@@ -1,0 +1,85 @@
+<!-- The Grid -->
+<div class="w3-row-padding">
+  
+  <!-- Left Column -->
+  <div class="w3-third">
+  
+    <div class="vdi-white-background w3-card-4">
+      <div class="w3-display-container">
+        <img ng-src="data:image/jpeg;charset=utf-8;base64, {{$ctrl.UserAvatar}}" style="width:100%" alt="Avatar" />
+        <div class="w3-display-bottomleft w3-container vdi-white-background">
+          <h2>{{$ctrl.UserData.name}}</h2>
+        </div>
+      </div>
+      <div class="w3-container">
+        <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.jobtitle" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <p><i class="fa fa-home fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.department" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large vdi-white-background"></i>{{$ctrl.UserData.email}}</p>
+        <p><i class="fa fa-phone fa-fw w3-margin-right w3-large vdi-white-background"></i>{{$ctrl.UserData.phone}}</p>
+        <hr />
+
+        <p class="w3-large">
+          <b><i class="fa fa-asterisk fa-fw w3-margin-right vdi-white-background"></i>Skills</b>
+          <button class="fa fa-plus vdi-button-symbol" ng-show="$ctrl.editable" ng-click="$ctrl.addSkill()"></button>
+        </p>
+        <skill-list skills="$ctrl.UserData.competencies" editable="$ctrl.editable" on-save="$ctrl.save()"></skill-list>
+        <br />
+
+        <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right vdi-white-background"></i>Languages</b></p>
+        <p>English</p>
+        <div class="vdi-lightGrey-background w3-round-xlarge">
+          <div class="w3-round-xlarge vdi-blue-background vdi-lightGrey-background" style="height:24px;width:100%"></div>
+        </div>
+        <p>Spanish</p>
+        <div class="vdi-lightGrey-background w3-round-xlarge">
+          <div class="w3-round-xlarge vdi-blue-background vdi-lightGrey-background" style="height:24px;width:55%"></div>
+        </div>
+        <p>German</p>
+        <div class="vdi-lightGrey-background w3-round-xlarge">
+          <div class="w3-round-xlarge vdi-blue-background" style="height:24px;width:25%"></div>
+        </div>
+        <br />
+      </div>
+    </div><br />
+
+  <!-- End Left Column -->
+  </div>
+
+  <!-- Right Column -->
+  <div class="w3-twothird">
+  
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+      <h2 class="w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge"></i>Work Experience</h2>
+      <div class="w3-container">
+        <h5><b>Front End Developer / w3schools.com</b></h5>
+        <h6><i class="fa fa-calendar fa-fw w3-margin-right"></i>Jan 2015 - <span class="w3-tag vdi-blue-background w3-round">Current</span></h6>
+        <p>Lorem ipsum dolor sit amet. Praesentium magnam consectetur vel in deserunt aspernatur est reprehenderit sunt hic. Nulla tempora soluta ea et odio, unde doloremque repellendus iure, iste.</p>
+      </div>
+    </div>
+
+    <div class="w3-container w3-card vdi-white-background">
+      <h2 class="w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge"></i>Education</h2>
+      <div class="w3-container">
+        <h5><b>W3Schools.com</b></h5>
+        <h6><i class="fa fa-calendar fa-fw w3-margin-right"></i>Forever</h6>
+        <p>Web Development! All I need to know in one place</p>
+        <hr />
+      </div>
+      <div class="w3-container">
+        <h5><b>London Business School</b></h5>
+        <h6><i class="fa fa-calendar fa-fw w3-margin-right"></i>2013 - 2015</h6>
+        <p>Master Degree</p>
+        <hr />
+      </div>
+      <div class="w3-container">
+        <h5><b>School of Coding</b></h5>
+        <h6><i class="fa fa-calendar fa-fw w3-margin-right"></i>2010 - 2013</h6>
+        <p>Bachelor Degree</p><br />
+      </div>
+    </div>
+
+  <!-- End Right Column -->
+  </div>
+  
+<!-- End Grid -->
+</div>

@@ -1,0 +1,11 @@
+{ 
+    "ident": "GUID4",
+    "age": 28,
+    "gender": "-",
+    "jobtitle": "-",
+    "department": "-",
+    "academia": "-",
+    "email": "-",
+    "phone": "-",
+    "skills" : [ ]
+}

@@ -1,0 +1,21 @@
+{ 
+    "ident": "GUID1",
+    "name": "Andreas Stutz",
+    "age": 28,
+    "gender": "Male",
+    "jobtitle": "Research Engineer",
+    "department": "Siemens AG",
+    "academia": "Master of Science",
+    "email": "andreas.stutz@siemens.com",
+    "phone": "0171-4324125",
+    "competencies" : [
+        { "name" : "NodeJS" , "Group": "SoftwareDevelopment", "experienceLevel" : "2"},
+        { "name" : "JS/TS" , "Group": "SoftwareDevelopment", "experienceLevel" : "3"},
+        { "name" : "C#" , "Group": "SoftwareDevelopment", "experienceLevel" : "4"},
+        { "name" : "SCL" , "Group": "SoftwareDevelopment", "experienceLevel" : "5"},
+        { "name" : "HTML" , "Group": "SoftwareDevelopment", "experienceLevel" : "1"},
+        { "name" : "Rhetoric" , "Group": "Softskills", "experienceLevel" : "4"},
+        { "name" : "Team Management" , "Group": "Softskills", "experienceLevel" : "3"},
+        { "name" : "Leadership" , "Group": "Softskills", "experienceLevel" : "4"}
+    ]
+}

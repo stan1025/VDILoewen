@@ -1,0 +1,12 @@
+{ 
+    "ident": "GUID5",
+    "name": "Sören Köble",
+    "age": 28,
+    "gender": "Male",
+    "jobtitle": "-",
+    "department": "-",
+    "academia": "-",
+    "email": "-",
+    "phone": "-",
+    "skills" : [ ]
+}

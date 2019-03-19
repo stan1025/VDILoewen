@@ -1,0 +1,12 @@
+{ 
+    "ident": "GUID3",
+    "name": "Michael Hertwig",
+    "age": 28,
+    "gender": "-",
+    "jobtitle": "-",
+    "department": "-",
+    "academia": "-",
+    "email": "-",
+    "phone": "-",
+    "skills" : [ ]
+}
