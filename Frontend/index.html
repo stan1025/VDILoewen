@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
   <script src="index.js"></script>
+  <script src="controls/loginView.js"></script>
   <script src="controls/profileView.js"></script>
+  <script src="controls/logoutView.js"></script>
   <script src="controls/skillList.js"></script>
   <script src="controls/skillDetail.js"></script>
   <script src="controls/editableField.js"></script>
@@ -19,15 +21,15 @@
 <body class="vdi-blue-background" ng-app="VDILionExample" ng-controller="ProfileController as ctrl">
 
 <header  class="w3-container vdi-blue-background">
-  <img src="logo.png" class="vdi-white-background" style="padding: 10px; margin: 10px; float: left">
-  <h1>Benutzerprofil</h1>
+  <img src="logo.png" class="vdi-white-background" style="padding: 10px; margin: 10px; float: left" />
+  <h1>{{title}}</h1>
 </header>
 
 <!-- Page Container -->
 <main class="w3-content w3-margin-top" style="max-width:1400px;">
-
-  <profile-view server="$server" user="$ctrl.userID"></profile-view>
-  
+  <login-view ng-show="screen == 'Login'" login-user="login(user)"></login-view>
+  <profile-view ng-show="screen == 'Userprofile'" logout="logout()" user-id="userID"></profile-view>
+  <logout-view ng-show="screen == 'Logout'" home="home()"></logout-view>  
   <!-- End Page Container -->
 </main>
 

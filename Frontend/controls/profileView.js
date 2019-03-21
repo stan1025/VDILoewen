@@ -1,20 +1,28 @@
 function ProfileViewController($http) {
   var ctrl = this;
-
-  //workaorund because bindings are not working
+  //ctrl.user = userID
+  //bindings do not work for some reason
   ctrl.server = server;
-  ctrl.user = 'GUID1';//userID;
+  //ctrl.userID = userID;
 
+  $http.get(ctrl.server + "/users")
+    .then(function (response) {
+        //console.log(response.data);
+        ctrl.profiles = response.data;
+    }, function () {
+        // Second function handles error
+        console.log("Something went wrong 1");
 
-  ctrl.editable = (ctrl.user == userID);
+    })
 
+  ctrl.loadProfile = function () { 
   $http.get(ctrl.server + "/user/profile", { params: {userID: ctrl.user}})
     .then(function (response) {
         //console.log(response.data);
         ctrl.UserData = response.data;
     }, function () {
         // Second function handles error
-        console.log("Something went wrong 1");
+        console.log("Something went wrong 1a");
 
     }),
   $http.get(ctrl.server + "/user/avatar", { params: {userID: ctrl.user}})
@@ -23,8 +31,10 @@ function ProfileViewController($http) {
         ctrl.UserAvatar = response.data;
       }, function () {
         // Second function handles error
-        console.log("Something went wrong 1a");
+        console.log("Something went wrong 1b");
       })
+      ctrl.editable = (ctrl.user == ctrl.userId);
+    }
   
   
     ctrl.addSkill = function () {
@@ -57,13 +67,24 @@ function ProfileViewController($http) {
               console.log("finally finished");
             });*/
     }
+
+    ctrl.$onChanges = function (changesObj) {
+      if ('' != ctrl.userId)
+      {
+        ctrl.user = ctrl.userId;
+        ctrl.loadProfile();
+      }
+    }
+
+    //ctrl.loadProfile();
 }
 
 angular.module('VDILionExample').component('profileView', {
-  templateUrl: 'controls/profileView.html',
+  templateUrl: './controls/profileView.html',
   controller: ProfileViewController,
- /* bindings: {
-    server: '@',
-    user: '<'
-  }*/
+  bindings: {
+ //   server: '@',
+    userId: '<',
+    logout: '&'
+  }
 });

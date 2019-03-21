@@ -1,6 +1,10 @@
 <!-- The Grid -->
-<div class="w3-row-padding">
-  
+<div class="w3-row-padding"> 
+    <div class="w3-display-topright">
+      Profil
+      <select class="vdi-select vdi-white-background w3-round" ng-change="$ctrl.loadProfile()" ng-model="$ctrl.user" ng-options="x for x in $ctrl.profiles"></select>
+      <button class="vdi-button vdi-white-background w3-round" ng-click="$ctrl.logout()">Logout</button>
+    </div> 
   <!-- Left Column -->
   <div class="w3-third">
   

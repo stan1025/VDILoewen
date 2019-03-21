@@ -35,6 +35,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 20px}
 .vdi-button{background-color:#008ad9;border:none;border-radius:4px;color:white;padding:5px 2px;text-align:center;display:inline-block;}
 .vdi-button-symbol{background-color:#ffffff;border: none;border-radius:0;color:#008ad9;padding:0 0;text-align: center;display: inline-block;}
 .vdi-star-rating{text-align: justify}
+.vdi-select{padding:9px 0;width:100%;border:none;border-bottom:1px solid #ccc}
 .w3-image{max-width:100%;height:auto}img{vertical-align:middle}a{color:inherit}
 .w3-table,.w3-table-all{border-collapse:collapse;border-spacing:0;width:100%;display:table}.w3-table-all{border:1px solid #ccc}
 .w3-bordered tr,.w3-table-all tr{border-bottom:1px solid #ddd}.w3-striped tbody tr:nth-child(even){background-color:#f1f1f1}
@@ -52,7 +53,6 @@ hr{border:0;border-top:1px solid #eee;margin:20px 20px}
 .w3-tooltip,.w3-display-container{position:relative}.w3-tooltip .w3-text{display:none}.w3-tooltip:hover .w3-text{display:inline-block}
 .w3-ripple:active{opacity:0.5}.w3-ripple{transition:opacity 0s}
 .w3-input{padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:100%}
-.w3-select{padding:9px 0;width:100%;border:none;border-bottom:1px solid #ccc}
 .w3-dropdown-click,.w3-dropdown-hover{position:relative;display:inline-block;cursor:pointer}
 .w3-dropdown-hover:hover .w3-dropdown-content{display:block}
 .w3-dropdown-hover:first-child,.w3-dropdown-click:hover{background-color:#ccc;color:#000}

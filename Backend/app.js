@@ -1,5 +1,6 @@
 const fs = require('fs')
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const express = require('express')
 const app = express()
@@ -38,20 +39,20 @@ app.get('/', (request, response) => {
 //GetProfiles - Establish the existing User Profile Folders inside UserManagement
 function GetProfiles()
 {
-  let directories = fs.readdirSync('./UserManagement')
+  let directories = fs.readdirSync(path.join(__dirname, './UserManagement'))
   return JSON.stringify(directories)
 }
 
 //Calculate Profile Data - returns the Profile JSON File Path
 function CalculateProfileData(userIdent)
 {
-  return './UserManagement/' + userIdent + '/Profile.json';
+  return path.join(__dirname, './UserManagement/', userIdent, '/Profile.json');
 }
 
 //Calculate Profile Data - returns the Profile JSON File Path
 function CalculateProfileAvatar(userIdent)
 {
-  return './UserManagement/' + userIdent + '/Avatar.jpg';
+  return path.join(__dirname, './UserManagement/', userIdent, '/Avatar.jpg');
 }
 
 //GetProfile - returns the Profile JSON Object
@@ -69,7 +70,7 @@ function GetProfileProperty(userIdent, userProperty)
 //UpdateUser - update the Profile JSON Object to the JSON File
 function UpdateProfile(userProfile)
 {
-  fs.writeFileSync(CalculateProfileData(userProfile.ident),JSON.stringify(userProfile));
+  fs.writeFileSync(path.normalize(CalculateProfileData(userProfile.ident)),JSON.stringify(userProfile));
 }
 
 //UpdateProfileField - update single property of the profile
@@ -99,7 +100,7 @@ app.get('/user/profile', (request, response) => {
 //Param: userID - Returns the Profile Avatar
 app.get('/user/avatar', (request, response) => {
     console.log(request.query.userID);
-    response.send(fs.readFileSync(CalculateProfileAvatar(request.query.userID)).toString('base64'))
+    response.send(fs.readFileSync(path.normalize(CalculateProfileAvatar(request.query.userID))).toString('base64'))
   })
 
 //GET: /user
