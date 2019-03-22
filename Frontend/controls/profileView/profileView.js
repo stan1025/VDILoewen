@@ -1,9 +1,7 @@
 function ProfileViewController($http) {
   var ctrl = this;
-  //ctrl.user = userID
-  //bindings do not work for some reason
+  //server as global variable in first step
   ctrl.server = server;
-  //ctrl.userID = userID;
 
   $http.get(ctrl.server + "/users")
     .then(function (response) {
@@ -38,7 +36,15 @@ function ProfileViewController($http) {
   
   
     ctrl.addSkill = function () {
-        ctrl.UserData.competencies.push({name: 'New Skill', experienceLevel: '1'});
+      //create field competencies in user daa if it does not exit yes
+      if (!ctrl.UserData.competencies)
+        {
+          ctrl.UserData.competencies = [{name: 'New Skill', experienceLevel: '1'}];
+        }
+        else
+        {
+          ctrl.UserData.competencies.push({name: 'New Skill', experienceLevel: '1'});
+        }
     }
 
     ctrl.updateProp = function(value) {
@@ -68,6 +74,7 @@ function ProfileViewController($http) {
             });*/
     }
 
+    //load profile if user changes (e.g. login)
     ctrl.$onChanges = function (changesObj) {
       if ('' != ctrl.userId)
       {
@@ -75,8 +82,6 @@ function ProfileViewController($http) {
         ctrl.loadProfile();
       }
     }
-
-    //ctrl.loadProfile();
 }
 
 angular.module('VDILionExample').component('profileView', {
