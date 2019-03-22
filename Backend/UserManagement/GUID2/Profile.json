@@ -1,12 +1,1 @@
-{ 
-    "ident": "GUID2",
-    "name": "Hauke Jürgensen",
-    "age": 28,
-    "gender": "-",
-    "jobtitle": "-",
-    "department": "-",
-    "academia": "-",
-    "email": "-",
-    "phone": "-",
-    "skills" : [ ]
-}
+{"ident":"GUID2","name":"Hauke Jürgensen","age":28,"gender":"-","jobtitle":"-","department":"-","academia":"-","email":"-","phone":"-","competencies":[]}
