@@ -16,7 +16,7 @@ function SkillListController($scope, $element, $attrs) {
 }
 
 angular.module('VDILionExample').component('skillList', {
-  template: '<skill-detail ng-repeat="skill in $ctrl.skills" editable="$ctrl.editable" skill="skill" on-delete="$ctrl.deleteSkill(skill)" on-update="$ctrl.updateSkill(skill, prop, value)"></skill-detail>',
+  templateUrl: './controls/skillListView/skillListView.html',
   controller: SkillListController,
   bindings: {
     skills: '=',

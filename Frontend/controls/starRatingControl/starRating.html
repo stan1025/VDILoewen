@@ -1,0 +1,6 @@
+<span>
+    <div ng-repeat="star in $ctrl.stars" ng-class="star.filled ? 'fa fa-star' : 'fa fa-star-o'" ng-click="$ctrl.toggle($index)"></div>
+    <button ng-show="$ctrl.editMode" ng-click="$ctrl.handleModeChange()" class="fa fa-save vdi-button-symbol"></button>
+    <button ng-hide="$ctrl.editMode" ng-click="$ctrl.handleModeChange()" class="fa fa-edit vdi-button-symbol"></button>
+    <button ng-show="$ctrl.editMode" ng-click="$ctrl.reset()" class="fa fa-undo vdi-button-symbol"></button>
+</span>

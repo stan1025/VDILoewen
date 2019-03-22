@@ -1,0 +1,9 @@
+<div class="vdi-white-background vdi-boxed w3-round-xlarge vdi-star-rating">
+    <h6>
+        <editable-field field-value="$ctrl.skill.name" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update('name', value)"></editable-field>
+        <span class="w3-right">
+            <star-rating editable="$ctrl.editable" rating-value="$ctrl.skill.experienceLevel" max-stars="5" on-update="$ctrl.update('experienceLevel', value)"></star-rating>
+            <button ng-show="$ctrl.editable" ng-click="$ctrl.delete()" class="fa fa-eraser vdi-button-symbol"></button>
+        </span>
+    </h6>
+</div>

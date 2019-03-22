@@ -44,12 +44,7 @@ function StarRatingController($scope, $element, $attrs) {
   }
   
   angular.module('VDILionExample').component('starRating', {
-    template: '<span ng-switch="$ctrl.editMode"> \
-                <i ng-repeat="star in $ctrl.stars" ng-class="star.filled ? \'fa fa-star\' : \'fa fa-star-o\'" ng-click="$ctrl.toggle($index)"></i>\
-                <span ng-switch-default>{{$ctrl.fieldValue}}</span> \
-              </span> \
-              <button ng-show="$ctrl.editable" ng-click="$ctrl.handleModeChange()" ng-class="$ctrl.editMode ? \'fa fa-save\' : \'fa fa-edit\'" class="vdi-button-symbol"></button> \
-              <button ng-if="$ctrl.editMode" ng-click="$ctrl.reset()" class="fa fa-undo vdi-button-symbol"></button>',
+    templateUrl: './controls/starRatingControl/starRating.html',
     controller: StarRatingController,
     bindings: {
       ratingValue: '=',

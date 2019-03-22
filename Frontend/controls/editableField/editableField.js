@@ -29,12 +29,7 @@ function EditableFieldController($scope, $element, $attrs) {
 }
 
 angular.module('VDILionExample').component('editableField', {
-  template: ' <span ng-switch="$ctrl.editMode"> \
-                <input ng-switch-when="true" type="{{$ctrl.fieldType}}" ng-model="$ctrl.fieldValue"> \
-                <span ng-switch-default>{{$ctrl.fieldValue}}</span> \
-              </span> \
-              <button ng-show="$ctrl.editable" ng-click="$ctrl.handleModeChange()" ng-class="$ctrl.editMode ? \'fa fa-save\' : \'fa fa-edit\'" class="vdi-button-symbol"></button> \
-              <button ng-if="$ctrl.editMode" ng-click="$ctrl.reset()" class="fa fa-undo vdi-button-symbol"></button>',
+  templateUrl: 'controls/editableField/editableField.html',
   controller: EditableFieldController,
   bindings: {
     fieldValue: '=',

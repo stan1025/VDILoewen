@@ -38,7 +38,7 @@ function ProfileViewController($http) {
   
   
     ctrl.addSkill = function () {
-        ctrl.UserData.competencies.push({name: ' ', experienceLevel: '1'});
+        ctrl.UserData.competencies.push({name: 'New Skill', experienceLevel: '1'});
     }
 
     ctrl.updateProp = function(value) {
@@ -80,7 +80,7 @@ function ProfileViewController($http) {
 }
 
 angular.module('VDILionExample').component('profileView', {
-  templateUrl: './controls/profileView.html',
+  templateUrl: './controls/profileView/profileView.html',
   controller: ProfileViewController,
   bindings: {
  //   server: '@',

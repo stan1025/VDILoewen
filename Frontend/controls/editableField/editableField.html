@@ -1,0 +1,8 @@
+<span>
+    <input ng-show="$ctrl.editMode" type="{{$ctrl.fieldType}}" ng-model="$ctrl.fieldValue" />
+    <span ng-hide="$ctrl.editMode">{{$ctrl.fieldValue}}</span>
+
+<button ng-show="$ctrl.editMode" ng-click="$ctrl.handleModeChange()" class="fa fa-save vdi-button-symbol"></button>
+<button ng-hide="$ctrl.editMode" ng-click="$ctrl.handleModeChange()" class="fa fa-edit vdi-button-symbol"></button>
+<button ng-show="$ctrl.editMode" ng-click="$ctrl.reset()" class="fa fa-undo vdi-button-symbol"></button>
+</span>
