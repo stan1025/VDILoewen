@@ -3,6 +3,7 @@
     <span ng-hide="$ctrl.editMode">{{$ctrl.fieldValue}}</span>
 
 <button ng-show="$ctrl.editMode" ng-click="$ctrl.handleModeChange()" class="fa fa-save vdi-button-symbol"></button>
+<!-- hide edit button if in editmode or if the value should not be editable -->
 <button ng-hide="$ctrl.editMode || !$ctrl.editable" ng-click="$ctrl.handleModeChange()" class="fa fa-edit vdi-button-symbol"></button>
 <button ng-show="$ctrl.editMode" ng-click="$ctrl.reset()" class="fa fa-undo vdi-button-symbol"></button>
 </span>

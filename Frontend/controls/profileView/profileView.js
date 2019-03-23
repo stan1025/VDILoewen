@@ -3,6 +3,7 @@ function ProfileViewController($http) {
   //server as global variable in first step
   ctrl.server = server;
 
+  //get userlist to show the profile selection dropdown menu
   $http.get(ctrl.server + "/users")
     .then(function (response) {
         //console.log(response.data);
@@ -13,7 +14,9 @@ function ProfileViewController($http) {
 
     })
 
+  //load the profile data shown in the profile view section of the page
   ctrl.loadProfile = function () { 
+    //get the data structure
   $http.get(ctrl.server + "/user/profile", { params: {userID: ctrl.user}})
     .then(function (response) {
         //console.log(response.data);
@@ -23,6 +26,7 @@ function ProfileViewController($http) {
         console.log("Something went wrong 1a");
 
     }),
+    //get the avatar
   $http.get(ctrl.server + "/user/avatar", { params: {userID: ctrl.user}})
     .then(function (response) {
        // console.log(response.data);
@@ -31,10 +35,11 @@ function ProfileViewController($http) {
         // Second function handles error
         console.log("Something went wrong 1b");
       })
+      //only show edit buttons if the user is viewing his own profile
       ctrl.editable = (ctrl.user == ctrl.userId);
     }
   
-  
+  //add an empty skill
     ctrl.addSkill = function () {
       //create field competencies in user daa if it does not exit yes
       if (!ctrl.UserData.competencies)
@@ -47,15 +52,17 @@ function ProfileViewController($http) {
         }
     }
 
+    //function to handle update of user properties
     ctrl.updateProp = function(value) {
       ctrl.save();
     }
       
+    //save function
   ctrl.save = function() {
         ctrl.UpdateUser();
       }
 
-
+//updates user profile on the server
   ctrl.UpdateUser = function () {
       $http.post(ctrl.server + "/user/profile", {userID: ctrl.user, userProfile: ctrl.UserData}/*, {headers: { 'Content-Type': 'application/json' }}*/)
             .then(function (response) {
@@ -89,7 +96,7 @@ angular.module('VDILionExample').component('profileView', {
   controller: ProfileViewController,
   bindings: {
  //   server: '@',
-    userId: '<',
-    logout: '&'
+    userId: '<', //logged in user
+    logout: '&' //inding of logout method, signature logout()
   }
 });

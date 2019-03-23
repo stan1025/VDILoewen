@@ -1,6 +1,6 @@
 function logoutViewController($scope, $http) {
     var ctrl = this;
-    //bindings do not work for some reason
+    //in this module only the home-method of the upper module is called. This method is passed by bindings
   
     $scope.title = 'LogOut';
 
@@ -10,6 +10,6 @@ function logoutViewController($scope, $http) {
     templateUrl: './controls/logoutView/logoutView.html',
     controller: logoutViewController,
     bindings: {
-      home: '&'
+      home: '&' //binding of home method, signature home()
     }
   });

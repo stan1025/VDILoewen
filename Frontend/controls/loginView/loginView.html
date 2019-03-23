@@ -1,9 +1,11 @@
+<!-- HTML-Template for the views angularJS module -->
 <div class="w3-content vdi-white-background"> 
 <P>
 Please select a User Profile
 </P>
     <select class="vdi-select vdi-blue-background w3-round" ng-model="$ctrl.user" ng-options="x for x in $ctrl.profiles"></select>
     <button ng-click="$ctrl.login()" class="vdi-button vdi-blue-background">Login</button>
+    <!-- show error message only in case of an error -->
     <div ng-show="$ctrl.error" style="background: red; color: white; opacity: 0.7;">Fehlerhafte Logindaten</div> 
     <img src="loewe2.png" height="100" width="100" /> 
 </div> 

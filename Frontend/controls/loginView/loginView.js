@@ -1,12 +1,14 @@
 function loginViewController($scope, $http) {
     var ctrl = this;
-    //bindings do not work for some reason
+    //as first step set server via gloabl variable
     ctrl.server = server;
+    //initialize local variables
     ctrl.error = false;
     ctrl.user = '';
   
     $scope.title = 'LogIn';
 
+    //get user list to show available logins
     $http.get(ctrl.server + "/users")
       .then(function (response) {
           //console.log(response.data);
@@ -17,6 +19,7 @@ function loginViewController($scope, $http) {
   
       })
 
+      //call login functionof upper module if valid user has been entered, show error message otherwise
     ctrl.login = function () {
         if (ctrl.user != '')
         {
@@ -48,7 +51,7 @@ function loginViewController($scope, $http) {
       controller: loginViewController,
       bindings: {
        // server: '@',
-        loginUser: '&'
+        loginUser: '&' //login callback to uper module, signature loginUser(user)
       }
 
   });

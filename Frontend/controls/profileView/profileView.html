@@ -1,5 +1,7 @@
+<!-- HTML-Template for the views angularJS module -->
 <!-- The Grid -->
 <div class="w3-row-padding"> 
+    <!-- Show profile selection and logout in top right corner -->
     <div class="w3-display-topright">
       Profil
       <select class="vdi-select vdi-white-background w3-round" ng-change="$ctrl.loadProfile()" ng-model="$ctrl.user" ng-options="x for x in $ctrl.profiles"></select>
@@ -7,7 +9,7 @@
     </div> 
   <!-- Left Column -->
   <div class="w3-third">
-  
+  <!-- show profile data and skills in left third -->
     <div class="vdi-white-background w3-card-4">
       <div class="w3-display-container">
         <img ng-src="data:image/jpeg;charset=utf-8;base64, {{$ctrl.UserAvatar}}" style="width:100%" alt="Avatar" />
@@ -51,7 +53,7 @@
 
   <!-- Right Column -->
   <div class="w3-twothird">
-  
+  <!-- Show other data in righ 2 thirds -->
     <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
       <h2 class="w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge"></i>Work Experience</h2>
       <div class="w3-container">
