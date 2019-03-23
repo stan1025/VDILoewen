@@ -109,6 +109,7 @@ app.get('/user/profile', (request, response) => {
 //Param: userID - Returns the Profile Avatar
 app.get('/user/avatar', (request, response) => {
     console.log(request.query.userID);
+    //convert binary data to base64 encoding before transmitting it via http
     response.send(fs.readFileSync(path.normalize(CalculateProfileAvatar(request.query.userID))).toString('base64'))
   })
 
