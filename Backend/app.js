@@ -1,5 +1,14 @@
+/*
+this example uses nodejs and express to build the server component
+https://www.w3schools.com/nodejs/default.asp
+https://expressjs.com/de/
+*/
 const fs = require('fs')
+
+
+//include bodyParser to parse body of POST requests
 const bodyParser = require('body-parser');
+//include path to create plattform independent paths
 const path = require('path');
 
 const express = require('express')
@@ -131,7 +140,7 @@ app.get('/user/profile/:userID', (request, response) => {
 //POST: /user/profile
 //Param: userID, userProfile
 app.post('/user/profile', (request, response) => {
-
+//body-parser delivers the body of the request as body substructure
   console.log(request.body);
 
   let ident = request.body.userID;
@@ -145,12 +154,12 @@ app.post('/user/profile', (request, response) => {
 //POST: /user/property´
 //Param: userID, userProperty, userValue
 app.post('/user/property', (request, response) => {
-
+//body-parser delivers the body of the request as body substructure
   console.log(request);
  
-  let ident = request.query.userID;
-  let value = request.query.userValue;
-  let field = request.query.userProperty;
+  let ident = request.body.userID;
+  let value = request.body.userValue;
+  let field = request.body.userProperty;
 
   UpdateProfileField(ident, field, value);
 
