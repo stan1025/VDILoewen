@@ -1,11 +1,40 @@
 <!DOCTYPE html>
+<!-- 
+Dies ist die Einstigesseite zum Beispielprototypen.
+Hier finden sich Links zu weiterführender Dokumentation und Kommentare im Code. 
+Die Kommentare im Code werden weinger detailiert, je weiter man in der Hierachieebene nach unten wandert.
+
+allgemeine Tutorials zur Webentwicklung:
+https://wiki.selfhtml.org/wiki/Wie_fange_ich_an%3F
+https://www.w3schools.com/default.asp
+
+Hierachie:
+Index
+-LogIn
+-profileView
+--editableField
+--SkillList
+---skillDetail
+----editableField
+----starRating
+-LogOut
+-->
 <html>
 <head>
   <title>VDI Digital</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- alle benötigten Scipte (Basisframework(AngularJS) und einzelne Seiten/Elemente) einbinden 
+  Dukumentation
+  https://www.w3schools.com/angular/default.asp
+  https://angularjs.org
+  https://www.w3schools.com/js/default.asp
+  -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+  <!--
+    hier werden alle verwendeten Elemente eingebunden
+  -->
   <script src="index.js"></script>
   <script src="controls/loginView/loginView.js"></script>
   <script src="controls/profileView/profileView.js"></script>
@@ -14,20 +43,34 @@
   <script src="controls/skillDetailView/skillDetail.js"></script>
   <script src="controls/editableField/editableField.js"></script>
   <script src="controls/starRatingControl/starRating.js"></script>
+  <!-- Designdefinition einbinden 
+  https://www.w3schools.com/css/default.asp
+
+  -->
   <link rel="stylesheet" href="vdiDesign.css">
-  <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>-->
+  <!-- Schrift für die Symbole einbinden
+  https://www.w3schools.com/icons/fontawesome_icons_intro.asp 
+  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="vdi-blue-background" ng-app="VDILionExample" ng-controller="ProfileController as ctrl">
+<!-- 
+  mit ng-app den Sichtbarkeitsbereich für Angular festlegen. ng-controller verknüpft den Javascript Code zur Seite
+  Alle ng-* Attribute sind AngularJS Attribute
+-->
+<body class="vdi-blue-background" ng-app="VDILionExample" ng-controller="ProfileController">
 
+  <!-- Kopf und Fuss der Seite sind konstant, nur dazwischen soll sich etwas ändern-->
 <header  class="w3-container vdi-blue-background">
   <img src="logo.png" class="vdi-white-background" style="padding: 10px; margin: 10px; float: left" />
+  <!-- {{var}} gibt den Wert von var  zurück -->
   <h1>{{title}}</h1>
 </header>
 
 <!-- Page Container -->
 <main class="w3-content w3-margin-top" style="max-width:1400px;">
+  <!-- Umschaltung zwischen den angezeigeten Seiten, Umschaltfunktionen und benötigte Daten verlinken 
+  jede Seite ist ein ANgularJS Module. Diese Module werden als durch sie definierte HTML-Tags eingebunden.
+  -->
   <login-view ng-show="screen == 'Login'" login-user="login(user)"></login-view>
   <profile-view ng-show="screen == 'Userprofile'" logout="logout()" user-id="userID"></profile-view>
   <logout-view ng-show="screen == 'Logout'" home="home()"></logout-view>  
