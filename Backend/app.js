@@ -138,6 +138,35 @@ app.get('/user/profile/:userID', (request, response) => {
     response.send(data)
   })
 
+  //
+ /* app.get('/couch/:location', (request, response) => {
+    console.log(request.params.userID);
+    let data = GetProfile(request.params.location, request.params.number)
+      console.log(data);
+      response.send(data)
+    })*/
+
+ app.get('/user/couch', (request, response) => {
+      console.log(request);
+      console.log(request.query.userID);
+      let data = JSON.parse(fs.readFileSync(path.join(__dirname, './UserManagement/', request.query.userID, '/Couch.json')));
+        console.log(data);
+        response.send(data)
+      })
+
+ app.post('/user/couch', (request, response) => {
+      //body-parser delivers the body of the request as body substructure
+        console.log(request.body);
+      
+        let ident = request.body.userID;
+        let data = request.body.number;
+        data.ident = ident;
+        UpdateProfile(data);
+        response.send("Profile updated!");
+      
+      })
+  
+
 //POST: /user/profile
 //Param: userID, userProfile
 app.post('/user/profile', (request, response) => {
