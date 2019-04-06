@@ -138,14 +138,22 @@ app.get('/user/profile/:userID', (request, response) => {
     response.send(data)
   })
 
-  //
- /* app.get('/couch/:location', (request, response) => {
+  //Get
+  //todo:get couchsurfing information from database 
+  app.get('/couch/:location', (request, response) => {
     console.log(request.params.userID);
-    let data = GetProfile(request.params.location, request.params.number)
+    let data = '';
+    if (request.params.location = 'Karlsruhe')
+    {
+      data = {"couches" : [{"user" : "User1", "city":"Karlsruhe", "count":"3"},
+      {"user" : "User2", "city":"Karlsruhe", "count":"1"}]};
+    }
       console.log(data);
       response.send(data)
-    })*/
+    })
 
+    //GET: /user/couch
+//Param: userID - Returns the couchsurfing information by Ident
  app.get('/user/couch', (request, response) => {
       console.log(request);
       console.log(request.query.userID);
@@ -154,14 +162,15 @@ app.get('/user/profile/:userID', (request, response) => {
         response.send(data)
       })
 
+      //todo: update profile
  app.post('/user/couch', (request, response) => {
       //body-parser delivers the body of the request as body substructure
         console.log(request.body);
       
-        let ident = request.body.userID;
-        let data = request.body.number;
-        data.ident = ident;
-        UpdateProfile(data);
+        //let ident = request.body.userID;
+        //let data = request.body.number;
+        //data.ident = ident;
+        //todo update couch.json
         response.send("Profile updated!");
       
       })

@@ -1,12 +1,22 @@
 <div class="vdi-white-background vdi-boxed w3-round-xlarge vdi-star-rating">
+    <h3>Angebot</h3>
     <table>
         <tr>
             <td>Ort</td>
-            <td><editable-field field-value="$ctrl.Data.couches[0].city" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update('name', value)"></editable-field></td>
+            <td><editable-field field-value="$ctrl.Data.couches[0].city" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update(value)"></editable-field></td>
         </tr>
         <tr>
             <td>Anzahl Betten</td>
-            <td><editable-field field-value="$ctrl.Data.couches[0].count" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update('name', value)"></editable-field></td>
+            <td><editable-field field-value="$ctrl.Data.couches[0].count" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update(value)"></editable-field></td>
         </tr>
     </table>
+</div>
+<div class="vdi-white-background vdi-boxed w3-round-xlarge vdi-star-rating">
+    <h3>Suche</h3>
+    <form novalidate>
+        <label>Stadt: <input type="text" ng-model="$ctrl.city" /></label><br />                
+        <input type="button" ng-click="$ctrl.search()" value="Suchen" />
+    </form>
+    <h3>Ergebnisse</h3>
+    {{$ctrl.offers}}
 </div>

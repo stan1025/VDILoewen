@@ -2,6 +2,8 @@
     var ctrl = this;
     //server as global variable in first step
     ctrl.server = server;
+    ctrl.city = '';
+    ctrl.offers = '';
 
     ctrl.loadCouch = function() {
       console.log(ctrl.userId);
@@ -11,22 +13,50 @@
           ctrl.Data = response.data;
       }, function () {
           // Second function handles error
-          console.log("Something went wrong 1a");
+          console.log("Something went wrong 1 couch");
 
       })
     }
 
-    //pass to upper module which skill has to be deleted
+    //send updated data to server
       ctrl.delete = function() {
-        console.log('test1');
-        //ctrl.onDelete({skill: ctrl.skill});
-      };
+        $http.post(ctrl.server + "/user/couch", {userID: ctrl.userId, couches: []})
+      .then(function (response) {
+          //console.log(response.data);
+          //ctrl.Data = response.data;
+      }, function () {
+          // Second function handles error
+          console.log("Something went wrong 2 couch");
+
+      })
+    }
     
-      //pass to list controller which skill has to be updated to which value
+      //send updated data to server
       ctrl.update = function(value) {
-        console.log('test2');
-       // ctrl.onUpdate({skill: ctrl.skill, prop: prop, value: value});
-      };
+        $http.post(ctrl.server + "/user/couch", ctrl.Data)
+      .then(function (response) {
+          //console.log(response.data);
+          //ctrl.Data = response.data;
+      }, function () {
+          // Second function handles error
+          console.log("Something went wrong 2 couch");
+
+      })
+    }
+
+    //search for results on server
+    ctrl.search = function() {
+      console.log(ctrl.userId);
+      $http.get(ctrl.server + "/couch/" + ctrl.city)
+      .then(function (response) {
+          //console.log(response.data);
+          ctrl.offers = response.data;
+      }, function () {
+          // Second function handles error
+          console.log("Something went wrong 1 couch");
+
+      })
+    }
 
     //load profile if user changes (e.g. login)
     ctrl.$onChanges = function (changesObj) {
