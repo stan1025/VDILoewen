@@ -6,16 +6,17 @@
     ctrl.offers = '';
 
     ctrl.loadCouch = function() {
-      console.log(ctrl.userId);
-      $http.get(ctrl.server + "/user/couch", { params: {userID: ctrl.userId}})
-      .then(function (response) {
-          //console.log(response.data);
-          ctrl.Data = response.data;
-      }, function () {
-          // Second function handles error
-          console.log("Something went wrong 1 couch");
+      if (ctrl.userId) {
+        $http.get(ctrl.server + "/user/couch", { params: {userID: ctrl.userId}})
+        .then(function (response) {
+            //console.log(response.data);
+            ctrl.Data = response.data;
+        }, function () {
+            // Second function handles error
+            console.log("Something went wrong 1 couch");
 
-      })
+        })
+      }
     }
 
     //send updated data to server
@@ -56,6 +57,10 @@
           console.log("Something went wrong 1 couch");
 
       })
+    }
+
+    ctrl.orderByMe = function(x) {
+      ctrl.myOrderBy = x;
     }
 
     //load profile if user changes (e.g. login)

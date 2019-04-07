@@ -1,22 +1,39 @@
-<div class="vdi-white-background vdi-boxed w3-round-xlarge vdi-star-rating">
-    <h3>Angebot</h3>
-    <table>
-        <tr>
-            <td>Ort</td>
-            <td><editable-field field-value="$ctrl.Data.couches[0].city" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update(value)"></editable-field></td>
-        </tr>
-        <tr>
-            <td>Anzahl Betten</td>
-            <td><editable-field field-value="$ctrl.Data.couches[0].count" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update(value)"></editable-field></td>
-        </tr>
-    </table>
-</div>
-<div class="vdi-white-background vdi-boxed w3-round-xlarge vdi-star-rating">
-    <h3>Suche</h3>
-    <form novalidate>
-        <label>Stadt: <input type="text" ng-model="$ctrl.city" /></label><br />                
-        <input type="button" ng-click="$ctrl.search()" value="Suchen" />
-    </form>
-    <h3>Ergebnisse</h3>
-    {{$ctrl.offers}}
+<div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+    <h2 class="w3-padding-16">
+        <i class="fas fa-couch w3-margin-right w3-xxlarge"></i>Couchsurfing
+    </h2>
+    <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
+        <h3>Angebot</h3>
+        Ort
+        <span class="w3-right">
+            <editable-field field-value="$ctrl.Data.couches[0].city" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update(value)"></editable-field>
+        </span>
+        <br />
+        Anzahl Betten
+        <span class="w3-right">
+            <editable-field field-value="$ctrl.Data.couches[0].count" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update(value)"></editable-field>
+        </span>
+    </div>
+    <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
+        <h3>Suche</h3>
+        <form novalidate="novalidate">
+            <label>Stadt: <input type="text" ng-model="$ctrl.city" /></label>
+            <span class="w3-right">              
+                <input type="button" ng-click="$ctrl.search()" value="Suchen" />
+            </span>
+        </form>
+        <h3>Ergebnisse</h3>
+        <table class="vdi-boxed" width="100%">
+            <tr>
+                <th ng-click="$ctrl.orderByMe('user')">User</th> 
+                <th ng-click="$ctrl.orderByMe('city')">Stadt</th>
+                <th ng-click="$ctrl.orderByMe('count')">Anzahl</th>
+            </tr>
+            <tr ng-repeat="x in $ctrl.offers.couches | orderBy:$ctrl.myOrderBy">
+                <td>{{x.user}}</td>
+                <td>{{x.city}}</td>
+                <td>{{x.count}}</td>
+            </tr>
+        </table>
+    </div>
 </div>
