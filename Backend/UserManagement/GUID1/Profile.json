@@ -1,1 +1,78 @@
-{"ident":"GUID1","name":"Andreas Stutz","age":28,"gender":"Male","jobtitle":"Research Engineer","department":"Siemens AG","academia":"Master of Science","email":"andreas.stutz@siemens.com","phone":"0171-4324125","competencies":[{"name":"JS/TS","Group":"SoftwareDevelopment","experienceLevel":"3"},{"name":"C#","Group":"SoftwareDevelopment","experienceLevel":"4"},{"name":"SCL","Group":"SoftwareDevelopment","experienceLevel":"5"},{"name":"HTML","Group":"SoftwareDevelopment","experienceLevel":"1"},{"name":"Rhetoric","Group":"Softskills","experienceLevel":"4"},{"name":"Team Management","Group":"Softskills","experienceLevel":"3"},{"name":"Leadership","Group":"Softskills","experienceLevel":"4"},{"name":"AngularJS","experienceLevel":2},{"name":"Visual Studio Code","experienceLevel":3}]}
+{
+    "ident": "GUID1",
+    "name": "Andreas Stutz",
+    "gender": "Male",
+    "age": 28,
+
+    "academia": "Master of Science",
+
+
+
+    
+    "private": {
+        "street" : "Kirchenstraße",
+        "number" : "23",
+        "zipcode" : "76344",
+        "city" : "Eggenstein-Leopoldshafen",
+        "phone": "0171-4324125",
+        "email": "andreas_stutz@t-online.de"
+    },
+
+    "job": {
+        "companyName": "Siemens AG",
+        "companyDepartment": "Digital Industry - Technologies and Innovation",
+        "jobtitle": "Research Engineer",
+        "street" : "Östliche Rheinbrückenstraße",
+        "number" : "50",
+        "zipcode" : "76187",
+        "city" : "Karlsruhe",
+        "phone": "0721-595-2547",
+        "email": "andreas.stutz@siemens.com"
+    },
+
+    "competencies": [
+        {
+            "name": "JS/TS",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "C#",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "SCL",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "5"
+        },
+        {
+            "name": "HTML",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "1"
+        },
+        {
+            "name": "Rhetoric",
+            "Group": "Softskills",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "Team Management",
+            "Group": "Softskills",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "Leadership",
+            "Group": "Softskills",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "AngularJS",
+            "experienceLevel": 2
+        },
+        {
+            "name": "Visual Studio Code 2019",
+            "experienceLevel": 5
+        }
+    ]
+}

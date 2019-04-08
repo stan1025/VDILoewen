@@ -1,0 +1,22 @@
+{
+    "GUID1" : {
+        "couches": "3",
+        "city": "Karlsruhe"
+    },
+    "GUID2" : {
+        "couches": "2",
+        "city": "Hamburg"
+    },
+    "GUID3" : {
+        "couches": "4",
+        "city": "Stuttgart"
+    },
+    "GUID4" : {
+        "couches": "2",
+        "city": "Stuttgart"
+    },
+    "GUID5" : {
+        "couches": "1",
+        "city": "Stuttgart"
+    }
+}

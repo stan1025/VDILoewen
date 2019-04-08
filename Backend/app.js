@@ -4,7 +4,7 @@ https://www.w3schools.com/nodejs/default.asp
 https://expressjs.com/de/
 */
 const fs = require('fs')
-
+const _ = require('underscore')
 
 //include bodyParser to parse body of POST requests
 const bodyParser = require('body-parser');
@@ -20,20 +20,20 @@ const port = 3000
 app.use(bodyParser.json());
 
 //Use Function to disable CrossScripting Security Features
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 //Listen Function to bind the Server to a defined IP Address
 app.listen(port, ip, (err) => {
-    if (err) {
-      return console.log('something bad happened', err)
-    }
-  
-    console.log(`server is listening on ${port}`)
-  })
+  if (err) {
+    return console.log('something bad happened', err)
+  }
+
+  console.log(`server is listening on ${port}`)
+})
 
 //GET - Simple Test Message
 app.get('/', (request, response) => {
@@ -46,48 +46,69 @@ app.get('/', (request, response) => {
 //Backend Component UserManagement
 
 //GetProfiles - Establish the existing User Profile Folders inside UserManagement
-function GetProfiles()
-{
+function GetProfiles() {
   let directories = fs.readdirSync(path.join(__dirname, './UserManagement'))
   return JSON.stringify(directories)
 }
 
 //Calculate Profile Data - returns the Profile JSON File Path
-function CalculateProfileData(userIdent)
-{
+function CalculateProfileData(userIdent) {
   return path.join(__dirname, './UserManagement/', userIdent, '/Profile.json');
 }
 
 //Calculate Profile Data - returns the Profile JSON File Path
-function CalculateProfileAvatar(userIdent)
-{
+function CalculateProfileAvatar(userIdent) {
   return path.join(__dirname, './UserManagement/', userIdent, '/Avatar.jpg');
 }
 
 //GetProfile - returns the Profile JSON Object
-function GetProfile(userIdent)
-{  
+function GetProfile(userIdent) {
   return JSON.parse(fs.readFileSync(CalculateProfileData(userIdent)))
 }
 
 //GetUser - returns the Profile JSON Object
-function GetProfileProperty(userIdent, userProperty)
-{  
+function GetProfileProperty(userIdent, userProperty) {
   return JSON.parse(fs.readFileSync(CalculateProfileData(userIdent)))[userProperty]
 }
 
 //UpdateUser - update the Profile JSON Object to the JSON File
-function UpdateProfile(userProfile)
-{
-  fs.writeFileSync(path.normalize(CalculateProfileData(userProfile.ident)),JSON.stringify(userProfile));
+function UpdateProfile(userProfile) {
+  fs.writeFileSync(path.normalize(CalculateProfileData(userProfile.ident)), JSON.stringify(userProfile));
 }
 
 //UpdateProfileField - update single property of the profile
-function UpdateProfileField(userIdent, userField, userValue)
-{
+function UpdateProfileField(userIdent, userField, userValue) {
   let userProfile = GetProfile(userIdent);
   userProfile[userField] = userValue;
   UpdateProfile(userProfile);
+}
+
+
+//Calculate CouchSurfing Data - returns the CouchSurfing JSON File Path
+function CalculateCouchData() {
+  return path.join(__dirname, './CouchSurfing/Couch.json');
+}
+
+//GetCouchData - returns the Couch JSON Object
+function GetCouchData() {
+  return JSON.parse(fs.readFileSync(CalculateCouchData()));
+}
+
+//UpdateUser - update the Profile JSON Object to the JSON File
+function UpdateCouchData(couchData) {
+  fs.writeFileSync(path.normalize(CalculateCouchData()), JSON.stringify(couchData));
+}
+
+//GetCouchProperties - returns the Couch Profile JSON Object
+function GetCouchProperties(userIdent) {
+  return GetCouchData()[userIdent];
+}
+
+//SetCouchProperties - set the Couch Profile JSON Object
+function SetCouchProperties(userIdent, userData) {
+  let data = GetCouchData();
+  data[userIdent] = userData;
+  UpdateCouchData(data);
 }
 
 //GET: /users - returns list of all profiles, Ident and Name
@@ -100,26 +121,26 @@ app.get('/users', (request, response) => {
 //Param: userID - Returns the Profile Data by Ident
 app.get('/user/profile', (request, response) => {
   console.log(request.query.userID);
-    let data = GetProfile(request.query.userID)
-    console.log(data/*[request.query.userProperty]*/);
-    response.send(data/*[request.query.userProperty]*/)
-  })
+  let data = GetProfile(request.query.userID)
+  console.log(data/*[request.query.userProperty]*/);
+  response.send(data/*[request.query.userProperty]*/)
+})
 
 //GET: /user
 //Param: userID - Returns the Profile Avatar
 app.get('/user/avatar', (request, response) => {
-    console.log(request.query.userID);
-    //convert binary data to base64 encoding before transmitting it via http
-    response.send(fs.readFileSync(path.normalize(CalculateProfileAvatar(request.query.userID))).toString('base64'))
-  })
+  console.log(request.query.userID);
+  //convert binary data to base64 encoding before transmitting it via http
+  response.send(fs.readFileSync(path.normalize(CalculateProfileAvatar(request.query.userID))).toString('base64'))
+})
 
 //GET: /user
 //Param: userID - Returns the Profile Data by Ident
 app.get('/user/property', (request, response) => {
-    console.log(request.query.userID);
-    let data = GetProfileProperty(request.query.userID, request.query.userProperty)
-    response.send(data)
-  })
+  console.log(request.query.userID);
+  let data = GetProfileProperty(request.query.userID, request.query.userProperty)
+  response.send(data)
+})
 
 //GET: /user
 //Param: userID - Returns the Profile Data by Ident
@@ -134,52 +155,15 @@ app.get('/user/property', (request, response) => {
 app.get('/user/profile/:userID', (request, response) => {
   console.log(request.params.userID);
   let data = GetProfile(request.params.userID)
-    console.log(data);
-    response.send(data)
-  })
+  console.log(data);
+  response.send(data)
+})
 
-  //Get
-  //todo:get couchsurfing information from database 
-  app.get('/couch/:location', (request, response) => {
-    console.log(request.params.userID);
-    let data = '';
-    if (request.params.location = 'Karlsruhe')
-    {
-      data = {"couches" : [{"user" : "User1", "city":"Karlsruhe", "count":"3"},
-      {"user" : "User2", "city":"Karlsruhe", "count":"1"}]};
-    }
-      console.log(data);
-      response.send(data)
-    })
-
-    //GET: /user/couch
-//Param: userID - Returns the couchsurfing information by Ident
- app.get('/user/couch', (request, response) => {
-      console.log(request);
-      console.log(request.query.userID);
-      let data = JSON.parse(fs.readFileSync(path.join(__dirname, './UserManagement/', request.query.userID, '/Couch.json')));
-        console.log(data);
-        response.send(data)
-      })
-
-      //todo: update profile
- app.post('/user/couch', (request, response) => {
-      //body-parser delivers the body of the request as body substructure
-        console.log(request.body);
-      
-        //let ident = request.body.userID;
-        //let data = request.body.number;
-        //data.ident = ident;
-        //todo update couch.json
-        response.send("Profile updated!");
-      
-      })
-  
 
 //POST: /user/profile
 //Param: userID, userProfile
 app.post('/user/profile', (request, response) => {
-//body-parser delivers the body of the request as body substructure
+  //body-parser delivers the body of the request as body substructure
   console.log(request.body);
 
   let ident = request.body.userID;
@@ -193,9 +177,9 @@ app.post('/user/profile', (request, response) => {
 //POST: /user/property´
 //Param: userID, userProperty, userValue
 app.post('/user/property', (request, response) => {
-//body-parser delivers the body of the request as body substructure
+  //body-parser delivers the body of the request as body substructure
   console.log(request);
- 
+
   let ident = request.body.userID;
   let value = request.body.userValue;
   let field = request.body.userProperty;
@@ -206,3 +190,73 @@ app.post('/user/property', (request, response) => {
 
 })
 
+
+
+
+
+//GET: /couches - returns list of all couches, Ident, Counts and City
+app.get('/couches', (request, response) => {
+  console.log(request);
+  response.send(GetCouchData())
+})
+
+
+
+//Get couchsurfing information from database 
+app.get('/couch/:location', (request, response) => {
+  console.log(request.params.location);
+  let data = GetCouchData();
+  let location = request.params.location;
+  var filteredData = [];
+
+  _.each(data, function (value, key, list) {
+    if (value.city == location) {
+      filteredData.push({ ident: key, data: value });
+    }
+  });
+
+  console.log(filteredData);
+  response.send(filteredData)
+})
+
+//Get full profile couchsurfing information from database 
+app.get('/couch/:location/Profiles', (request, response) => {
+  console.log(request.params.location);
+  let data = GetCouchData();
+  let location = request.params.location;
+  var filteredData = [];
+
+  _.each(data, function (value, key, list) {
+    if (value.city == location) {
+      filteredData.push({ ident: key, data: value, profile: GetProfileProperty(key, "private") });
+    }
+  });
+
+
+  console.log(filteredData);
+  response.send(filteredData)
+})
+
+//GET: /user/couch
+//Param: userID - Returns the couchsurfing information by Ident
+app.get('/user/couch', (request, response) => {
+  console.log(request);
+  console.log(request.query.userID);
+  let data = GetCouchProperties(request.query.userID);
+  console.log(data);
+  response.send(data)
+})
+
+//todo: update profile
+app.post('/user/couch', (request, response) => {
+  //body-parser delivers the body of the request as body substructure
+  console.log(request.body);
+
+  let ident = request.body.userID;
+  let data = request.body.couchData;
+
+  SetCouchProperties(ident, data);
+
+  response.send("CouchData updated!");
+
+})
