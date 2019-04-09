@@ -47,7 +47,7 @@
 
     //search for results on server
     ctrl.search = function() {
-      console.log(ctrl.userId);
+      //console.log(ctrl.userId);
       $http.get(ctrl.server + "/couch/" + ctrl.city)
       .then(function (response) {
           //console.log(response.data);
