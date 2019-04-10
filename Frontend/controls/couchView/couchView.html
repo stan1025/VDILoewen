@@ -30,7 +30,7 @@
                 <th ng-click="$ctrl.orderByMe('data.couches')">Anzahl</th>
             </tr>
             <tr ng-repeat="x in $ctrl.offers | orderBy:$ctrl.myOrderBy">
-                <td>{{x.ident}}</td>
+                <td><b>{{x.ident}}</b></td>
                 <td>{{x.data.city}}</td>
                 <td>{{x.data.couches}}</td>
             </tr>

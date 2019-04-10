@@ -18,10 +18,40 @@
         </div>
       </div>
       <div class="w3-container">
-        <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.jobtitle" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
-        <p><i class="fa fa-home fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.department" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
-        <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large vdi-white-background"></i>{{$ctrl.UserData.email}}</p>
-        <p><i class="fa fa-phone fa-fw w3-margin-right w3-large vdi-white-background"></i>{{$ctrl.UserData.phone}}</p>
+        <p><i class="fa fa-graduation-cap fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.academia" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <p>
+          <i ng-show="$ctrl.UserData.gender == 'Male'" class="fa fa-male fa-fw w3-margin-right w3-large vdi-white-background"></i>
+          <i ng-show="$ctrl.UserData.gender == 'Female'" class="fa fa-female fa-fw w3-margin-right w3-large vdi-white-background"></i>
+          <editable-field field-value="$ctrl.UserData.age" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+        </p>
+        <hr />
+
+        <p><h2><i class="fa fa-briefcase fa-fw w3-margin-right w3-large vdi-white-background"></i></h2></p>
+        <p><editable-field field-value="$ctrl.UserData.job.jobtitle" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <p><editable-field field-value="$ctrl.UserData.job.companyName" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <p><editable-field field-value="$ctrl.UserData.job.companyDepartment" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <p>
+          <editable-field field-value="$ctrl.UserData.job.street" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+          <editable-field field-value="$ctrl.UserData.job.number" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+        </p>
+        <p>
+          <editable-field field-value="$ctrl.UserData.job.zipcode" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+          <editable-field field-value="$ctrl.UserData.job.city" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+        </p>
+        <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.job.email" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <p><i class="fa fa-phone fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.job.phone" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <hr />
+        <p><h2><i class="fa fa-home fa-fw w3-margin-right w3-large vdi-white-background"></i></h2></p>
+        <p>
+          <editable-field field-value="$ctrl.UserData.private.street" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+          <editable-field field-value="$ctrl.UserData.private.number" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+        </p>
+        <p>
+          <editable-field field-value="$ctrl.UserData.private.zipcode" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+          <editable-field field-value="$ctrl.UserData.private.city" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+        </p>
+        <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.private.email" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <p><i class="fa fa-phone fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.private.phone" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
         <hr />
 
         <p class="w3-large">
@@ -29,22 +59,6 @@
           <button class="fa fa-plus vdi-button-symbol" ng-show="$ctrl.editable" ng-click="$ctrl.addSkill()"></button>
         </p>
         <skill-list skills="$ctrl.UserData.competencies" editable="$ctrl.editable" on-save="$ctrl.save()"></skill-list>
-        <br />
-
-        <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right vdi-white-background"></i>Languages</b></p>
-        <p>English</p>
-        <div class="vdi-lightGrey-background w3-round-xlarge">
-          <div class="w3-round-xlarge vdi-blue-background vdi-lightGrey-background" style="height:24px;width:100%"></div>
-        </div>
-        <p>Spanish</p>
-        <div class="vdi-lightGrey-background w3-round-xlarge">
-          <div class="w3-round-xlarge vdi-blue-background vdi-lightGrey-background" style="height:24px;width:55%"></div>
-        </div>
-        <p>German</p>
-        <div class="vdi-lightGrey-background w3-round-xlarge">
-          <div class="w3-round-xlarge vdi-blue-background" style="height:24px;width:25%"></div>
-        </div>
-        <br />
       </div>
     </div><br />
 

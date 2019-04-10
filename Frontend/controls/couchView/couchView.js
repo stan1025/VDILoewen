@@ -21,7 +21,7 @@
 
     //send updated data to server
       ctrl.delete = function() {
-        $http.post(ctrl.server + "/user/couch", {userID: ctrl.userId, couches: []})
+        $http.post(ctrl.server + "/user/couch", {userID: ctrl.userId, couchData: ctrl.Data})
       .then(function (response) {
           //console.log(response.data);
           //ctrl.Data = response.data;
@@ -34,7 +34,7 @@
     
       //send updated data to server
       ctrl.update = function(value) {
-        $http.post(ctrl.server + "/user/couch", ctrl.Data)
+        $http.post(ctrl.server + "/user/couch", {userID: ctrl.userId, couchData: ctrl.Data})
       .then(function (response) {
           //console.log(response.data);
           //ctrl.Data = response.data;
@@ -48,9 +48,9 @@
     //search for results on server
     ctrl.search = function() {
       //console.log(ctrl.userId);
-      $http.get(ctrl.server + "/couch/" + ctrl.city)
+      $http.get(ctrl.server + "/couch/" + ctrl.city + "/profiles")
       .then(function (response) {
-          //console.log(response.data);
+          console.log(response.data);
           ctrl.offers = response.data;
       }, function () {
           // Second function handles error
