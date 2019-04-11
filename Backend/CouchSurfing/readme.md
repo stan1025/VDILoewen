@@ -10,6 +10,7 @@ GET:    "/couch/:location"
 
 GET:    "/couch/:location/Profiles"
 -> Returns all entries for the given location with details profile information
+-> Update: returns additionally the name of the person.
 ***Attention: for this feature, a new profile data structure is defined, see GUID1/profile.json***
 
 GET:    "/user/couch" 

@@ -228,7 +228,7 @@ app.get('/couch/:location/Profiles', (request, response) => {
 
   _.each(data, function (value, key, list) {
     if (value.city == location) {
-      filteredData.push({ ident: key, data: value, profile: GetProfileProperty(key, "private") });
+      filteredData.push({ ident: key, data: value, profile: GetProfileProperty(key, "private"), name: GetProfileProperty(key, "name") });
     }
   });
 
@@ -260,3 +260,16 @@ app.post('/user/couch', (request, response) => {
   response.send("CouchData updated!");
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
