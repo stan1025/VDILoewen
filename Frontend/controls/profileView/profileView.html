@@ -30,28 +30,10 @@
         <p><editable-field field-value="$ctrl.UserData.job.jobtitle" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
         <p><editable-field field-value="$ctrl.UserData.job.companyName" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
         <p><editable-field field-value="$ctrl.UserData.job.companyDepartment" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
-        <p>
-          <editable-field field-value="$ctrl.UserData.job.street" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
-          <editable-field field-value="$ctrl.UserData.job.number" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
-        </p>
-        <p>
-          <editable-field field-value="$ctrl.UserData.job.zipcode" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
-          <editable-field field-value="$ctrl.UserData.job.city" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
-        </p>
-        <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.job.email" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
-        <p><i class="fa fa-phone fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.job.phone" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <address-view address="$ctrl.UserData.job" editable="$ctrl.editable" on-update="$ctrl.updateProp(value)"></address-view>
         <hr />
         <p><h2><i class="fa fa-home fa-fw w3-margin-right w3-large vdi-white-background"></i></h2></p>
-        <p>
-          <editable-field field-value="$ctrl.UserData.private.street" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
-          <editable-field field-value="$ctrl.UserData.private.number" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
-        </p>
-        <p>
-          <editable-field field-value="$ctrl.UserData.private.zipcode" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
-          <editable-field field-value="$ctrl.UserData.private.city" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
-        </p>
-        <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.private.email" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
-        <p><i class="fa fa-phone fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.private.phone" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+        <address-view address="$ctrl.UserData.private" editable="$ctrl.editable" on-update="$ctrl.updateProp(value)"></address-view>
         <hr />
 
         <p class="w3-large">

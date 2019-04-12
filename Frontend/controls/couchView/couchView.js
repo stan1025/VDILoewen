@@ -50,7 +50,7 @@
       //console.log(ctrl.userId);
       $http.get(ctrl.server + "/couch/" + ctrl.city + "/profiles")
       .then(function (response) {
-          console.log(response.data);
+          //console.log(response.data);
           ctrl.offers = response.data;
       }, function () {
           // Second function handles error
@@ -70,6 +70,8 @@
         ctrl.user = ctrl.userId;
         ctrl.loadCouch();
       }
+      ctrl.city = '';
+      ctrl.offers = '';
     }
   }
 

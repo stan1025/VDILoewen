@@ -17,20 +17,26 @@
     <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
         <h3>Suche</h3>
         <form novalidate="novalidate">
-            <label>Stadt: <input type="text" ng-model="$ctrl.city" /></label>
+            <label>Stadt: <input type="text" class="vdi-button vdi-blue-background vdi-boxed w3-round" ng-model="$ctrl.city" /></label>
             <span class="w3-right">              
-                <input type="button" ng-click="$ctrl.search()" value="Suchen" />
+                <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.search()" value="Suchen" />
             </span>
         </form>
         <h3>Ergebnisse</h3>
         <table class="vdi-boxed" width="100%">
-            <tr>
-                <th ng-click="$ctrl.orderByMe('user')">User</th> 
+            <tr class="vdi-blue-background">
+                <th ng-click="$ctrl.orderByMe('name')">User</th> 
                 <th ng-click="$ctrl.orderByMe('data.city')">Stadt</th>
                 <th ng-click="$ctrl.orderByMe('data.couches')">Anzahl</th>
             </tr>
-            <tr ng-repeat="x in $ctrl.offers | orderBy:$ctrl.myOrderBy">
-                <td><b>{{x.ident}}</b></td>
+            <tr ng-repeat="x in $ctrl.offers | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
+                <td>
+                    <b ng-show="!x.expanded" ng-click="x.expanded = !x.expanded">{{x.name}}</b>
+                    <i ng-show="x.expanded" ng-click="x.expanded = !x.expanded">{{x.name}}</i>
+                    <div ng-show="x.expanded" class="vdi-lightGrey-background">
+                        <address-view  address="x.profile" editable="false" on-update="null"></address-view>
+                    </div>
+                </td>
                 <td>{{x.data.city}}</td>
                 <td>{{x.data.couches}}</td>
             </tr>
