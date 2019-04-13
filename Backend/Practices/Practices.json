@@ -1,0 +1,21 @@
+{
+    "66176cd3-455b-413d-a870-d92a61a1321c": {
+        "authorID": "GUID1",
+        "practiceType": "FinalExam",
+        "requestType": "Offer",
+        "description": "FinalExam in the Reasearch Department for Modular Automation",
+        "competencies": [
+            {
+                "name": "TIA Portal",
+                "Group": "Automation",
+                "experienceLevel": "3"
+            },
+            {
+                "name": ".NET",
+                "Group": "ProgrammingLanguage",
+                "experienceLevel": "3"
+            }
+        ]
+    }
+
+}

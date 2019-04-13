@@ -41,6 +41,14 @@ app.get('/', (request, response) => {
 })
 
 
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  )
+}
+
+
+
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Backend Component UserManagement
@@ -83,6 +91,9 @@ function UpdateProfileField(userIdent, userField, userValue) {
   UpdateProfile(userProfile);
 }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Backend Component CouchSurfing Feautre
+
 
 //Calculate CouchSurfing Data - returns the CouchSurfing JSON File Path
 function CalculateCouchData() {
@@ -111,6 +122,10 @@ function SetCouchProperties(userIdent, userData) {
   UpdateCouchData(data);
 }
 
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//UserManagement API
+
 //GET: /users - returns list of all profiles, Ident and Name
 app.get('/users', (request, response) => {
   console.log(request);
@@ -132,14 +147,6 @@ app.get('/user/avatar', (request, response) => {
   console.log(request.query.userID);
   //convert binary data to base64 encoding before transmitting it via http
   response.send(fs.readFileSync(path.normalize(CalculateProfileAvatar(request.query.userID))).toString('base64'))
-})
-
-//GET: /user
-//Param: userID - Returns the Profile Data by Ident
-app.get('/user/property', (request, response) => {
-  console.log(request.query.userID);
-  let data = GetProfileProperty(request.query.userID, request.query.userProperty)
-  response.send(data)
 })
 
 //GET: /user
@@ -192,7 +199,8 @@ app.post('/user/property', (request, response) => {
 
 
 
-
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//CouchSurfing API
 
 //GET: /couches - returns list of all couches, Ident, Counts and City
 app.get('/couches', (request, response) => {
@@ -264,6 +272,8 @@ app.post('/user/couch', (request, response) => {
 
 
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Practice@VDI API
 
 
 
