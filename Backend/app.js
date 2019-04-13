@@ -123,6 +123,139 @@ function SetCouchProperties(userIdent, userData) {
 }
 
 
+function GetCouchResults(couchLocation){
+  var filteredData = [];
+  let data = GetCouchData();
+
+  _.each(data, function (value, key, list) {
+    if (value.city == couchLocation) {
+      filteredData.push({ ident: key, data: value, profile: GetProfileProperty(key, "private"), name: GetProfileProperty(key, "name") });
+    }
+  });
+
+  return filteredData;
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Backend Component Practice@VDI Feautre
+
+
+//Calculate Practice@VDI Data - returns the Practices JSON File Path
+function CalculatePracticesData() {
+  return path.join(__dirname, './Practices/Practices.json');
+}
+
+//GetPracticesData - returns the Practices JSON Object
+function GetPracticesData() {
+  return JSON.parse(fs.readFileSync(CalculatePracticesData()));
+}
+
+//UpdatePracticesData - update the Practices JSON Object to the JSON File
+function UpdatePracticesData(practiceData) {
+  fs.writeFileSync(path.normalize(CalculatePracticesData()), JSON.stringify(practiceData));
+}
+
+//CreatePracticeEntry - Create a new Entry
+function CreatePracticeEntry(practiceEntry) {
+  let data = GetPracticesData();
+  data[uuidv4()] = practiceEntry;
+  UpdatePracticesData(data);
+  return data;
+}
+
+//UpdatePracticeEntry - Update an existing Entry
+function UpdatePracticeEntry(practiceID, practiceEntry) {
+  let data = GetPracticesData();
+  data[practiceID] = practiceEntry;
+  UpdatePracticesData(data);
+  return data;
+}
+
+//ClosePracticeEntry - Delete an existing Entry
+function ClosePracticeEntry(practiceID) {
+  let data = GetPracticesData();
+  delete data[practiceID];
+  UpdatePracticesData(data);
+}
+
+
+function GetPracticeEntriesByRequestType(requestType){
+  var filteredData = [];
+  let data = GetPracticesData();
+
+  _.each(data, function (value, key, list) {
+    if (value.requestType == requestType) {
+      filteredData.push({ ident: key, data: value, author: GetProfile(value.authorID)});
+    }
+  });
+
+  return filteredData;
+}
+
+function GetPracticeEntriesByPracticeType(practiceType){
+  var filteredData = [];
+  let data = GetPracticesData();
+
+  _.each(data, function (value, key, list) {
+    if (value.practiceType == practiceType) {
+      filteredData.push({ ident: key, data: value, author: GetProfile(value.authorID)});
+    }
+  });
+
+  return filteredData;
+}
+
+function GetOwnPracticeEntries(requestType, authorID){
+  var filteredData = [];
+  let data = GetPracticesData();
+
+  _.each(data, function (value, key, list) {
+    if (value.authorID == authorID && value.requestType == requestType) {
+      filteredData.push({ident: key, data: value});
+    }
+  });
+
+  return filteredData;
+}
+
+//GetPracticesData - returns the Practices JSON Object
+function GetPracticeEntry(practiceID) {
+  return JSON.parse(fs.readFileSync(CalculatePracticesData()))[practiceID];
+}
+
+function GetPracticeResults(practiceID){
+  var filteredData = [];
+  let originEntry = GetPracticeEntry(practiceID);
+
+  if(originEntry.requestType == "Offer")
+  {
+    let searchData = GetPracticeEntriesByRequestType("Search");
+    //Origin Entry is an Offering -> match with Searchings
+
+    _.each(searchData, function (value, key, list) {
+      if (value.practiceType == originEntry.practiceType) {
+        filteredData.push({ident: key, matchEntry: value, matchProfile: GetProfile(value.authorID)});
+      }
+    });
+
+  }
+
+  if(originEntry.requestTyoe == "Search")
+  {
+    let offerData = GetPracticeEntriesByRequestType("Search");
+    // Origin Entry is an Searching -> match with Offerings
+
+    _.each(offerData, function (value, key, list) {
+      if (value.practiceType == originEntry.practiceType) {
+        filteredData.push({ident: key, matchEntry: value, matchProfile: GetProfile(value.authorID)});
+      }
+    });
+
+  }
+  
+  return filteredData;
+}
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //UserManagement API
 
@@ -230,16 +363,9 @@ app.get('/couch/:location', (request, response) => {
 //Get full profile couchsurfing information from database 
 app.get('/couch/:location/Profiles', (request, response) => {
   console.log(request.params.location);
-  let data = GetCouchData();
   let location = request.params.location;
-  var filteredData = [];
 
-  _.each(data, function (value, key, list) {
-    if (value.city == location) {
-      filteredData.push({ ident: key, data: value, profile: GetProfileProperty(key, "private"), name: GetProfileProperty(key, "name") });
-    }
-  });
-
+  let filteredData = GetCouchResults(location);
 
   console.log(filteredData);
   response.send(filteredData)
@@ -276,10 +402,89 @@ app.post('/user/couch', (request, response) => {
 //Practice@VDI API
 
 
+//GET: /practices 
+app.get('/practices', (request, response) => {
+  console.log(request);
+  response.send(GetPracticesData())
+})
+
+//GET: /practices/requestType 
+app.get('/practices/requestType', (request, response) => {
+
+  let reqType = request.body.requestType;
+  let data = GetPracticeEntriesByRequestType(reqType)
+
+  console.log(data);
+  response.send(data);
+})
+
+//GET: /practices/practiceTypes 
+app.get('/practices/practiceTypes', (request, response) => {
+
+  let precType = request.body.practiceTypes;
+  let data = GetPracticeEntriesByPracticeTypes(precType)
+
+  console.log(data);
+  response.send(data);
+})
+
+//GET: /practices/practiceTypes 
+app.get('/practices/requestTypes/user', (request, response) => {
+
+  let precType = request.body.requestType;
+  let authorID = request.body.userID;
+  let data = GetOwnPracticeEntries(reqType, authorID)
+
+  console.log(data);
+  response.send(data);
+})
 
 
 
+//POST: /practices/create
+app.post('/practices/create', (request, response) => {
+  console.log(request);
+  let userID = request.body.userID;
+  let practiceData = request.body.practiceData;
 
+  practiceData.authorID = userID;
 
+  let data = CreatePracticeEntry(practiceData)
 
+  console.log(data);
+  response.send(data)
+})
 
+//POST: /practices/update
+app.post('/practices/update', (request, response) => {
+  console.log(request);
+  let practiceID = request.body.practiceID;
+  let practiceData = request.body.practiceData;
+
+  let data = UpdatePracticeEntry(practiceID, practiceData)
+
+  console.log(data);
+  response.send(data)
+})
+
+//POST: /practices/close
+app.post('/practices/close', (request, response) => {
+  console.log(request);
+  let practiceID = request.body.practiceID;
+
+  ClosePracticeEntry(practiceID);
+
+  console.log("Entry deleted: " + practiceID);
+  response.send(data)
+})
+
+//POST: /practices/results
+app.post('/practices/results', (request, response) => {
+  console.log(request);
+  let practiceID = request.body.practiceID;
+
+  let data = GetPracticeResults(practiceID);
+
+  console.log(data);
+  response.send(data)
+})

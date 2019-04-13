@@ -35,13 +35,11 @@ Param:  requestType: requested Request Type
 
 ### User Requestes
 
-GET: "/practices/offerings"
+GET: "/practices/requestTypes/user"
+Param:  requestTypes: requested Request Type
 Param: UserID: User Identificator
 -> returns all the entries of this user
 
-GET: "/practices/searchings"
-Param: UserID: User Identificator
--> returns all the entries of this user
 
 POST:   "/practices/create"
 Param:  userID: User Identificator 
