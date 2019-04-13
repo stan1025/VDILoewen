@@ -14,26 +14,22 @@
 
     //search for results on server
     ctrl.search = function() {
-      //console.log(ctrl.userId);
-     /* $http.get(ctrl.server + "/couch/" + ctrl.city + "/profiles")
+      markers.clearLayers();
+      console.log(ctrl.skill);
+      $http.get(ctrl.server + "/competenceLocations", { params: {competencies: ctrl.skill}})
       .then(function (response) {
-          //console.log(response.data);
-          ctrl.offers = response.data;
+          console.log(response.data);
+          var locations = response.data;
+          locations.forEach(element => {
+            var marker = L.marker(element);
+            // add marker
+            markers.addLayer(marker);
+          });
       }, function () {
           // Second function handles error
           console.log("Something went wrong 1 couch");
 
-      })*/
-      markers.clearLayers();
-      if (ctrl.skill == 'C#')
-      {
-        var marker = L.marker([49.1238216,8.5695449]);
-        // add marker
-        markers.addLayer(marker);
-        marker = L.marker([49.077598, 8.390089]);
-        // add marker
-        markers.addLayer(marker);
-      }
+      })
     }
 
     //load profile if user changes (e.g. login)
