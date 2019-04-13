@@ -157,3 +157,4 @@ hr{border:0;border-top:1px solid #eee;margin:20px 20px}
 .vdi-blue-background{background-color: #008ad9; color: #ffffff}
 .vdi-white-background{background-color: #ffffff; color: #008ad9}
 .vdi-black-text{color: #000000}
+#mapid { height: 400px;  width: 100%;}

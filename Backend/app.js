@@ -11,6 +11,16 @@ const bodyParser = require('body-parser');
 //include path to create plattform independent paths
 const path = require('path');
 
+//https://www.npmjs.com/package/node-geocoder
+const NodeGeocoder = require('node-geocoder');
+ 
+const geooptions = {
+  provider: 'openstreetmap'
+};
+ 
+const geocoder = NodeGeocoder(geooptions);
+
+
 const express = require('express')
 const app = express()
 const ip = "127.0.0.1"
@@ -424,6 +434,7 @@ app.get('/practices/practiceTypes', (request, response) => {
   let precType = request.body.practiceTypes;
   let data = GetPracticeEntriesByPracticeTypes(precType)
 
+
   console.log(data);
   response.send(data);
 })
@@ -438,8 +449,6 @@ app.get('/practices/requestTypes/user', (request, response) => {
   console.log(data);
   response.send(data);
 })
-
-
 
 //POST: /practices/create
 app.post('/practices/create', (request, response) => {
@@ -487,4 +496,37 @@ app.post('/practices/results', (request, response) => {
 
   console.log(data);
   response.send(data)
+})
+
+
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//CompetenceMap API
+//GET: /competenceLocations
+//Param: competencies - returns the locations there mebers have this competencies
+app.get('/competenceLocations', (request, response) => {
+  console.log(request);
+  console.log(request.query.competencies);
+  var data = [];
+  if (request.query.competencies == 'C#')
+  {
+    geocoder.batchGeocode(['Kirchenstraße 23, Eggenstein-Leopoldshafen', 'Spöckweg 37a, Bruchsal'], function (err, results) {
+      // Return an array of type {error: false, value: []}
+      console.log(results) ;
+      results.forEach(element => {
+        console.log(element);
+        data.push([element.value[0].latitude, element.value[0].longitude]);
+      });
+
+      console.log(data);
+      response.send(data)
+    });
+    //data = geocoder.batchGeocode(['Kirchenstraße 23, Eggenstein-Leopoldshafen', 'Spöckweg 37a, Bruchsal']);
+  }
+  else
+  {
+    console.log(data);
+    response.send(data)
+  }
 })
