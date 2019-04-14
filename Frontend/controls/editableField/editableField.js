@@ -16,6 +16,14 @@ function EditableFieldController($scope, $element, $attrs) {
     ctrl.fieldValue = ctrl.fieldValueCopy;
   };
 
+  //make enter submit the form values as well
+  ctrl.keyup = function (event) {
+    if (13 == event.keyCode)
+    {
+      ctrl.handleModeChange();
+    }
+  }
+
   //init hook of this controllers, set default values if no value was passed
   ctrl.$onInit = function() {
     // Make a copy of the initial value to be able to reset it later

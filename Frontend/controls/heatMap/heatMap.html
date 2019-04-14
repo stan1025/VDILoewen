@@ -5,7 +5,7 @@
     <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
         <h3>Suche</h3>
         <form novalidate="novalidate">
-            <label>Skill: <input type="text" class="vdi-button vdi-blue-background vdi-boxed w3-round" ng-model="$ctrl.skill" /></label>
+            <label>Skill: <input type="text" class="vdi-button vdi-blue-background vdi-boxed w3-round" ng-model="$ctrl.skill" ng-keyup="$ctrl.keyup($event)" /></label>
             <span class="w3-right">              
                 <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.search()" value="Show" />
             </span>

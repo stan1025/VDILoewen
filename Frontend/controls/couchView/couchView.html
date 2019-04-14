@@ -17,7 +17,7 @@
     <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
         <h3>Suche</h3>
         <form novalidate="novalidate">
-            <label>Stadt: <input type="text" class="vdi-button vdi-blue-background vdi-boxed w3-round" ng-model="$ctrl.city" /></label>
+            <label>Stadt: <input type="text" class="vdi-button vdi-blue-background vdi-boxed w3-round" ng-model="$ctrl.city" ng-keyup="$ctrl.keyup($event)" /></label>
             <span class="w3-right">              
                 <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.search()" value="Suchen" />
             </span>

@@ -32,6 +32,14 @@
       })
     }
 
+    //make enter submit the form values as well
+    ctrl.keyup = function (event) {
+      if (13 == event.keyCode)
+      {
+        ctrl.search();
+      }
+    }
+
     //load profile if user changes (e.g. login)
     ctrl.$onChanges = function (changesObj) {
       if ('' != ctrl.userId)
