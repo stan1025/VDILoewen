@@ -6,7 +6,8 @@
     ctrl.practiceTypes = {FulltimeJob : "Vollzeitstelle ", Freelancer : "Teilzeitstelle", StudentJob : "Studentenjob", Internship : "Internship", FinalExam : "Abschlussarbeit" , Others : "andere"};
     ctrl.requestType = '';
     ctrl.practiceType = '';
-    ctrl.onlyMine = false;
+    ctrl.showOverlay = false;
+    ctrl.match = '';
     ctrl.practices = [];
     ctrl.myOffers = [];
     ctrl.mySearch = [];
@@ -137,6 +138,29 @@
       })
     }
 
+    //get matching practice entries
+    //params:
+    //value: data of the entry
+    ctrl.getMatch = function (value) {
+      //create field competencies in user daa if it does not exit yes
+      $http.get(ctrl.server + "/practices/results", {params :{practiceID: value.ident}})
+      .then(function (response) {
+          //console.log(response.data);
+          value.matches = response.data;
+          //console.log(value);
+      }, function () {
+          // Second function handles error
+          console.log("Something went wrong 2 practice");
+
+      })
+    }
+
+    //show match results in overlay
+    ctrl.Overlay = function(element) {
+      ctrl.match = element;
+      ctrl.showOverlay = true;
+    }
+
     ctrl.loadMyOffers = function() {
       //console.log(ctrl.onlyMine);
       if (ctrl.userId) {
@@ -145,6 +169,9 @@
         .then(function (response) {
             //console.log(response.data);
             ctrl.myOffers = response.data;
+            ctrl.myOffers.forEach(element => {
+              ctrl.getMatch(element);
+            });
             //console.log(ctrl.practices);
         }, function () {
             // Second function handles error
@@ -162,6 +189,9 @@
         .then(function (response) {
             //console.log(response.data);
             ctrl.mySearch = response.data;
+            ctrl.mySearch.forEach(element => {
+              ctrl.getMatch(element);
+            });
             //console.log(ctrl.practices);
         }, function () {
             // Second function handles error
@@ -174,7 +204,7 @@
     ctrl.reset = function() {
       ctrl.requestType = '';
       ctrl.practiceType = '';
-      ctrl.onlyMine = false;
+      ctrl.showOverlay = false;
       ctrl.loadPractices();
     }
 
@@ -193,7 +223,7 @@
       }
       ctrl.requestType = '';
       ctrl.practiceType = '';
-      ctrl.onlyMine = false;
+      ctrl.showOverlay = false;
       ctrl.practices = [];
       ctrl.myOffers = [];
       ctrl.mySearch = [];
