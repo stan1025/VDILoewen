@@ -23,11 +23,11 @@ Following RequestTypes are possible:
 GET:    "/practices"
 -> Returns all the Practices Entries
 
-GET:    "/practices/practiceTypes"
+GET:    "/practices/practiceType"
 Param:  practiceType: requested Practice Type
 -> Returns all the Practices Entries of the defined Type
 
-GET:    "/practices/requestTypes
+GET:    "/practices/requestType"
 Param:  requestType: requested Request Type
 -> Returns all the Practices Entries of the defined Type
 
@@ -35,8 +35,8 @@ Param:  requestType: requested Request Type
 
 ### User Requestes
 
-GET: "/practices/requestTypes/user"
-Param:  requestTypes: requested Request Type
+GET: "/practices/requestType/user"
+Param:  requestType: requested Request Type
 Param: UserID: User Identificator
 -> returns all the entries of this user
 
