@@ -167,14 +167,24 @@ function UpdatePracticesData(practiceData) {
 
 //CreatePracticeEntry - Create a new Entry
 function CreatePracticeEntry(practiceEntry) {
+  console.log("Call: CreatePracticeEntry");
+  console.log("Incoming Data:")
+  console.log(practiceEntry);
+
   let data = GetPracticesData();
   data[uuidv4()] = practiceEntry;
   UpdatePracticesData(data);
+
   return data;
 }
 
 //UpdatePracticeEntry - Update an existing Entry
 function UpdatePracticeEntry(practiceID, practiceEntry) {
+  console.log("Call: UpdatePracticeEntry");
+  console.log("Incoming Data:")
+  console.log(practiceID);
+  console.log(practiceEntry);
+
   let data = GetPracticesData();
   data[practiceID] = practiceEntry;
   UpdatePracticesData(data);
@@ -183,6 +193,11 @@ function UpdatePracticeEntry(practiceID, practiceEntry) {
 
 //ClosePracticeEntry - Delete an existing Entry
 function ClosePracticeEntry(practiceID) {
+  console.log("Call: ClosePracticeEntry");
+  console.log("Incoming Data:")
+  console.log(practiceID);
+
+
   let data = GetPracticesData();
   delete data[practiceID];
   UpdatePracticesData(data);
@@ -190,6 +205,10 @@ function ClosePracticeEntry(practiceID) {
 
 
 function GetPracticeEntriesByRequestType(requestType){
+  console.log("Call: GetPracticeEntriesByRequestType");
+  console.log("Incoming Data:")
+  console.log(requestType);
+
   var filteredData = [];
   let data = GetPracticesData();
 
@@ -199,10 +218,17 @@ function GetPracticeEntriesByRequestType(requestType){
     }
   });
 
+  console.log("Outgoing Data:")
+  console.log(filteredData);
+
   return filteredData;
 }
 
-function GetPracticeEntriesByPracticeType(practiceType){
+function GetPracticeEntriesByPracticeTypes(practiceType){
+  console.log("Call: GetPracticeEntriesByPracticeTypes");
+  console.log("Incoming Data:")
+  console.log(practiceType);
+
   var filteredData = [];
   let data = GetPracticesData();
 
@@ -212,10 +238,18 @@ function GetPracticeEntriesByPracticeType(practiceType){
     }
   });
 
+  console.log("Outgoing Data:")
+  console.log(filteredData);
+
   return filteredData;
 }
 
 function GetOwnPracticeEntries(requestType, authorID){
+  console.log("Call: GetOwnPracticeEntries");
+  console.log("Incoming Data:")
+  console.log(requestType);
+  console.log(authorID);
+
   var filteredData = [];
   let data = GetPracticesData();
 
@@ -224,6 +258,9 @@ function GetOwnPracticeEntries(requestType, authorID){
       filteredData.push({ident: key, data: value});
     }
   });
+
+  console.log("Outgoing Data:")
+  console.log(filteredData);
 
   return filteredData;
 }
@@ -234,6 +271,11 @@ function GetPracticeEntry(practiceID) {
 }
 
 function GetPracticeResults(practiceID){
+  console.log("Call: GetPracticeResults");
+  console.log("Incoming Data:")
+  console.log(practiceID);
+
+
   var filteredData = [];
   let originEntry = GetPracticeEntry(practiceID);
 
@@ -263,6 +305,9 @@ function GetPracticeResults(practiceID){
 
   }
   
+  console.log("Outgoing Data:")
+  console.log(filteredData);
+
   return filteredData;
 }
 
@@ -420,55 +465,58 @@ app.get('/practices', (request, response) => {
 
 //GET: /practices/requestType 
 app.get('/practices/requestType', (request, response) => {
+  console.log(request);
 
-  let reqType = request.body.requestType;
+  let reqType = request.query.requestType;
   let data = GetPracticeEntriesByRequestType(reqType)
 
   console.log(data);
   response.send(data);
 })
 
-//GET: /practices/practiceTypes 
-app.get('/practices/practiceTypes', (request, response) => {
+//GET: /practices/practiceType
+app.get('/practices/practiceType', (request, response) => {
+  console.log(request);
 
-  let precType = request.body.practiceTypes;
+  let precType = request.query.practiceType;
   let data = GetPracticeEntriesByPracticeTypes(precType)
 
 
-  console.log(data);
+
   response.send(data);
 })
 
-//GET: /practices/practiceTypes 
-app.get('/practices/requestTypes/user', (request, response) => {
+//GET: /practices/practiceType 
+app.get('/practices/requestType/user', (request, response) => {
+  console.log(request);
 
-  let precType = request.body.requestType;
-  let authorID = request.body.userID;
+  let reqType = request.query.requestType;
+  let authorID = request.query.userID;
   let data = GetOwnPracticeEntries(reqType, authorID)
 
-  console.log(data);
   response.send(data);
 })
 
 //POST: /practices/create
 app.post('/practices/create', (request, response) => {
   console.log(request);
-  let userID = request.body.userID;
-  let practiceData = request.body.practiceData;
+
+  let userID = request.query.userID;
+  let practiceData = request.query.practiceData;
 
   practiceData.authorID = userID;
 
   let data = CreatePracticeEntry(practiceData)
 
-  console.log(data);
   response.send(data)
 })
 
 //POST: /practices/update
 app.post('/practices/update', (request, response) => {
   console.log(request);
-  let practiceID = request.body.practiceID;
-  let practiceData = request.body.practiceData;
+
+  let practiceID = request.query.practiceID;
+  let practiceData = request.query.practiceData;
 
   let data = UpdatePracticeEntry(practiceID, practiceData)
 
@@ -479,22 +527,21 @@ app.post('/practices/update', (request, response) => {
 //POST: /practices/close
 app.post('/practices/close', (request, response) => {
   console.log(request);
-  let practiceID = request.body.practiceID;
+  let practiceID = request.query.practiceID;
 
   ClosePracticeEntry(practiceID);
 
-  console.log("Entry deleted: " + practiceID);
   response.send(data)
 })
 
 //POST: /practices/results
 app.post('/practices/results', (request, response) => {
   console.log(request);
-  let practiceID = request.body.practiceID;
+  let practiceID = request.query.practiceID;
 
   let data = GetPracticeResults(practiceID);
 
-  console.log(data);
+
   response.send(data)
 })
 
