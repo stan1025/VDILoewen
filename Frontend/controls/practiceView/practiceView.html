@@ -7,15 +7,11 @@
             <span class="w3-right">
                 <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.reset()" value="Reset" />
             </span>
-            <label><input type="radio" ng-model="$ctrl.requestType" ng-change="$ctrl.loadRequestTypes()" value="Offer" />Angebote</label>
-            <label><input type="radio" ng-model="$ctrl.requestType" ng-change="$ctrl.loadRequestTypes()" value="Search" />Suchanfragen</label><br />
+            <label ng-repeat="(key, value) in $ctrl.requestTypes"><input type="radio" ng-model="$ctrl.requestType" ng-change="$ctrl.loadRequestType()" value="{{key}}" />{{value}}</label>
+            <br />
             <label><b>Typ</b></label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="FulltimeJob" />Vollzeitstelle</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="Freelancer" />Teilzeitstelle</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="StudentJob" />Studentenjob</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="Internship" />Internship</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="FinalExam" />Abschlussarbeit</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="Others" />andere</label><br />
+            <label ng-repeat="(key, value) in $ctrl.practiceTypes"><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeType()" value="{{key}}" />{{value}}</label>
+            <br />
             <label><input type="checkbox" ng-model="$ctrl.onlyMine" ng-change="$ctrl.loadMine()"  />Nur meine</label>
         </form>
     </div>
@@ -28,12 +24,18 @@
                 <th ng-click="$ctrl.orderByMe('title')">Beschreibung</th>
             </tr>
             <tr ng-repeat="x in $ctrl.practices | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
-                <td>{{x.data.requestType}}</td>
-                <td>{{x.data.practiceType}}</td>
-                <td><b ng-show="!x.expanded" ng-click="x.expanded = !x.expanded">{{x.data.description}}</b>
-                    <i ng-show="x.expanded" ng-click="x.expanded = !x.expanded">{{x.data.description}}</i>
+                <td>
+                    <select class="vdi-select vdi-white-background w3-round" ng-model="x.data.requestType" ng-options="key as value for (key , value) in $ctrl.requestTypes" ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x)"></select>
+                    <span ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.requestTypes[x.data.requestType]}}</span>
+                </td>
+                <td><select class="vdi-select vdi-white-background w3-round" ng-model="x.data.practiceType" ng-options="key as value for (key , value) in $ctrl.practiceTypes" ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x)"></select>
+                    <span ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.practiceTypes[x.data.practiceType]}}</span>
+                </td>
+                <td>
+                    <b ng-show="!x.expanded" ng-click="x.expanded = !x.expanded"><editable-field field-value="x.data.description" editable="x.data.authorID == $ctrl.userId" field-type="text" on-update="$ctrl.change(x)"></editable-field></b>
+                    <i ng-show="x.expanded" ng-click="x.expanded = !x.expanded"><editable-field field-value="x.data.description" editable="x.data.authorID == $ctrl.userId" field-type="text" on-update="$ctrl.change(x)"></editable-field></i>
                     <div ng-show="x.expanded" class="vdi-lightGrey-background">
-                        <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId" on-save="$ctrl.save()"></skill-list>
+                        <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId" on-save="$ctrl.change(x)"></skill-list>
                     </div>
                 </td>
             </tr>

@@ -13,12 +13,12 @@
       if (ctrl.userId) {
         $http.get(ctrl.server + "/practices")
         .then(function (response) {
-            ctrl.practices = [];
+            //ctrl.practices = [];
             //console.log(response.data);
-            angular.forEach(response.data, function(value, key) {
+            /*angular.forEach(response.data, function(value, key) {
               this.push({data: value, uuid: key});
-            }, ctrl.practices);
-            //ctrl.Data = response.data;
+            }, ctrl.practices);*/
+            ctrl.practices = response.data;
             //console.log(ctrl.practices);
         }, function () {
             // Second function handles error
@@ -28,17 +28,13 @@
       }
     }
 
-    ctrl.loadPracticeTypes = function() {
+    ctrl.loadPracticeType = function() {
       if (ctrl.userId) {
-        console.log(ctrl.practiceType);
+        //console.log(ctrl.practiceType);
         $http.get(ctrl.server + "/practices/practiceType", {params: {practiceType: ctrl.practiceType}})
         .then(function (response) {
-            ctrl.practices = [];
             //console.log(response.data);
-            angular.forEach(response.data, function(value, key) {
-              this.push({data: value, uuid: key});
-            }, ctrl.practices);
-            //ctrl.Data = response.data;
+            ctrl.practices = response.data;
             //console.log(ctrl.practices);
         }, function () {
             // Second function handles error
@@ -48,17 +44,13 @@
       }
     }
 
-    ctrl.loadRequestTypes = function() {
+    ctrl.loadRequestType = function() {
       if (ctrl.userId) {
-        console.log(ctrl.requestType);
+        //console.log(ctrl.requestType);
         $http.get(ctrl.server + "/practices/requestType", {params: {requestType: ctrl.requestType}})
         .then(function (response) {
-            ctrl.practices = [];
             //console.log(response.data);
-            angular.forEach(response.data, function(value, key) {
-              this.push({data: value, uuid: key});
-            }, ctrl.practices);
-            //ctrl.Data = response.data;
+            ctrl.practices = response.data;
             //console.log(ctrl.practices);
         }, function () {
             // Second function handles error
@@ -66,25 +58,39 @@
 
         })
       }
+    }
+
+    ctrl.change = function(value) {
+      console.log(value);
+      $http.post(ctrl.server + "/practices/update", {practiceID: value.ident, practiceData: value.data})
+      .then(function (response) {
+          //console.log(response.data);
+          //ctrl.Data = response.data;
+      }, function () {
+          // Second function handles error
+          console.log("Something went wrong 2 practice");
+
+      })
     }
 
     ctrl.loadMine = function() {
+      //console.log(ctrl.onlyMine);
       if (ctrl.userId) {
-        console.log(ctrl.userId);
-        $http.get(ctrl.server + "/practices/requestType/user", {params: {UserID: ctrl.userId}})
-        .then(function (response) {
-            ctrl.practices = [];
-            //console.log(response.data);
-            angular.forEach(response.data, function(value, key) {
-              this.push({data: value, uuid: key});
-            }, ctrl.practices);
-            //ctrl.Data = response.data;
-            //console.log(ctrl.practices);
-        }, function () {
-            // Second function handles error
-            console.log("Something went wrong 1 practice");
+        if (ctrl.onlyMine) {
+          //console.log(ctrl.userId);
+          $http.get(ctrl.server + "/practices/requestType/user", {params: {userID: ctrl.userId, requestType: ctrl.requestType}})
+          .then(function (response) {
+              //console.log(response.data);
+              ctrl.practices = response.data;
+              //console.log(ctrl.practices);
+          }, function () {
+              // Second function handles error
+              console.log("Something went wrong 1 practice");
 
-        })
+          })
+        }
+        else
+          ctrl.loadRequestType();
       }
     }
 
