@@ -16,6 +16,42 @@
                 "experienceLevel": "3"
             }
         ]
+    },
+    "79554fee-bf46-4c10-8184-f3a96bb57b12": {
+        "practiceType": "FulltimeJob",
+        "requestType": "Search",
+        "description": "Im looking for a full time job as NodeJS Developer",
+        "competencies": [
+            {
+                "name": "JS/TS",
+                "experienceLevel": 3
+            }
+        ],
+        "authorID": "GUID1"
+    },
+    "fb1a46d0-e29c-4da2-a921-04d267cdc765": {
+        "practiceType": "StudentJob",
+        "requestType": "Search",
+        "description": "Suche Stelle für ein Praxissemester in der Luftfahrtbranche",
+        "competencies": [
+            {
+                "name": "Teamcenter",
+                "experienceLevel": 2
+            }
+        ],
+        "authorID": "GUID2"
+    },
+    "95bc0e99-8cc6-4dd8-be54-9be16de47654": {
+        "practiceType": "StudentJob",
+        "requestType": "Offer",
+        "description": "Betreuung von Siemens TeamCenter in der Produktion",
+        "competencies": [
+            {
+                "name": "Teamcenter",
+                "experienceLevel": "1"
+            }
+        ],
+        "authorID": "GUID1"
     }
 
 }
