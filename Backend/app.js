@@ -11,7 +11,7 @@ const fs = require('fs')                      //FileSystem Handling
 const _ = require('underscore')               //Property Handling
 const bodyParser = require('body-parser');    //BodyParser to parse the Body of Post Messages
 const path = require('path');                 //Path Handling, to create plattform independent paths
-const nearestStations = require('find-nearest-cities')
+const nearbyCities = require('nearby-cities')
 
 //REST Framework
 const express = require('express')
@@ -75,8 +75,9 @@ function GetProfiles() {
   console.log("Call: GetProfiles");
   console.log(directories);
 
-  return JSON.stringify(directories)
+  return directories
 }
+
 
 //Calculate Profile Data - returns the Profile JSON File Path
 function CalculateProfileData(userIdent) {
@@ -110,6 +111,43 @@ function UpdateProfileField(userIdent, userField, userValue) {
   UpdateProfile(userProfile);
 }
 
+function GetCitiesNearbyAsync(userIdent, maxDistance, maxResults, minPopulation, callback) {
+  console.log("Call: GetCitiesNearby");
+  console.log("Incoming Data:")
+  console.log("UserIdent: " + userIdent);
+
+  var userProfile = GetProfile(userIdent);
+
+  GetGeoLocationOfPrivateAddressAsync(userProfile, retGeoData => {
+    const query = { latitude: retGeoData.latitude, longitude: retGeoData.longitude }
+    var cityData = nearbyCities(query, maxResults, maxDistance);
+
+    var filteredData = [];
+    filteredData = cityData.filter(city => city.population >= minPopulation).sort(function (a, b) { return b.population - a.population }).slice(0, maxResults);
+
+    console.log("Outgoing Data:")
+    console.log(filteredData);
+    callback(filteredData);
+  });
+}
+
+function GetCompetenciesOfProfiles() {
+  var filteredData = [];
+  var profileList = GetProfiles();
+
+  _.each(profileList, (userIdent, userkey, userlist) => {
+
+    var competenciesData = GetProfileProperty(userIdent, "competencies")
+
+    competenciesData.forEach((competency, compkey, complist) => {
+      if (filteredData.indexOf(competency.name) == -1) {
+        filteredData.push({ "name": competency.name, "group": competency.Group });
+      }
+    })
+  })
+
+  return filteredData;
+}
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //UserManagement API
@@ -117,7 +155,7 @@ function UpdateProfileField(userIdent, userField, userValue) {
 //GET: /users - returns list of all profiles, Ident and Name
 app.get('/users', (request, response) => {
   console.log(request);
-  response.send(GetProfiles())
+  response.send(JSON.stringify(GetProfiles()))
 })
 
 //GET: /user
@@ -127,6 +165,22 @@ app.get('/user/profile', (request, response) => {
   let data = GetProfile(request.query.userID)
   console.log(data/*[request.query.userProperty]*/);
   response.send(data/*[request.query.userProperty]*/)
+})
+
+//GET: /user/profile/nearby
+//Param: userID - Returns the biggest cities nearby the user private location
+//Param: maxDistance - maximal distance from user in kilometer (optional, default is 20)
+//Param: maxResults - maximal length of results of the biggest cities (optional, default is 5)
+app.get('/user/profile/nearby', (request, response) => {
+  console.log(request);
+
+  var userID = request.query.userID ? request.query.userID : "GUID1";
+  var maxDistance = request.query.maxDistance ? request.query.maxDistance : "20";
+  var maxResults = request.query.maxResults ? request.query.maxResults : "5";
+
+  GetCitiesNearbyAsync(userID, maxDistance, maxResults, "1", result => {
+    response.send(result);
+  });
 })
 
 //GET: /user
@@ -232,6 +286,19 @@ function GetCouchResults(couchLocation) {
   return filteredData;
 }
 
+function GetCouchLocations() {
+  var filteredData = [];
+  let data = GetCouchData();
+
+  _.each(data, function (value, key, list) {
+    if (filteredData.indexOf(value.city) == -1) {
+      filteredData.push(value.city);
+    }
+
+  });
+
+  return filteredData;
+}
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //CouchSurfing API
@@ -240,6 +307,12 @@ function GetCouchResults(couchLocation) {
 app.get('/couches', (request, response) => {
   console.log(request);
   response.send(GetCouchData())
+})
+
+//GET: /couches/locations - returns list of all locations where couches are offered
+app.get('/couches/locations', (request, response) => {
+  console.log(request);
+  response.send(GetCouchLocations())
 })
 
 //Get couchsurfing information from database 
@@ -475,6 +548,68 @@ function GetPracticeResults(practiceID) {
   return filteredData;
 }
 
+function GetOfferCompetenciesOfPractices() {
+  var filteredData = [];
+  var practiceList = GetPracticesDataAsArray();
+
+  _.each(practiceList, (practice, userkey, userlist) => {
+
+
+    if (practice.data.requestType == "Offer") {
+      var competenciesData = practice.data.competencies;
+
+      competenciesData.forEach((competency, compkey, complist) => {
+        if (filteredData.indexOf(competency.name) == -1) {
+          filteredData.push({ "name": competency.name, "group": competency.Group });
+        }
+      })
+    }
+  })
+
+  return filteredData;
+}
+
+function GetRequestCompetenciesOfPractices() {
+  var filteredData = [];
+  var practiceList = GetPracticesDataAsArray();
+
+  _.each(practiceList, (practice, userkey, userlist) => {
+
+
+    if (practice.data.requestType == "Request") {
+      var competenciesData = practice.data.competencies;
+
+      competenciesData.forEach((competency, compkey, complist) => {
+        if (filteredData.indexOf(competency.name) == -1) {
+          filteredData.push({ "name": competency.name, "group": competency.Group });
+        }
+      })
+    }
+  })
+
+  return filteredData;
+}
+
+
+
+function GetCompetenciesOfPractices() {
+  var filteredData = [];
+  var practiceList = GetPracticesDataAsArray();
+
+  _.each(practiceList, (practice, userkey, userlist) => {
+
+    var competenciesData = practice.data.competencies;
+
+    competenciesData.forEach((competency, compkey, complist) => {
+      if (filteredData.indexOf(competency.name) == -1) {
+        filteredData.push({ "name": competency.name, "group": competency.Group });
+      }
+    })
+  })
+
+  return filteredData;
+}
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Practice@VDI API
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -562,28 +697,52 @@ app.get('/practices/results', (request, response) => {
   response.send(data)
 })
 
+//GET: /practices/results
+app.get('/practices/competencies', (request, response) => {
+  console.log(request);
 
 
+  let data = GetCompetenciesOfPractices();
 
-function GetGeoLocationOfPrivateAddress(userProfile) {
+  response.send(data)
+})
+
+//GET: /practices/results
+app.get('/practices/competencies/request', (request, response) => {
+  console.log(request);
+
+
+  let data = GetRequestCompetenciesOfPractices();
+
+  response.send(data)
+})
+
+//GET: /practices/results
+app.get('/practices/competencies/offer', (request, response) => {
+  console.log(request);
+
+
+  let data = GetOfferCompetenciesOfPractices();
+
+  response.send(data)
+})
+
+function GetGeoLocationOfPrivateAddressAsync(userProfile, callback) {
   console.log("Call GetGeoLocationOfPrivateAddress");
   console.log("Incoming Data:");
   console.log(userProfile);
 
-  var resultData = [];
-  geocoder.batchGeocode([userProfile.private.street + " " + userProfile.private.number + ", " + userProfile.private.city], function (err, results) {
-    results.forEach(element => {
-      data.push([element.value[0].latitude, element.value[0].longitude]);
-    })
+  var requestingData = userProfile.private.street + " " + userProfile.private.number + ", " + userProfile.private.city;
+  console.log("RequestingData: " + requestingData)
+
+  geocoder.batchGeocode([requestingData], function (err, results) {
+    console.log("Result Data:");
+    console.log(results);
+    callback(results[0].value[0]);
   });
-
-  console.log("OutgoingData Data:");
-  console.log(resultData);
-
-  return resultData;
 }
 
-function GetGeoLocationOfPrivateAddresses(userProfiles) {
+function GetGeoLocationOfPrivateAddressesAsync(userProfiles, callback) {
   console.log("Call GetGeoLocationOfPrivateAddresses");
   console.log("Incoming Data:");
   console.log(userProfiles);
@@ -599,14 +758,13 @@ function GetGeoLocationOfPrivateAddresses(userProfiles) {
   var resultData = [];
   geocoder.batchGeocode(addressData, function (err, results) {
     results.forEach(element => {
-      resultData.push([element.value[0].latitude, element.value[0].longitude]);
+      resultData.push([element.value[0]]);
     })
+
+    console.log("OutgoingData Data:");
+    console.log(resultData);
+    callback(resultData);
   });
-
-  console.log("OutgoingData Data:");
-  console.log(resultData);
-
-  return resultData;
 }
 
 
@@ -616,25 +774,17 @@ function GetGeoLocationOfPrivateAddresses(userProfiles) {
 //GET: /competenceLocations
 //Param: competencies - returns the locations there mebers have this competencies
 app.get('/competenceLocations', (request, response) => {
+
   console.log(request);
-  console.log(request.query.competencies);
-  var data = [];
-  if (request.query.competencies == 'C#') {
-    geocoder.batchGeocode(['Kirchenstraße 23, Eggenstein-Leopoldshafen', 'Spöckweg 37a, Bruchsal'], function (err, results) {
-      // Return an array of type {error: false, value: []}
-      console.log(results);
-      results.forEach(element => {
-        console.log(element);
-        data.push([element.value[0].latitude, element.value[0].longitude]);
-      });
 
-      console.log(data);
-      response.send(data)
-    });
+  var competenceFilter = request.query.competencies;
 
-  }
-  else {
-    console.log(data);
-    response.send(data)
-  }
+  response.send(GetCompetenciesOfPractices());
+
 })
+
+app.get('/competenceMap/competencies/profiles', (request, response) => {
+  console.log(request);
+  response.send(GetCompetenciesOfProfiles());
+})
+
