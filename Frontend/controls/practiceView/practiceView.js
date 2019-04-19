@@ -2,6 +2,8 @@
     var ctrl = this;
     //server as global variable in first step
     ctrl.server = server;
+    ctrl.requestTypes = {Offer : "Angebot", Search : "Gesuch"};
+    ctrl.practiceTypes = {FulltimeJob : "Vollzeitstelle ", Freelancer : "Teilzeitstelle", StudentJob : "Studentenjob", Internship : "Internship", FinalExam : "Abschlussarbeit" , Others : "andere"};
     ctrl.requestType = '';
     ctrl.practiceType = '';
     ctrl.onlyMine = false;
@@ -29,7 +31,7 @@
     ctrl.loadPracticeTypes = function() {
       if (ctrl.userId) {
         console.log(ctrl.practiceType);
-        $http.get(ctrl.server + "/practices/practiceTypes", {params: {practiceType: ctrl.practiceType}})
+        $http.get(ctrl.server + "/practices/practiceType", {params: {practiceType: ctrl.practiceType}})
         .then(function (response) {
             ctrl.practices = [];
             //console.log(response.data);
@@ -49,7 +51,7 @@
     ctrl.loadRequestTypes = function() {
       if (ctrl.userId) {
         console.log(ctrl.requestType);
-        $http.get(ctrl.server + "/practices/requestTypes", {params: {requestType: ctrl.requestType}})
+        $http.get(ctrl.server + "/practices/requestType", {params: {requestType: ctrl.requestType}})
         .then(function (response) {
             ctrl.practices = [];
             //console.log(response.data);
@@ -69,7 +71,7 @@
     ctrl.loadMine = function() {
       if (ctrl.userId) {
         console.log(ctrl.userId);
-        $http.get(ctrl.server + "/practices/requestTypes/user", {params: {UserID: ctrl.userId}})
+        $http.get(ctrl.server + "/practices/requestType/user", {params: {UserID: ctrl.userId}})
         .then(function (response) {
             ctrl.practices = [];
             //console.log(response.data);
