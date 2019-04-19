@@ -11,7 +11,8 @@ const fs = require('fs')                      //FileSystem Handling
 const _ = require('underscore')               //Property Handling
 const bodyParser = require('body-parser');    //BodyParser to parse the Body of Post Messages
 const path = require('path');                 //Path Handling, to create plattform independent paths
-const nearbyCities = require('nearby-cities')
+const nearbyCities = require('nearby-cities') //Nearby Cities Handling
+const uuid = require('uuidv4');               //Generate Universal Unique Identifier
 
 //REST Framework
 const express = require('express')
@@ -54,11 +55,7 @@ app.get('/', (request, response) => {
 })
 
 
-function uuidv4() {
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  )
-}
+
 
 
 
@@ -412,7 +409,7 @@ function CreatePracticeEntry(practiceEntry) {
   console.log(practiceEntry);
 
   let data = GetPracticesData();
-  data[uuidv4()] = practiceEntry;
+  data[uuid()] = practiceEntry;
   UpdatePracticesData(data);
 
   return data;
@@ -523,15 +520,15 @@ function GetPracticeResults(practiceID) {
     //Origin Entry is an Offering -> match with Searchings
 
     _.each(searchData, function (value, key, list) {
-      if (value.practiceType == originEntry.practiceType) {
-        filteredData.push({ ident: key, matchEntry: value, matchProfile: GetProfile(value.authorID) });
+      if (value.data.practiceType == originEntry.practiceType) {
+        filteredData.push(value);
       }
     });
 
   }
 
-  if (originEntry.requestTyoe == "Search") {
-    let offerData = GetPracticeEntriesByRequestType("Search");
+  if (originEntry.requestType == "Search") {
+    let offerData = GetPracticeEntriesByRequestType("Offer");
     // Origin Entry is an Searching -> match with Offerings
 
     _.each(offerData, function (value, key, list) {
@@ -687,6 +684,8 @@ app.post('/practices/close', (request, response) => {
   response.send(data)
 })
 
+
+
 //GET: /practices/results
 app.get('/practices/results', (request, response) => {
   console.log(request);
@@ -696,6 +695,9 @@ app.get('/practices/results', (request, response) => {
 
   response.send(data)
 })
+
+
+
 
 //GET: /practices/results
 app.get('/practices/competencies', (request, response) => {
@@ -726,6 +728,10 @@ app.get('/practices/competencies/offer', (request, response) => {
 
   response.send(data)
 })
+
+
+
+
 
 function GetGeoLocationOfPrivateAddressAsync(userProfile, callback) {
   console.log("Call GetGeoLocationOfPrivateAddress");
@@ -779,7 +785,7 @@ app.get('/competenceLocations', (request, response) => {
 
   var competenceFilter = request.query.competencies;
 
-  response.send(GetCompetenciesOfPractices());
+  response.send(GetPracticeResults("95bc0e99-8cc6-4dd8-be54-9be16de47654"));
 
 })
 
