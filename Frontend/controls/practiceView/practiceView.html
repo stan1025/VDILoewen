@@ -51,6 +51,7 @@
                     <td>
                         <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}" ng-click="x.expanded = !x.expanded" field-value="x.data.description" editable="x.data.authorID == $ctrl.userId" field-type="text" on-update="$ctrl.change(x)"></editable-field>
                         <button class="fa fa-plus vdi-button-symbol" ng-show="x.expanded" ng-click="$ctrl.addSkill(x.data)"></button>
+                        <button ng-click="$ctrl.delete(x)" class="fa fa-eraser vdi-button-symbol"></button>
                         <div ng-show="x.expanded" class="vdi-lightGrey-background">
                             <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId" on-save="$ctrl.change(x)"></skill-list>
                         </div>
@@ -78,6 +79,7 @@
                         <td>
                             <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}" ng-click="x.expanded = !x.expanded" field-value="x.data.description" editable="x.data.authorID == $ctrl.userId" field-type="text" on-update="$ctrl.change(x)"></editable-field>
                             <button class="fa fa-plus vdi-button-symbol" ng-show="x.expanded" ng-click="$ctrl.addSkill(x.data)"></button>
+                            <button ng-click="$ctrl.delete(x)" class="fa fa-eraser vdi-button-symbol"></button>
                             <div ng-show="x.expanded" class="vdi-lightGrey-background">
                                 <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId" on-save="$ctrl.change(x)"></skill-list>
                             </div>

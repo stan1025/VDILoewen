@@ -119,6 +119,24 @@
         }
     }
 
+    //delete practice entry
+    //params:
+    //value: data of the entry
+    ctrl.delete = function (value) {
+      //create field competencies in user daa if it does not exit yes
+      $http.post(ctrl.server + "/practices/close", {practiceID: value.ident})
+      .then(function (response) {
+          //console.log(response.data);
+          //ctrl.Data = response.data;
+          ctrl.loadMySearch();
+          ctrl.loadMyOffers();
+      }, function () {
+          // Second function handles error
+          console.log("Something went wrong 2 practice");
+
+      })
+    }
+
     ctrl.loadMyOffers = function() {
       //console.log(ctrl.onlyMine);
       if (ctrl.userId) {
