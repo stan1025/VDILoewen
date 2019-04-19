@@ -66,6 +66,12 @@ function uuidv4() {
 //GetProfiles - Establish the existing User Profile Folders inside UserManagement
 function GetProfiles() {
   let directories = fs.readdirSync(path.join(__dirname, './UserManagement'))
+
+  directories = directories.filter(source => fs.lstatSync(path.join(__dirname, './UserManagement', source)).isDirectory());
+
+  console.log("Call: GetProfiles");
+  console.log(directories);
+
   return JSON.stringify(directories)
 }
 
@@ -157,8 +163,28 @@ function CalculatePracticesData() {
 
 //GetPracticesData - returns the Practices JSON Object
 function GetPracticesData() {
-  return JSON.parse(fs.readFileSync(CalculatePracticesData()));
+
+  console.log("Call: GetPracticesData")
+  console.log("Data:");
+  let data = JSON.parse(fs.readFileSync(CalculatePracticesData()));
+
+  console.log(data);
+
+  return data;
 }
+
+function GetPracticesDataAsArray()
+{
+  var filteredData = [];
+  let data = GetPracticesData();
+
+  _.each(data, function (value, key, list) {
+      filteredData.push({ ident: key, data: value, author: GetProfile(value.authorID)});
+  });
+
+  return filteredData;
+}
+
 
 //UpdatePracticesData - update the Practices JSON Object to the JSON File
 function UpdatePracticesData(practiceData) {
@@ -460,7 +486,7 @@ app.post('/user/couch', (request, response) => {
 //GET: /practices 
 app.get('/practices', (request, response) => {
   console.log(request);
-  response.send(GetPracticesData())
+  response.send(GetPracticesDataAsArray())
 })
 
 //GET: /practices/requestType 
