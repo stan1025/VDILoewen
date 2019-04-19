@@ -1,0 +1,42 @@
+<div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+    <h2 class="w3-padding-16">
+        <i class="fas fa-couch w3-margin-right w3-xxlarge"></i>Practice@VDI
+    </h2>
+    <div class="vdi-white-background w3-round-xlarge">
+        <form>
+            <span class="w3-right">
+                <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.reset()" value="Reset" />
+            </span>
+            <label><input type="radio" ng-model="$ctrl.requestType" value="Offer" />Angebote</label>
+            <label><input type="radio" ng-model="$ctrl.requestType" value="Search" />Suchanfragen</label><br />
+            <label><b>Typ</b></label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" value="FulltimeJob" />Vollzeitstelle</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" value="Freelancer" />Teilzeitstelle</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" value="StudentJob" />Studentenjob</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" value="Internship" />Internship</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" value="FinalExam" />Abschlussarbeit</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" value="Others" />andere</label><br />
+            <label><input type="checkbox" ng-model="$ctrl.onlyMine" />Nur meine</label>
+        </form>
+    </div>
+    <div class="vdi-white-background w3-round-xlarge">
+        <h3>Ergebnisse</h3>
+        <table class="vdi-boxed" width="100%">
+            <tr class="vdi-blue-background">
+                <th ng-click="$ctrl.orderByMe('requestType')">Art</th>
+                <th ng-click="$ctrl.orderByMe('practiceType')">Typ</th>
+                <th ng-click="$ctrl.orderByMe('title')">Beschreibung</th>
+            </tr>
+            <tr ng-repeat="x in $ctrl.practices | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
+                <td>{{x.data.requestType}}</td>
+                <td>{{x.data.practiceType}}</td>
+                <td><b ng-show="!x.expanded" ng-click="x.expanded = !x.expanded">{{x.data.description}}</b>
+                    <i ng-show="x.expanded" ng-click="x.expanded = !x.expanded">{{x.data.description}}</i>
+                    <div ng-show="x.expanded" class="vdi-lightGrey-background">
+                        <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId" on-save="$ctrl.save()"></skill-list>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
