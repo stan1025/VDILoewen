@@ -3,28 +3,30 @@ this example uses nodejs and express to build the server component
 https://www.w3schools.com/nodejs/default.asp
 https://expressjs.com/de/
 */
-const fs = require('fs')
-const _ = require('underscore')
-
-//include bodyParser to parse body of POST requests
-const bodyParser = require('body-parser');
-//include path to create plattform independent paths
-const path = require('path');
-
-//https://www.npmjs.com/package/node-geocoder
-const NodeGeocoder = require('node-geocoder');
- 
-const geooptions = {
-  provider: 'openstreetmap'
-};
- 
-const geocoder = NodeGeocoder(geooptions);
 
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Call System Modules
+const fs = require('fs')                      //FileSystem Handling
+const _ = require('underscore')               //Property Handling
+const bodyParser = require('body-parser');    //BodyParser to parse the Body of Post Messages
+const path = require('path');                 //Path Handling, to create plattform independent paths
+
+//REST Framework
 const express = require('express')
 const app = express()
 const ip = "127.0.0.1"
 const port = 3000
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Call External Modules
+
+//GeoCoder to translate addresses to geo location data
+const NodeGeocoder = require('node-geocoder');
+const geooptions = {
+  provider: 'openstreetmap'
+};
+const geocoder = NodeGeocoder(geooptions);
 
 //parser for post requests
 app.use(bodyParser.json());
@@ -163,14 +165,7 @@ function CalculatePracticesData() {
 
 //GetPracticesData - returns the Practices JSON Object
 function GetPracticesData() {
-
-  console.log("Call: GetPracticesData")
-  console.log("Data:");
-  let data = JSON.parse(fs.readFileSync(CalculatePracticesData()));
-
-  console.log(data);
-
-  return data;
+  return JSON.parse(fs.readFileSync(CalculatePracticesData()));
 }
 
 function GetPracticesDataAsArray()
