@@ -26,6 +26,66 @@
       }
     }
 
+    ctrl.loadPracticeTypes = function() {
+      if (ctrl.userId) {
+        console.log(ctrl.practiceType);
+        $http.get(ctrl.server + "/practices/practiceTypes", {params: {practiceType: ctrl.practiceType}})
+        .then(function (response) {
+            ctrl.practices = [];
+            //console.log(response.data);
+            angular.forEach(response.data, function(value, key) {
+              this.push({data: value, uuid: key});
+            }, ctrl.practices);
+            //ctrl.Data = response.data;
+            //console.log(ctrl.practices);
+        }, function () {
+            // Second function handles error
+            console.log("Something went wrong 1 practice");
+
+        })
+      }
+    }
+
+    ctrl.loadRequestTypes = function() {
+      if (ctrl.userId) {
+        console.log(ctrl.requestType);
+        $http.get(ctrl.server + "/practices/requestTypes", {params: {requestType: ctrl.requestType}})
+        .then(function (response) {
+            ctrl.practices = [];
+            //console.log(response.data);
+            angular.forEach(response.data, function(value, key) {
+              this.push({data: value, uuid: key});
+            }, ctrl.practices);
+            //ctrl.Data = response.data;
+            //console.log(ctrl.practices);
+        }, function () {
+            // Second function handles error
+            console.log("Something went wrong 1 practice");
+
+        })
+      }
+    }
+
+    ctrl.loadMine = function() {
+      if (ctrl.userId) {
+        console.log(ctrl.userId);
+        $http.get(ctrl.server + "/practices/requestTypes/user", {params: {UserID: ctrl.userId}})
+        .then(function (response) {
+            ctrl.practices = [];
+            //console.log(response.data);
+            angular.forEach(response.data, function(value, key) {
+              this.push({data: value, uuid: key});
+            }, ctrl.practices);
+            //ctrl.Data = response.data;
+            //console.log(ctrl.practices);
+        }, function () {
+            // Second function handles error
+            console.log("Something went wrong 1 practice");
+
+        })
+      }
+    }
+
 
     ctrl.reset = function() {
       ctrl.requestType = '';

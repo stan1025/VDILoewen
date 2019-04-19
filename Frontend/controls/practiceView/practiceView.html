@@ -7,16 +7,16 @@
             <span class="w3-right">
                 <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.reset()" value="Reset" />
             </span>
-            <label><input type="radio" ng-model="$ctrl.requestType" value="Offer" />Angebote</label>
-            <label><input type="radio" ng-model="$ctrl.requestType" value="Search" />Suchanfragen</label><br />
+            <label><input type="radio" ng-model="$ctrl.requestType" ng-change="$ctrl.loadRequestTypes()" value="Offer" />Angebote</label>
+            <label><input type="radio" ng-model="$ctrl.requestType" ng-change="$ctrl.loadRequestTypes()" value="Search" />Suchanfragen</label><br />
             <label><b>Typ</b></label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" value="FulltimeJob" />Vollzeitstelle</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" value="Freelancer" />Teilzeitstelle</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" value="StudentJob" />Studentenjob</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" value="Internship" />Internship</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" value="FinalExam" />Abschlussarbeit</label>
-            <label><input type="radio" ng-model="$ctrl.practiceType" value="Others" />andere</label><br />
-            <label><input type="checkbox" ng-model="$ctrl.onlyMine" />Nur meine</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="FulltimeJob" />Vollzeitstelle</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="Freelancer" />Teilzeitstelle</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="StudentJob" />Studentenjob</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="Internship" />Internship</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="FinalExam" />Abschlussarbeit</label>
+            <label><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeTypes()" value="Others" />andere</label><br />
+            <label><input type="checkbox" ng-model="$ctrl.onlyMine" ng-change="$ctrl.loadMine()"  />Nur meine</label>
         </form>
     </div>
     <div class="vdi-white-background w3-round-xlarge">
