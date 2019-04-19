@@ -11,6 +11,7 @@ const fs = require('fs')                      //FileSystem Handling
 const _ = require('underscore')               //Property Handling
 const bodyParser = require('body-parser');    //BodyParser to parse the Body of Post Messages
 const path = require('path');                 //Path Handling, to create plattform independent paths
+const nearestStations = require('find-nearest-cities')
 
 //REST Framework
 const express = require('express')
@@ -54,7 +55,7 @@ app.get('/', (request, response) => {
 
 
 function uuidv4() {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   )
 }
@@ -109,228 +110,6 @@ function UpdateProfileField(userIdent, userField, userValue) {
   UpdateProfile(userProfile);
 }
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//Backend Component CouchSurfing Feautre
-
-
-//Calculate CouchSurfing Data - returns the CouchSurfing JSON File Path
-function CalculateCouchData() {
-  return path.join(__dirname, './CouchSurfing/Couch.json');
-}
-
-//GetCouchData - returns the Couch JSON Object
-function GetCouchData() {
-  return JSON.parse(fs.readFileSync(CalculateCouchData()));
-}
-
-//UpdateUser - update the Profile JSON Object to the JSON File
-function UpdateCouchData(couchData) {
-  fs.writeFileSync(path.normalize(CalculateCouchData()), JSON.stringify(couchData));
-}
-
-//GetCouchProperties - returns the Couch Profile JSON Object
-function GetCouchProperties(userIdent) {
-  return GetCouchData()[userIdent];
-}
-
-//SetCouchProperties - set the Couch Profile JSON Object
-function SetCouchProperties(userIdent, userData) {
-  let data = GetCouchData();
-  data[userIdent] = userData;
-  UpdateCouchData(data);
-}
-
-
-function GetCouchResults(couchLocation){
-  var filteredData = [];
-  let data = GetCouchData();
-
-  _.each(data, function (value, key, list) {
-    if (value.city == couchLocation) {
-      filteredData.push({ ident: key, data: value, profile: GetProfileProperty(key, "private"), name: GetProfileProperty(key, "name") });
-    }
-  });
-
-  return filteredData;
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//Backend Component Practice@VDI Feautre
-
-
-//Calculate Practice@VDI Data - returns the Practices JSON File Path
-function CalculatePracticesData() {
-  return path.join(__dirname, './Practices/Practices.json');
-}
-
-//GetPracticesData - returns the Practices JSON Object
-function GetPracticesData() {
-  return JSON.parse(fs.readFileSync(CalculatePracticesData()));
-}
-
-function GetPracticesDataAsArray()
-{
-  var filteredData = [];
-  let data = GetPracticesData();
-
-  _.each(data, function (value, key, list) {
-      filteredData.push({ ident: key, data: value, author: GetProfile(value.authorID)});
-  });
-
-  return filteredData;
-}
-
-
-//UpdatePracticesData - update the Practices JSON Object to the JSON File
-function UpdatePracticesData(practiceData) {
-  fs.writeFileSync(path.normalize(CalculatePracticesData()), JSON.stringify(practiceData));
-}
-
-//CreatePracticeEntry - Create a new Entry
-function CreatePracticeEntry(practiceEntry) {
-  console.log("Call: CreatePracticeEntry");
-  console.log("Incoming Data:")
-  console.log(practiceEntry);
-
-  let data = GetPracticesData();
-  data[uuidv4()] = practiceEntry;
-  UpdatePracticesData(data);
-
-  return data;
-}
-
-//UpdatePracticeEntry - Update an existing Entry
-function UpdatePracticeEntry(practiceID, practiceEntry) {
-  console.log("Call: UpdatePracticeEntry");
-  console.log("Incoming Data:")
-  console.log(practiceID);
-  console.log(practiceEntry);
-
-  let data = GetPracticesData();
-  data[practiceID] = practiceEntry;
-  UpdatePracticesData(data);
-  return data;
-}
-
-//ClosePracticeEntry - Delete an existing Entry
-function ClosePracticeEntry(practiceID) {
-  console.log("Call: ClosePracticeEntry");
-  console.log("Incoming Data:")
-  console.log(practiceID);
-
-
-  let data = GetPracticesData();
-  delete data[practiceID];
-  UpdatePracticesData(data);
-}
-
-
-function GetPracticeEntriesByRequestType(requestType){
-  console.log("Call: GetPracticeEntriesByRequestType");
-  console.log("Incoming Data:")
-  console.log(requestType);
-
-  var filteredData = [];
-  let data = GetPracticesData();
-
-  _.each(data, function (value, key, list) {
-    if (value.requestType == requestType) {
-      filteredData.push({ ident: key, data: value, author: GetProfile(value.authorID)});
-    }
-  });
-
-  console.log("Outgoing Data:")
-  console.log(filteredData);
-
-  return filteredData;
-}
-
-function GetPracticeEntriesByPracticeTypes(practiceType){
-  console.log("Call: GetPracticeEntriesByPracticeTypes");
-  console.log("Incoming Data:")
-  console.log(practiceType);
-
-  var filteredData = [];
-  let data = GetPracticesData();
-
-  _.each(data, function (value, key, list) {
-    if (value.practiceType == practiceType) {
-      filteredData.push({ ident: key, data: value, author: GetProfile(value.authorID)});
-    }
-  });
-
-  console.log("Outgoing Data:")
-  console.log(filteredData);
-
-  return filteredData;
-}
-
-function GetOwnPracticeEntries(requestType, authorID){
-  console.log("Call: GetOwnPracticeEntries");
-  console.log("Incoming Data:")
-  console.log(requestType);
-  console.log(authorID);
-
-  var filteredData = [];
-  let data = GetPracticesData();
-
-  _.each(data, function (value, key, list) {
-    if (value.authorID == authorID && value.requestType == requestType) {
-      filteredData.push({ident: key, data: value});
-    }
-  });
-
-  console.log("Outgoing Data:")
-  console.log(filteredData);
-
-  return filteredData;
-}
-
-//GetPracticesData - returns the Practices JSON Object
-function GetPracticeEntry(practiceID) {
-  return JSON.parse(fs.readFileSync(CalculatePracticesData()))[practiceID];
-}
-
-function GetPracticeResults(practiceID){
-  console.log("Call: GetPracticeResults");
-  console.log("Incoming Data:")
-  console.log(practiceID);
-
-
-  var filteredData = [];
-  let originEntry = GetPracticeEntry(practiceID);
-
-  if(originEntry.requestType == "Offer")
-  {
-    let searchData = GetPracticeEntriesByRequestType("Search");
-    //Origin Entry is an Offering -> match with Searchings
-
-    _.each(searchData, function (value, key, list) {
-      if (value.practiceType == originEntry.practiceType) {
-        filteredData.push({ident: key, matchEntry: value, matchProfile: GetProfile(value.authorID)});
-      }
-    });
-
-  }
-
-  if(originEntry.requestTyoe == "Search")
-  {
-    let offerData = GetPracticeEntriesByRequestType("Search");
-    // Origin Entry is an Searching -> match with Offerings
-
-    _.each(offerData, function (value, key, list) {
-      if (value.practiceType == originEntry.practiceType) {
-        filteredData.push({ident: key, matchEntry: value, matchProfile: GetProfile(value.authorID)});
-      }
-    });
-
-  }
-  
-  console.log("Outgoing Data:")
-  console.log(filteredData);
-
-  return filteredData;
-}
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //UserManagement API
@@ -386,6 +165,7 @@ app.post('/user/profile', (request, response) => {
   let data = request.body.userProfile;
   data.ident = ident;
   UpdateProfile(data);
+
   response.send("Profile updated!");
 
 })
@@ -409,6 +189,51 @@ app.post('/user/property', (request, response) => {
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Backend Component CouchSurfing Feautre
+
+
+//Calculate CouchSurfing Data - returns the CouchSurfing JSON File Path
+function CalculateCouchData() {
+  return path.join(__dirname, './CouchSurfing/Couch.json');
+}
+
+//GetCouchData - returns the Couch JSON Object
+function GetCouchData() {
+  return JSON.parse(fs.readFileSync(CalculateCouchData()));
+}
+
+//UpdateUser - update the Profile JSON Object to the JSON File
+function UpdateCouchData(couchData) {
+  fs.writeFileSync(path.normalize(CalculateCouchData()), JSON.stringify(couchData));
+}
+
+//GetCouchProperties - returns the Couch Profile JSON Object
+function GetCouchProperties(userIdent) {
+  return GetCouchData()[userIdent];
+}
+
+//SetCouchProperties - set the Couch Profile JSON Object
+function SetCouchProperties(userIdent, userData) {
+  let data = GetCouchData();
+  data[userIdent] = userData;
+  UpdateCouchData(data);
+}
+
+function GetCouchResults(couchLocation) {
+  var filteredData = [];
+  let data = GetCouchData();
+
+  _.each(data, function (value, key, list) {
+    if (value.city == couchLocation) {
+      filteredData.push({ ident: key, data: value, profile: GetProfileProperty(key, "private"), name: GetProfileProperty(key, "name") });
+    }
+  });
+
+  return filteredData;
+}
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //CouchSurfing API
 
 //GET: /couches - returns list of all couches, Ident, Counts and City
@@ -416,8 +241,6 @@ app.get('/couches', (request, response) => {
   console.log(request);
   response.send(GetCouchData())
 })
-
-
 
 //Get couchsurfing information from database 
 app.get('/couch/:location', (request, response) => {
@@ -474,9 +297,187 @@ app.post('/user/couch', (request, response) => {
 
 
 
+
+
+
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Backend Component Practice@VDI Feautre
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+//Calculate Practice@VDI Data - returns the Practices JSON File Path
+function CalculatePracticesData() {
+  return path.join(__dirname, './Practices/Practices.json');
+}
+
+//GetPracticesData - returns the Practices JSON Object
+function GetPracticesData() {
+  return JSON.parse(fs.readFileSync(CalculatePracticesData()));
+}
+
+function GetPracticesDataAsArray() {
+  var filteredData = [];
+  let data = GetPracticesData();
+
+  _.each(data, function (value, key, list) {
+    filteredData.push({ ident: key, data: value, author: GetProfile(value.authorID) });
+  });
+
+  return filteredData;
+}
+
+//UpdatePracticesData - update the Practices JSON Object to the JSON File
+function UpdatePracticesData(practiceData) {
+  fs.writeFileSync(path.normalize(CalculatePracticesData()), JSON.stringify(practiceData));
+}
+
+//CreatePracticeEntry - Create a new Entry
+function CreatePracticeEntry(practiceEntry) {
+  console.log("Call: CreatePracticeEntry");
+  console.log("Incoming Data:")
+  console.log(practiceEntry);
+
+  let data = GetPracticesData();
+  data[uuidv4()] = practiceEntry;
+  UpdatePracticesData(data);
+
+  return data;
+}
+
+//UpdatePracticeEntry - Update an existing Entry
+function UpdatePracticeEntry(practiceID, practiceEntry) {
+  console.log("Call: UpdatePracticeEntry");
+  console.log("Incoming Data:")
+  console.log(practiceID);
+  console.log(practiceEntry);
+
+  let data = GetPracticesData();
+  data[practiceID] = practiceEntry;
+  UpdatePracticesData(data);
+  return data;
+}
+
+//ClosePracticeEntry - Delete an existing Entry
+function ClosePracticeEntry(practiceID) {
+  console.log("Call: ClosePracticeEntry");
+  console.log("Incoming Data:")
+  console.log(practiceID);
+
+
+  let data = GetPracticesData();
+  delete data[practiceID];
+  UpdatePracticesData(data);
+}
+
+function GetPracticeEntriesByRequestType(requestType) {
+  console.log("Call: GetPracticeEntriesByRequestType");
+  console.log("Incoming Data:")
+  console.log(requestType);
+
+  var filteredData = [];
+  let data = GetPracticesData();
+
+  _.each(data, function (value, key, list) {
+    if (value.requestType == requestType) {
+      filteredData.push({ ident: key, data: value, author: GetProfile(value.authorID) });
+    }
+  });
+
+  console.log("Outgoing Data:")
+  console.log(filteredData);
+
+  return filteredData;
+}
+
+function GetPracticeEntriesByPracticeTypes(practiceType) {
+  console.log("Call: GetPracticeEntriesByPracticeTypes");
+  console.log("Incoming Data:")
+  console.log(practiceType);
+
+  var filteredData = [];
+  let data = GetPracticesData();
+
+  _.each(data, function (value, key, list) {
+    if (value.practiceType == practiceType) {
+      filteredData.push({ ident: key, data: value, author: GetProfile(value.authorID) });
+    }
+  });
+
+  console.log("Outgoing Data:")
+  console.log(filteredData);
+
+  return filteredData;
+}
+
+function GetOwnPracticeEntries(requestType, authorID) {
+  console.log("Call: GetOwnPracticeEntries");
+  console.log("Incoming Data:")
+  console.log(requestType);
+  console.log(authorID);
+
+  var filteredData = [];
+  let data = GetPracticesData();
+
+  _.each(data, function (value, key, list) {
+    if (value.authorID == authorID && value.requestType == requestType) {
+      filteredData.push({ ident: key, data: value });
+    }
+  });
+
+  console.log("Outgoing Data:")
+  console.log(filteredData);
+
+  return filteredData;
+}
+
+//GetPracticesData - returns the Practices JSON Object
+function GetPracticeEntry(practiceID) {
+  return JSON.parse(fs.readFileSync(CalculatePracticesData()))[practiceID];
+}
+
+function GetPracticeResults(practiceID) {
+  console.log("Call: GetPracticeResults");
+  console.log("Incoming Data:")
+  console.log(practiceID);
+
+
+  var filteredData = [];
+  let originEntry = GetPracticeEntry(practiceID);
+
+  if (originEntry.requestType == "Offer") {
+    let searchData = GetPracticeEntriesByRequestType("Search");
+    //Origin Entry is an Offering -> match with Searchings
+
+    _.each(searchData, function (value, key, list) {
+      if (value.practiceType == originEntry.practiceType) {
+        filteredData.push({ ident: key, matchEntry: value, matchProfile: GetProfile(value.authorID) });
+      }
+    });
+
+  }
+
+  if (originEntry.requestTyoe == "Search") {
+    let offerData = GetPracticeEntriesByRequestType("Search");
+    // Origin Entry is an Searching -> match with Offerings
+
+    _.each(offerData, function (value, key, list) {
+      if (value.practiceType == originEntry.practiceType) {
+        filteredData.push({ ident: key, matchEntry: value, matchProfile: GetProfile(value.authorID) });
+      }
+    });
+
+  }
+
+  console.log("Outgoing Data:")
+  console.log(filteredData);
+
+  return filteredData;
+}
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Practice@VDI API
-
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //GET: /practices 
 app.get('/practices', (request, response) => {
@@ -491,7 +492,6 @@ app.get('/practices/requestType', (request, response) => {
   let reqType = request.query.requestType;
   let data = GetPracticeEntriesByRequestType(reqType)
 
-  console.log(data);
   response.send(data);
 })
 
@@ -501,8 +501,6 @@ app.get('/practices/practiceType', (request, response) => {
 
   let precType = request.query.practiceType;
   let data = GetPracticeEntriesByPracticeTypes(precType)
-
-
 
   response.send(data);
 })
@@ -522,8 +520,8 @@ app.get('/practices/requestType/user', (request, response) => {
 app.post('/practices/create', (request, response) => {
   console.log(request);
 
-  let userID = request.query.userID;
-  let practiceData = request.query.practiceData;
+  let userID = request.body.userID;
+  let practiceData = request.body.practiceData;
 
   practiceData.authorID = userID;
 
@@ -536,36 +534,80 @@ app.post('/practices/create', (request, response) => {
 app.post('/practices/update', (request, response) => {
   console.log(request);
 
-  let practiceID = request.query.practiceID;
-  let practiceData = request.query.practiceData;
+  let practiceID = request.body.practiceID;
+  let practiceData = request.body.practiceData;
 
   let data = UpdatePracticeEntry(practiceID, practiceData)
 
-  console.log(data);
   response.send(data)
 })
 
 //POST: /practices/close
 app.post('/practices/close', (request, response) => {
   console.log(request);
-  let practiceID = request.query.practiceID;
+  let practiceID = request.body.practiceID;
 
   ClosePracticeEntry(practiceID);
 
   response.send(data)
 })
 
-//POST: /practices/results
-app.post('/practices/results', (request, response) => {
+//GET: /practices/results
+app.get('/practices/results', (request, response) => {
   console.log(request);
   let practiceID = request.query.practiceID;
 
   let data = GetPracticeResults(practiceID);
 
-
   response.send(data)
 })
 
+
+
+
+function GetGeoLocationOfPrivateAddress(userProfile) {
+  console.log("Call GetGeoLocationOfPrivateAddress");
+  console.log("Incoming Data:");
+  console.log(userProfile);
+
+  var resultData = [];
+  geocoder.batchGeocode([userProfile.private.street + " " + userProfile.private.number + ", " + userProfile.private.city], function (err, results) {
+    results.forEach(element => {
+      data.push([element.value[0].latitude, element.value[0].longitude]);
+    })
+  });
+
+  console.log("OutgoingData Data:");
+  console.log(resultData);
+
+  return resultData;
+}
+
+function GetGeoLocationOfPrivateAddresses(userProfiles) {
+  console.log("Call GetGeoLocationOfPrivateAddresses");
+  console.log("Incoming Data:");
+  console.log(userProfiles);
+
+  var addressData = [];
+  userProfiles.forEach(element => {
+    addressData.push(element.private.street + " " + element.private.number + ", " + element.private.city);
+  });
+
+  console.log("Intermediate Data:");
+  console.log(addressData);
+
+  var resultData = [];
+  geocoder.batchGeocode(addressData, function (err, results) {
+    results.forEach(element => {
+      resultData.push([element.value[0].latitude, element.value[0].longitude]);
+    })
+  });
+
+  console.log("OutgoingData Data:");
+  console.log(resultData);
+
+  return resultData;
+}
 
 
 
@@ -577,11 +619,10 @@ app.get('/competenceLocations', (request, response) => {
   console.log(request);
   console.log(request.query.competencies);
   var data = [];
-  if (request.query.competencies == 'C#')
-  {
+  if (request.query.competencies == 'C#') {
     geocoder.batchGeocode(['Kirchenstraße 23, Eggenstein-Leopoldshafen', 'Spöckweg 37a, Bruchsal'], function (err, results) {
       // Return an array of type {error: false, value: []}
-      console.log(results) ;
+      console.log(results);
       results.forEach(element => {
         console.log(element);
         data.push([element.value[0].latitude, element.value[0].longitude]);
@@ -590,10 +631,9 @@ app.get('/competenceLocations', (request, response) => {
       console.log(data);
       response.send(data)
     });
-    //data = geocoder.batchGeocode(['Kirchenstraße 23, Eggenstein-Leopoldshafen', 'Spöckweg 37a, Bruchsal']);
+
   }
-  else
-  {
+  else {
     console.log(data);
     response.send(data)
   }
