@@ -31,7 +31,8 @@ Index
   https://angularjs.org
   https://www.w3schools.com/js/default.asp
   -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+  <script src="angularjs/angular.js"></script>
+  <script src="angularjs/angular-route.js"></script>
   <!--
     hier werden alle verwendeten Elemente eingebunden
   -->
@@ -56,13 +57,9 @@ Index
   -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
   <!-- leaflet needs stylesheet loaded before js included -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-   crossorigin=""/>
+  <link rel="stylesheet" href="leaflet/leaflet.css" />
    <!-- Make sure you put this AFTER Leaflet's CSS -->
-  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-  integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-  crossorigin=""></script>
+  <script src="leaflet/leaflet.js"></script>
   <!-- kompetenzlandkarte einbauen, muss geladen werden, nachdem die OSM-Skripte geladen sind -->
   <script src="controls/heatMap/heatMap.js"></script>
 </head>
