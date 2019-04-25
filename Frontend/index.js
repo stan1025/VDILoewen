@@ -8,6 +8,12 @@ app.controller('ProfileController', function ($scope, $http) {
     $scope.screen = 'Login';
     $scope.userID ='';
 
+    $scope.setScreen = function(screen, callMyFunc) {
+        $scope.screen = screen;
+        if (callMyFunc)
+            myFunction();
+    }
+
     //Callback-Funktion für die LogIn Seite, setzt den aktiven Benutzer und schaltet die Seite um
     $scope.login = function(user) {
         $scope.userID = user;
@@ -26,3 +32,13 @@ app.controller('ProfileController', function ($scope, $http) {
         $scope.screen ='Login';
     }
 });
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}

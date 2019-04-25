@@ -1,32 +1,31 @@
 <!-- HTML-Template for the views angularJS module -->
 <!-- The Grid -->
 <div class="w3-row-padding"> 
-    <!-- Show profile selection and logout in top right corner -->
-    <div class="w3-display-topright">
-      Profil
-      <select class="vdi-select vdi-white-background w3-round" ng-change="$ctrl.loadProfile()" ng-model="$ctrl.user" ng-options="x for x in $ctrl.profiles"></select>
-      <button class="vdi-button vdi-white-background w3-round" ng-click="$ctrl.logout()">Logout</button>
-    </div> 
-  <!-- Left Column -->
-  <div class="w3-third">
-  <!-- show profile data and skills in left third -->
-    <div class="vdi-white-background w3-card-4 w3-margin-bottom">
-      <div class="w3-display-container">
-        <img ng-src="data:image/jpeg;charset=utf-8;base64, {{$ctrl.UserAvatar}}" style="width:100%" alt="Avatar" />
-        <div class="w3-display-bottomleft w3-container vdi-white-background">
-          <h2>{{$ctrl.UserData.name}}</h2>
-        </div>
-      </div>
-      <div class="w3-container">
-        <p><i class="fa fa-graduation-cap fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.academia" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
-        <p>
-          <i ng-show="$ctrl.UserData.gender == 'Male'" class="fa fa-male fa-fw w3-margin-right w3-large vdi-white-background"></i>
-          <i ng-show="$ctrl.UserData.gender == 'Female'" class="fa fa-female fa-fw w3-margin-right w3-large vdi-white-background"></i>
-          <editable-field field-value="$ctrl.UserData.age" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
-        </p>
+  <!-- Show profile selection and logout in top right corner -->
+  <div class="w3-display-topright">
+    Profil
+    <select class="vdi-select vdi-white-background w3-round" ng-change="$ctrl.loadProfile()" ng-model="$ctrl.user" ng-options="x for x in $ctrl.profiles"></select>
+    <button class="vdi-button vdi-white-background w3-round" ng-click="$ctrl.logout()">Logout</button>
+  </div> 
+<!-- show profile data and skills in left third -->
+  <div class="vdi-white-background w3-card-4 w3-margin-bottom w3-third">
+    <div class="w3-display-container">
+      <img ng-src="data:image/jpeg;charset=utf-8;base64, {{$ctrl.UserAvatar}}" style="width:100%" alt="Avatar" />
+      <div class="w3-display-bottomleft w3-container vdi-white-background">
+        <h2>{{$ctrl.UserData.name}}</h2>
       </div>
     </div>
-    <div class="vdi-white-background w3-card-4 w3-container w3-margin-bottom">
+    <div class="w3-container">
+      <p><i class="fa fa-graduation-cap fa-fw w3-margin-right w3-large vdi-white-background"></i><editable-field field-value="$ctrl.UserData.academia" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
+      <p>
+        <i ng-show="$ctrl.UserData.gender == 'Male'" class="fa fa-male fa-fw w3-margin-right w3-large vdi-white-background"></i>
+        <i ng-show="$ctrl.UserData.gender == 'Female'" class="fa fa-female fa-fw w3-margin-right w3-large vdi-white-background"></i>
+        <editable-field field-value="$ctrl.UserData.age" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field>
+      </p>
+    </div>
+  </div>
+  <div class="w3-third">
+    <div class="vdi-white-background w3-card-4 w3-container w3-margin-bottom ">
       <p><h2><i class="fa fa-briefcase fa-fw w3-margin-right w3-xxlarge vdi-white-background"></i></h2></p>
       <p><editable-field field-value="$ctrl.UserData.job.jobtitle" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
       <p><editable-field field-value="$ctrl.UserData.job.companyName" editable="$ctrl.editable" field-type="text" on-update="$ctrl.updateProp(value)"></editable-field></p>
@@ -37,25 +36,15 @@
       <p><h2><i class="fa fa-home fa-fw w3-margin-right w3-xxlarge vdi-white-background"></i></h2></p>
       <address-view address="$ctrl.UserData.private" editable="$ctrl.editable" on-update="$ctrl.updateProp(value)"></address-view>
     </div>
-    <div class="vdi-white-background w3-card-4 w3-container w3-margin-bottom">
-      <p class="w3-large">
-        <b><i class="fa fa-asterisk fa-fw w3-margin-right w3-xxlarge vdi-white-background"></i>Skills</b>
-        <button class="fa fa-plus vdi-button-symbol" ng-show="$ctrl.editable" ng-click="$ctrl.addSkill()"></button>
-      </p>
-      <skill-list skills="$ctrl.UserData.competencies" editable="$ctrl.editable" on-save="$ctrl.save()"></skill-list>
-    </div><br />
-
-  <!-- End Left Column -->
   </div>
+  <div class="vdi-white-background w3-card-4 w3-container w3-margin-bottom w3-third">
+    <p class="w3-large">
+      <b><i class="fa fa-asterisk fa-fw w3-margin-right w3-xxlarge vdi-white-background"></i>Skills</b>
+      <button class="fa fa-plus vdi-button-symbol" ng-show="$ctrl.editable" ng-click="$ctrl.addSkill()"></button>
+    </p>
+    <skill-list skills="$ctrl.UserData.competencies" editable="$ctrl.editable" on-save="$ctrl.save()"></skill-list>
+  </div><br />
 
-  <!-- Right Column -->
-  <div class="w3-twothird">
-  <!-- Show other data in righ 2 thirds -->
-    <couch-view user-id="$ctrl.user" editable="$ctrl.editable"></couch-view>
-    <practice-view user-id="$ctrl.user" editable="$ctrl.editable"></practice-view>
-    <heat-map user-id="$ctrl.user"></heat-map>
-  <!-- End Right Column -->
-  </div>
   
 <!-- End Grid -->
 </div>

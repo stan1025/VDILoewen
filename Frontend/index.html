@@ -76,13 +76,36 @@ Index
   <h1>{{title}}</h1>
 </header>
 
+<!-- Navigation element -->
+<nav ng-show="userID != ''" class="w3-quarter vdi-white-background w3-card-4 w3-content">
+  <div>
+      <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href="javascript:void(0)" ng-click="setScreen('Userprofile')" class="w3-bar-item w3-button w3-padding-large">Profil</a><br />
+      <a href="javascript:void(0)" ng-click="setScreen('Couchsurfing')" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CouchsurfING</a><br />
+      <a href="javascript:void(0)" ng-click="setScreen('Practice')" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Practice@VDI</a><br />
+      <a href="javascript:void(0)" ng-click="setScreen('Map')" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Kompetenzkarte</a><br />
+      <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
+  </div>
+  
+  <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+  <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top w3-container vdi-white-background" style="margin-top:46px">
+    <a href="javascript:void(0)" ng-click="setScreen('Couchsurfing')" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CouchsurfING</a>
+    <a href="javascript:void(0)" ng-click="setScreen('Practice')" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Practice@VDI</a>
+    <a href="javascript:void(0)" ng-click="setScreen('Map')" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Kompetenzkarte</a>
+  </div>
+</nav>
+
+
 <!-- Page Container -->
-<main class="w3-content w3-margin-top" style="max-width:1400px;">
+<main class="w3-content w3-margin-top w3-threequarter w3-container" style="max-width:1400px;">
   <!-- Umschaltung zwischen den angezeigeten Seiten, Umschaltfunktionen und benötigte Daten verlinken 
   jede Seite ist ein ANgularJS Module. Diese Module werden als durch sie definierte HTML-Tags eingebunden.
   -->
   <login-view ng-show="screen == 'Login'" login-user="login(user)"></login-view>
   <profile-view ng-show="screen == 'Userprofile'" logout="logout()" user-id="userID"></profile-view>
+  <couch-view ng-show="screen == 'Couchsurfing'" user-id="$ctrl.user" editable="$ctrl.editable"></couch-view>
+  <practice-view ng-show="screen == 'Practice'" user-id="$ctrl.user" editable="$ctrl.editable"></practice-view>
+  <heat-map ng-show="screen == 'Map'" user-id="$ctrl.user"></heat-map>
   <logout-view ng-show="screen == 'Logout'" home="home()"></logout-view>  
   <!-- End Page Container -->
 </main>
