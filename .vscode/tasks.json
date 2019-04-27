@@ -5,7 +5,7 @@
     "tasks": [
         {
             "type": "typescript",
-            "tsconfig": "BackendTS\\tsconfig.json",
+            "tsconfig": "RoutedFrontend\\tsconfig.json",
             "problemMatcher": [
                 "$tsc"
             ]

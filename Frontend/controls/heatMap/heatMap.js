@@ -19,9 +19,10 @@
       $http.get(ctrl.server + "/competenceLocations", { params: {competencies: ctrl.skill}})
       .then(function (response) {
           console.log(response.data);
-          var locations = response.data;
-          locations.forEach(element => {
-            var marker = L.marker(element);
+          var profiles = response.data;
+          profiles.forEach(profile => {
+            var marker = L.marker([profile.GeoData.latitude, profile.GeoData.longitude]);
+              marker.bindPopup(profile.name + '<br>' + profile.job.phone + '<br>' + profile.job.email)
             // add marker
             markers.addLayer(marker);
           });

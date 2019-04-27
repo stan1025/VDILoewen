@@ -146,6 +146,41 @@ function GetCompetenciesOfProfiles() {
   return filteredData;
 }
 
+function GetProfilesOfCompetence(competence, callback) {
+  var filteredData = [];
+  var foundProfiles = [];
+  var profileList = GetProfiles();
+
+  _.each(profileList, (userIdent, userkey, userlist) => {
+
+    var competenciesData = GetProfileProperty(userIdent, "competencies")
+
+    var competencyExist = false
+    competenciesData.forEach((competency, compkey, complist) => {
+      if (competency.name == competence || competence == 'all') {
+        competencyExist = true;
+      }
+    })
+
+    if(competencyExist)
+    {
+      foundProfiles.push(GetProfile(userIdent));
+    }
+  })
+
+  GetGeoLocationOfPrivateAddressesAsync(foundProfiles, (data) => {
+
+    foundProfiles.forEach((profile, profileNumber, profileList) => {
+      foundProfiles[profileNumber].GeoData = data[profileNumber][0];
+    }) 
+
+
+    callback(foundProfiles);
+  });
+
+  return;
+}
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //UserManagement API
 
@@ -782,10 +817,26 @@ function GetGeoLocationOfPrivateAddressesAsync(userProfiles, callback) {
 app.get('/competenceLocations', (request, response) => {
 
   console.log(request);
+  var competenceFilter;
 
-  var competenceFilter = request.query.competencies;
+  if (request.query.hasOwnProperty('competencies')) {
+    if (request.query.competencies == '') {
+      competenceFilter = 'all'
+    }
+    else {
+      competenceFilter = request.query.competencies;
+    }
+  }
+  else {
+    competenceFilter = 'all'
+  }
 
-  response.send(GetPracticeResults("95bc0e99-8cc6-4dd8-be54-9be16de47654"));
+  GetProfilesOfCompetence(competenceFilter, (result) => {
+    console.log(result);
+    response.send(result);
+  })
+
+
 
 })
 
