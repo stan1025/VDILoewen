@@ -33,6 +33,7 @@
                 <td>
                     <b ng-show="!x.expanded" ng-click="x.expanded = !x.expanded">{{x.name}}</b>
                     <i ng-show="x.expanded" ng-click="x.expanded = !x.expanded">{{x.name}}</i>
+                    <button class="fa fa-envelope fa-fw w3-right w3-large vdi-button-symbol"></button>
                     <div ng-show="x.expanded" class="vdi-lightGrey-background">
                         <address-view  address="x.profile" editable="false" on-update="null"></address-view>
                     </div>
