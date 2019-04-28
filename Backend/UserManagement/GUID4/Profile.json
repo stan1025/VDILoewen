@@ -1,1 +1,98 @@
-{"ident":"GUID4","age":28,"gender":"-","jobtitle":"-","department":"-","academia":"-","email":"-","phone":"-","competencies":[]}
+{
+    "ident": "GUID2",
+    "name": "Philipp Gesner",
+    "gender": "Male",
+    "age": 27,
+    "academia": "Master of Science",
+    "private": {
+        "street": "Olgastraße",
+        "number": "93b",
+        "zipcode": "70180",
+        "city": "Stuttgart",
+        "phone": "+49 176 72320586",
+        "email": "philipp.gesner@googlemail.com"
+    },
+    "job": {
+        "companyName": "Daimler AG",
+        "companyDepartment": "Powertrain Prototyping",
+        "jobtitle": "Research Engineer",
+        "street": "Mercedesstr.",
+        "number": "137",
+        "zipcode": "70732",
+        "city": "Stuttgart",
+        "phone": "+49 176 72320586",
+        "email": "philipp.gesner@daimler.com"
+    },
+    "competencies": [
+        {
+            "name": "Model-Based Systems Engineering",
+            "Group": "EngineeringMethods",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "Control theory",
+            "Group": "EngineeringMethods",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "Machine Learning",
+            "Group": "EngineeringMethods",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "Python",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "C++",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "Visual Basic",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "Java",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "2"
+        },
+        {
+            "name": "MATLAB",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "5"
+        },
+        {
+            "name": "MATLAB Simulink",
+            "Group": "EngineeringSoftware",
+            "experienceLevel": "5"
+        },
+        {
+            "name": "CAD",
+            "Group": "EngineeringSoftware",
+            "experienceLevel": "5"
+        },
+        {
+            "name": "PLM",
+            "Group": "EngineeringSoftware",
+            "experienceLevel": "5"
+        },
+        {
+            "name": "Intercultural competece",
+            "Group": "Softskills",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "Communication",
+            "Group": "Softskills",
+            "experienceLevel": "5"
+        },
+        {
+            "name": "Motivation",
+            "Group": "Softskills",
+            "experienceLevel": "4"
+        }
+    ]
+}

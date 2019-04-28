@@ -1,3 +1,30 @@
+@media screen and (min-width: 900px) {
+    /* start of large tablet styles */
+    .mediaLarge{display: block}
+    .mediaMedium{display: none}
+    .mediaSmall{display: none}
+    #mapid { height: 400px;  width: 100%;}
+    }
+    
+    @media screen and (max-width: 899px) and (min-width: 481px){
+    /* start of medium tablet styles */
+    .mediaLarge{display: none}
+    .mediaMedium{display: none}
+    .mediaSmall{display: block}
+    #mapid { height: 200px;  width: 100%;}
+    }
+    
+    @media screen and (max-width: 480px) {
+    /* start of phone styles */
+    .mediaLarge{display: none}
+    .mediaMedium{display: none}
+    .mediaSmall{display: block}
+    #mapid { height: 100px;  width: 100%;}
+    }
+
+
+
+
 /* W3.CSS 4.12 November 2018 by Jan Egil and Borge Refsnes */
 html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
 /* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
@@ -157,4 +184,3 @@ hr{border:0;border-top:1px solid #eee;margin:20px 20px}
 .vdi-blue-background{background-color: #008ad9; color: #ffffff}
 .vdi-white-background{background-color: #ffffff; color: #008ad9}
 .vdi-black-text{color: #000000}
-#mapid { height: 400px;  width: 100%;}

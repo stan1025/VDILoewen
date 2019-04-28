@@ -1,0 +1,80 @@
+{
+    "ident": "GUID6",
+    "name": "Benedikt Geib",
+    "gender": "Male",
+    "age": 29,
+    "academia": "Master of Science",
+    "private": {
+        "street": "Spöckweg",
+        "number": "37a",
+        "zipcode": "76646",
+        "city": "Bruchsal",
+        "phone": "015253445854",
+        "email": "benediktgeib@gmx.de"
+    },
+    "job": {
+        "companyName": "SEW-EURODRIVE GmbH & Co KG",
+        "companyDepartment": "Service Electronics",
+        "jobtitle": "Project Engineer",
+        "street": "Ernst-Blickle-Straße",
+        "number": "42",
+        "zipcode": "76646",
+        "city": "Bruchsal",
+        "phone": "07251-75-24809",
+        "email": "Benedikt.geib@sew-eurodrive.de"
+    },
+    "competencies": [
+        {
+            "name": "JS/TS",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "2"
+        },
+        {
+            "name": "C#",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "2"
+        },
+        {
+            "name": "ST/FUP",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "5"
+        },
+        {
+            "name": "HTML",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "C++",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "Rhetoric",
+            "Group": "Softskills",
+            "experienceLevel": "2"
+        },
+        {
+            "name": "Team Management",
+            "Group": "Softskills",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "Leadership",
+            "Group": "Softskills",
+            "experienceLevel": "2"
+        },
+        {
+            "name": "AngularJS",
+            "experienceLevel": 2
+        },
+        {
+            "name": "Visual Studio Code",
+            "experienceLevel": 3
+        },
+        {
+            "name": "Codesys",
+            "experienceLevel": "5"
+        }
+    ]
+}

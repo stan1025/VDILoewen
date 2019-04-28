@@ -1,12 +1,53 @@
 {
     "ident": "GUID2",
-    "name": "Hauke Jürgensen",
-    "age": 28,
-    "gender": "-",
-    "jobtitle": "-",
-    "department": "-",
-    "academia": "-",
-    "email": "-",
-    "phone": "-",
-    "competencies": []
+    "name": "Hauke Juergensen",
+    "gender": "Male",
+    "age": 29,
+
+    "academia": "Master of Science",
+
+
+
+    
+    "private": {
+        "street" : "Wiesendamm",
+        "number" : "111",
+        "zipcode" : "22303",
+        "city" : "Hamburg",
+        "phone": "+49 176 64102048",
+        "email": "hajuergensen@gmail.com"
+    },
+
+    "job": {
+        "companyName": "IAV GmbH",
+        "companyDepartment": "Funktionssicherheit Getriebe",
+        "jobtitle": "Werksstudent",
+        "street" : "Carnotstr",
+        "number" : "1",
+        "zipcode" : "10587",
+        "city" : "Berlin",
+        "phone": "-",
+        "email": "-"
+    },
+
+    "competencies": [
+        {
+            "name": "Matlab",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "Rhetoric",
+            "Group": "Softskills",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "Siemens NX",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "Java",
+            "experienceLevel": 2
+        }
+    ]
 }

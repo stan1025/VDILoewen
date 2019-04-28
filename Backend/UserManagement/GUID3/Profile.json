@@ -1,12 +1,74 @@
-{ 
+{
     "ident": "GUID3",
     "name": "Michael Hertwig",
-    "age": 28,
-    "gender": "-",
-    "jobtitle": "-",
-    "department": "-",
-    "academia": "-",
-    "email": "-",
-    "phone": "-",
-    "competencies" : [ ]
+    "gender": "Male",
+    "age": 31,
+
+    "academia": "Diplom-Ingenieur (Maschinenbau)",
+
+
+
+    
+    "private": {
+        "street" : "Eichenweg",
+        "number" : "16",
+        "zipcode" : "74321",
+        "city" : "Bietigheim-Bissingen",
+        "phone": "0152-54119477",
+        "email": "hertwig.michael@vdi.de"
+    },
+
+    "job": {
+        "companyName": "Fraunhofer-Institut für Arbeitswirtschaft und Organisation",
+        "companyDepartment": "Digital Engineering",
+        "jobtitle": "Researcher",
+        "street" : "Nobelstraße",
+        "number" : "12",
+        "zipcode" : "70569",
+        "city" : "Stuttgart",
+        "phone": "0711-970-2288",
+        "email": "michael.hertwig@iao.fraunhofer.de"
+    },
+
+    "competencies": [
+        {
+            "name": "Creo 2.0",
+            "Group": "Produktentwicklung",
+            "experienceLevel": "2"
+        },
+        {
+            "name": "Prozessoptimierung",
+            "Group": "Effizienzsteigerung",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "Workflow Engineering",
+            "Group": "Prozessmodellierung",
+            "experienceLevel": "5"
+        },
+        {
+            "name": "Zertifizierung nach DIN Spec 94173",
+            "Group": "Zertifizierungsaktivitäten",
+            "experienceLevel": "2"
+        },
+        {
+            "name": "Rhetoric",
+            "Group": "Softskills",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "Team Management",
+            "Group": "Softskills",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "Leadership",
+            "Group": "Softskills",
+            "experienceLevel": "4"
+        },
+        {
+            "name": "PowerPoint",
+            "experienceLevel": 3
+        }
+    ]
 }

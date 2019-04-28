@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- 
+Dies ist die Einstigesseite zum Beispielprototypen.
+Hier finden sich Links zu weiterführender Dokumentation und Kommentare im Code. 
+Die Kommentare im Code werden weinger detailiert, je weiter man in der Hierachieebene nach unten wandert.
+
+allgemeine Tutorials zur Webentwicklung:
+https://wiki.selfhtml.org/wiki/Wie_fange_ich_an%3F
+https://www.w3schools.com/default.asp
+
+Hierachie:
+Index
+-LogIn
+-profileView
+--editableField
+--SkillList
+---skillDetail
+----editableField
+----starRating
+-LogOut
+-->
+<html>
+
+<head>
+  <title>VDI Digital</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- alle benötigten Scipte (Basisframework(AngularJS) und einzelne Seiten/Elemente) einbinden 
+  Dukumentation
+  https://www.w3schools.com/angular/default.asp
+  https://angularjs.org
+  https://www.w3schools.com/js/default.asp
+  -->
+  <script src="angularjs/angular.js"></script>
+  <script src="angularjs/angular-route.js"></script>
+  <!--
+    hier werden alle verwendeten Elemente eingebunden
+  -->
+  <script src="index.js"></script>
+  <script src="controls/loginView/loginView.js"></script>
+  <script src="controls/profileView/profileView.js"></script>
+  <script src="controls/logoutView/logoutView.js"></script>
+  <script src="controls/skillListView/skillList.js"></script>
+  <script src="controls/skillDetailView/skillDetail.js"></script>
+  <script src="controls/editableField/editableField.js"></script>
+  <script src="controls/starRatingControl/starRating.js"></script>
+  <script src="controls/couchView/couchView.js"></script>
+  <script src="controls/addressView/addressView.js"></script>
+  <script src="controls/practiceView/practiceView.js"></script>
+  <!-- Designdefinition einbinden 
+  https://www.w3schools.com/css/default.asp
+
+  -->
+  <link rel="stylesheet" href="vdiDesign.css">
+  <!-- Schrift für die Symbole einbinden
+  https://www.w3schools.com/icons/fontawesome_icons_intro.asp 
+  -->
+  <link rel="stylesheet" href="fontawesome/css/all.min.css" />
+  <!-- leaflet needs stylesheet loaded before js included -->
+  <link rel="stylesheet" href="leaflet/leaflet.css" />
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="leaflet/leaflet.js"></script>
+  <!-- kompetenzlandkarte einbauen, muss geladen werden, nachdem die OSM-Skripte geladen sind -->
+  <script src="controls/heatMap/heatMap.js"></script>
+</head>
+<!-- 
+  mit ng-app den Sichtbarkeitsbereich für Angular festlegen. ng-controller verknüpft den Javascript Code zur Seite
+  Alle ng-* Attribute sind AngularJS Attribute
+-->
+
+<body class="vdi-blue-background" ng-app="VDILionExample" ng-controller="ProfileController">
+
+  <div ng-show="viewMode == 'Desktop'">
+    <!-- Kopf und Fuss der Seite sind konstant, nur dazwischen soll sich etwas ändern-->
+    <header class="w3-container vdi-blue-background">
+      <img src="logo.png" class="vdi-white-background" style="padding: 10px; margin: 10px; float: left" />
+      <!-- {{var}} gibt den Wert von var  zurück -->
+      <h1 style="padding: 10px; margin: 10px; float: left">
+        VDI goes Digital <br> (for Desktop/Tablet)
+      </h1>
+    </header>
+
+
+    <!-- Left Quarter Column for View Area 1-->
+    <div class="w3-content w3-margin-top w3-container  w3-quarter" style="max-width:1400px;">
+
+      <!-- Menu Structure Area -->
+      <div class="w3-row-padding">
+        <div class="vdi-white-background w3-card-4 w3-margin-bottom w3-container">
+          <!-- Navigation element -->
+          <nav ng-show="userID != ''" style="max-width:1400px;">
+            <a href="javascript:void(0)" ng-click="setScreen('Couchsurfing')"
+              class="w3-bar-item w3-button w3-padding-large">CouchsurfING</a><br />
+            <a href="javascript:void(0)" ng-click="setScreen('Practice')"
+              class="w3-bar-item w3-button w3-padding-large">Practice@VDI</a><br />
+            <a href="javascript:void(0)" ng-click="setScreen('Map')"
+              class="w3-bar-item w3-button w3-padding-large">CompetenceMap</a><br />
+            <a href="javascript:void(0)" ng-click="logout()" class="w3-bar-item w3-button w3-padding-large">Logout</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Login View and Profile View -->
+      <main class="w3-content w3-margin-top w3-container" style="max-width:1400px;">
+        <login-view ng-show="userID == ''" login-user="login(user)"></login-view>
+        <profile-view ng-show="userID != ''" logout="logout()" user-id="userID"></profile-view>
+      </main>
+
+
+      <footer class="w3-container vdi-blue-background w3-center w3-margin-top">
+        <p>Powered by <a href="http://www.vdi.de/vdi-loewen" target="_blank">VDI Digital</a> - created with <i
+            class="fab fa-angular fa-fw"></i><i class="fab fa-node-js fa-fw"></i></p>
+      </footer>
+
+
+    </div>
+
+    <!-- Page Container -->
+    <main class="w3-content w3-margin-top w3-container w3-threequarter" style="max-width:1400px;">
+      <couch-view ng-show="screen == 'Couchsurfing'" user-id="userID" editable="$ctrl.editable"></couch-view>
+      <practice-view ng-show="screen == 'Practice'" user-id="userID" editable="$ctrl.editable"></practice-view>
+      <heat-map ng-show="screen == 'Map'" user-id="userID"></heat-map>
+    </main>
+
+  </div>
+
+
+  <div ng-show="viewMode == 'Smartphone'">
+
+    <!-- Kopf und Fuss der Seite sind konstant, nur dazwischen soll sich etwas ändern-->
+    <header class="w3-container vdi-blue-background">
+      <img src="logo.png" class="vdi-white-background" style="padding: 10px; margin: 10px; float: left" />
+      <!-- {{var}} gibt den Wert von var  zurück -->
+      <h1 style="padding: 10px; margin: 10px; float: left">
+        VDI goes Digital <br> (for Smartphone)
+      </h1>
+    </header>
+
+
+    <!-- Left Quarter Column for View Area 1-->
+    <div class="w3-content w3-margin-top w3-container">
+
+      <!-- Menu Structure Area -->
+      <div class="w3-row-padding">
+        <div class="vdi-white-background w3-card-4 w3-margin-bottom w3-container">
+          <!-- Navigation element -->
+          <nav ng-show="userID != ''">
+            <a href="javascript:void(0)" ng-click="setScreen('Couchsurfing')"
+              class="w3-bar-item w3-button w3-padding-large">CouchsurfING</a><br />
+            <a href="javascript:void(0)" ng-click="setScreen('Practice')"
+              class="w3-bar-item w3-button w3-padding-large">Practice@VDI</a><br />
+            <a href="javascript:void(0)" ng-click="setScreen('Map')"
+              class="w3-bar-item w3-button w3-padding-large">CompetenceMap</a><br />
+            <a href="javascript:void(0)" ng-click="logout()" class="w3-bar-item w3-button w3-padding-large">Logout</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Page Container -->
+      <main class="w3-content w3-margin-top w3-container">
+        <couch-view ng-show="screen == 'Couchsurfing'" user-id="userID" editable="$ctrl.editable"></couch-view>
+        <practice-view ng-show="screen == 'Practice'" user-id="userID" editable="$ctrl.editable"></practice-view>
+        <heat-map ng-show="screen == 'Map'" user-id="userID"></heat-map>
+      </main>
+
+      <!-- Login View and Profile View -->
+      <main class="w3-content w3-margin-top w3-container">
+        <login-view ng-show="userID == ''" login-user="login(user)"></login-view>
+        <profile-view ng-show="userID != ''" logout="logout()" user-id="userID"></profile-view>
+      </main>
+
+
+      <footer class="w3-container vdi-blue-background w3-center w3-margin-top">
+        <p>Powered by <a href="http://www.vdi.de/vdi-loewen" target="_blank">VDI Digital</a> - created with <i
+            class="fab fa-angular fa-fw"></i><i class="fab fa-node-js fa-fw"></i></p>
+      </footer>
+
+
+    </div>
+
+
+  </div>
+
+
+</body>
+
+
+
+
+</html>

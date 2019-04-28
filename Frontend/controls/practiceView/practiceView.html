@@ -1,99 +1,138 @@
-<div class="w3-container w3-card vdi-white-background w3-margin-bottom">
-    <h2 class="w3-padding-16">
-        <i class="fas fa-industry w3-margin-right w3-xxlarge"></i>Practice@VDI
-    </h2>
-    <div class="vdi-white-background w3-round-xlarge">
-        <h3>Suche</h3>
-        <form>
-            <span class="w3-right">
-                <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.reset()" value="Reset" />
-            </span>
-            <label ng-repeat="(key, value) in $ctrl.requestTypes"><input type="radio" ng-model="$ctrl.requestType" ng-change="$ctrl.loadRequestType()" value="{{key}}" />{{value}}</label>
-            <br />
-            <label><b>Typ</b></label>
-            <label ng-repeat="(key, value) in $ctrl.practiceTypes"><input type="radio" ng-model="$ctrl.practiceType" ng-change="$ctrl.loadPracticeType()" value="{{key}}" />{{value}}</label>
-        </form>
-        <table class="vdi-boxed" width="100%">
-            <tr class="vdi-blue-background">
-                <th ng-click="$ctrl.orderByMe('data.requestType')">Art</th>
-                <th ng-click="$ctrl.orderByMe('data.practiceType')">Typ</th>
-                <th ng-click="$ctrl.orderByMe('data.description')">Beschreibung</th>
-            </tr>
-            <tr ng-repeat="x in $ctrl.practices | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
-                <td>{{$ctrl.requestTypes[x.data.requestType]}}</td>
-                <td>{{$ctrl.practiceTypes[x.data.practiceType]}}</td>
-                <td>
-                    <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}" ng-click="x.expanded = !x.expanded" field-value="x.data.description" editable="false" field-type="text" on-update="$ctrl.change(x)"></editable-field>
-                    <div ng-show="x.expanded" class="vdi-lightGrey-background">
-                        <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId" on-save="$ctrl.change(x)"></skill-list>
-                    </div>
-                </td>
-            </tr>
-        </table>
+<div>
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <h2 class="w3-padding-16">
+            <i class="fas fa-industry w3-margin-right w3-xxlarge"></i>Practice@VDI
+        </h2>
     </div>
-    <div class="vdi-white-background w3-round-xlarge">
-        <h3>Meine Gesuche <button class="fa fa-plus vdi-button-symbol" ng-click="$ctrl.create('Search')"></button></h3>
-        <table class="vdi-boxed" width="100%">
-            <tr class="vdi-blue-background">
-                <th ng-click="$ctrl.orderByMe('data.requestType')">Art</th>
-                <th ng-click="$ctrl.orderByMe('data.practiceType')">Typ</th>
-                <th ng-click="$ctrl.orderByMe('data.description')">Beschreibung</th>
-                <th ng-click="$ctrl.orderByMe('x.matches.length')">Treffer</th>
-            </tr>
-            <tr ng-repeat="x in $ctrl.mySearch | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
-                <td>
-                    <select class="vdi-select vdi-white-background w3-round" ng-model="x.data.requestType" ng-options="key as value for (key , value) in $ctrl.requestTypes" ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x, true)"></select>
-                    <span ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.requestTypes[x.data.requestType]}}</span>
-                </td>
-                <td><select class="vdi-select vdi-white-background w3-round" ng-model="x.data.practiceType" ng-options="key as value for (key , value) in $ctrl.practiceTypes" ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x)"></select>
-                    <span ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.practiceTypes[x.data.practiceType]}}</span>
-                </td>
-                <td>
-                    <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}" ng-click="x.expanded = !x.expanded" field-value="x.data.description" editable="x.data.authorID == $ctrl.userId" field-type="text" on-update="$ctrl.change(x)"></editable-field>
-                    <button class="fa fa-plus vdi-button-symbol" ng-show="x.expanded" ng-click="$ctrl.addSkill(x.data)"></button>
-                    <button ng-click="$ctrl.delete(x)" class="fa fa-eraser vdi-button-symbol"></button>
-                    <div ng-show="x.expanded" class="vdi-lightGrey-background">
-                        <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId" on-save="$ctrl.change(x)"></skill-list>
-                    </div>
-                </td>
-                <td>
-                    <b ng-style="(x.matches.length > 0) ? {'font-weight': 'bold'} : {'font-weight': 'normal'}" ng-click="$ctrl.showOverlay(x)">{{x.matches.length}}</b>
-                </td>
-            </tr>
-        </table>
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <div class="vdi-white-background w3-round-xlarge">
+            <h3>Suche</h3>
+            <form>
+                <span class="w3-right">
+                    <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.reset()" value="Reset" />
+                </span>
+                <label ng-repeat="(key, value) in $ctrl.requestTypes"><input type="radio" ng-model="$ctrl.requestType"
+                        ng-change="$ctrl.loadRequestType()" value="{{key}}" />{{value}}</label>
+                <br />
+                <label><b>Typ</b></label>
+                <label ng-repeat="(key, value) in $ctrl.practiceTypes"><input type="radio" ng-model="$ctrl.practiceType"
+                        ng-change="$ctrl.loadPracticeType()" value="{{key}}" />{{value}}</label>
+            </form>
+            <table class="vdi-boxed" width="100%">
+                <tr class="vdi-blue-background">
+                    <th ng-click="$ctrl.orderByMe('data.requestType')">Art</th>
+                    <th ng-click="$ctrl.orderByMe('data.practiceType')">Typ</th>
+                    <th ng-click="$ctrl.orderByMe('data.description')">Beschreibung</th>
+                </tr>
+                <tr ng-repeat="x in $ctrl.practices | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
+                    <td>{{$ctrl.requestTypes[x.data.requestType]}}</td>
+                    <td>{{$ctrl.practiceTypes[x.data.practiceType]}}</td>
+                    <td>
+                        <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}"
+                            ng-click="x.expanded = !x.expanded" field-value="x.data.description" editable="false"
+                            field-type="text" on-update="$ctrl.change(x)"></editable-field>
+                        <div ng-show="x.expanded" class="vdi-lightGrey-background">
+                            <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId"
+                                on-save="$ctrl.change(x)"></skill-list>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="vdi-white-background w3-round-xlarge">
-        <h3>Meine Angebote <button class="fa fa-plus vdi-button-symbol" ng-click="$ctrl.create('Offer')"></button></h3>
-        <table class="vdi-boxed" width="100%">
-            <tr class="vdi-blue-background">
-                <th ng-click="$ctrl.orderByMe('data.requestType')">Art</th>
-                <th ng-click="$ctrl.orderByMe('data.practiceType')">Typ</th>
-                <th ng-click="$ctrl.orderByMe('data.description')">Beschreibung</th>
-                <th ng-click="$ctrl.orderByMe('x.matches.length')">Treffer</th>
-            </tr>
-            <tr ng-repeat="x in $ctrl.myOffers | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
-                <td>
-                    <select class="vdi-select vdi-white-background w3-round" ng-model="x.data.requestType" ng-options="key as value for (key , value) in $ctrl.requestTypes" ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x, true)"></select>
-                    <span ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.requestTypes[x.data.requestType]}}</span>
-                </td>
-                <td><select class="vdi-select vdi-white-background w3-round" ng-model="x.data.practiceType" ng-options="key as value for (key , value) in $ctrl.practiceTypes" ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x)"></select>
-                    <span ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.practiceTypes[x.data.practiceType]}}</span>
-                </td>
-                <td>
-                    <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}" ng-click="x.expanded = !x.expanded" field-value="x.data.description" editable="x.data.authorID == $ctrl.userId" field-type="text" on-update="$ctrl.change(x)"></editable-field>
-                    <button class="fa fa-plus vdi-button-symbol" ng-show="x.expanded" ng-click="$ctrl.addSkill(x.data)"></button>
-                    <button ng-click="$ctrl.delete(x)" class="fa fa-eraser vdi-button-symbol"></button>
-                    <div ng-show="x.expanded" class="vdi-lightGrey-background">
-                        <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId" on-save="$ctrl.change(x)"></skill-list>
-                    </div>
-                </td>
-                <td>
-                    <b ng-style="(x.matches.length > 0) ? {'font-weight': 'bold'} : {'font-weight': 'normal'}" ng-click="$ctrl.Overlay(x.matches)">{{x.matches.length}}</b>
-                </td>
-            </tr>
-        </table>
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <div class="vdi-white-background w3-round-xlarge">
+            <h3>Meine Gesuche <button class="fa fa-plus vdi-button-symbol" ng-click="$ctrl.create('Search')"></button>
+            </h3>
+            <table class="vdi-boxed" width="100%">
+                <tr class="vdi-blue-background">
+                    <th ng-click="$ctrl.orderByMe('data.requestType')">Art</th>
+                    <th ng-click="$ctrl.orderByMe('data.practiceType')">Typ</th>
+                    <th ng-click="$ctrl.orderByMe('data.description')">Beschreibung</th>
+                    <th ng-click="$ctrl.orderByMe('x.matches.length')">Treffer</th>
+                </tr>
+                <tr ng-repeat="x in $ctrl.mySearch | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
+                    <td>
+                        <select class="vdi-select vdi-white-background w3-round" ng-model="x.data.requestType"
+                            ng-options="key as value for (key , value) in $ctrl.requestTypes"
+                            ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x, true)"></select>
+                        <span
+                            ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.requestTypes[x.data.requestType]}}</span>
+                    </td>
+                    <td><select class="vdi-select vdi-white-background w3-round" ng-model="x.data.practiceType"
+                            ng-options="key as value for (key , value) in $ctrl.practiceTypes"
+                            ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x)"></select>
+                        <span
+                            ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.practiceTypes[x.data.practiceType]}}</span>
+                    </td>
+                    <td>
+                        <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}"
+                            ng-click="x.expanded = !x.expanded" field-value="x.data.description"
+                            editable="x.data.authorID == $ctrl.userId" field-type="text" on-update="$ctrl.change(x)">
+                        </editable-field>
+                        <button class="fa fa-plus vdi-button-symbol" ng-show="x.expanded"
+                            ng-click="$ctrl.addSkill(x.data)"></button>
+                        <button ng-click="$ctrl.delete(x)" class="fa fa-eraser vdi-button-symbol"></button>
+                        <div ng-show="x.expanded" class="vdi-lightGrey-background">
+                            <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId"
+                                on-save="$ctrl.change(x)"></skill-list>
+                        </div>
+                    </td>
+                    <td>
+                        <b ng-style="(x.matches.length > 0) ? {'font-weight': 'bold'} : {'font-weight': 'normal'}"
+                            ng-click="$ctrl.showOverlay(x)">{{x.matches.length}}</b>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="w3-container w3-card w3-modal w3-modal-content w3-animate-top w3-card-4 vdi-white-background" ng-show="$ctrl.showOverlay" ng-style="$ctrl.showOverlay ? {'display': 'block'} : { 'display': 'none' }">
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <div class="vdi-white-background w3-round-xlarge">
+            <h3>Meine Angebote <button class="fa fa-plus vdi-button-symbol" ng-click="$ctrl.create('Offer')"></button>
+            </h3>
+            <table class="vdi-boxed" width="100%">
+                <tr class="vdi-blue-background">
+                    <th ng-click="$ctrl.orderByMe('data.requestType')">Art</th>
+                    <th ng-click="$ctrl.orderByMe('data.practiceType')">Typ</th>
+                    <th ng-click="$ctrl.orderByMe('data.description')">Beschreibung</th>
+                    <th ng-click="$ctrl.orderByMe('x.matches.length')">Treffer</th>
+                </tr>
+                <tr ng-repeat="x in $ctrl.myOffers | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
+                    <td>
+                        <select class="vdi-select vdi-white-background w3-round" ng-model="x.data.requestType"
+                            ng-options="key as value for (key , value) in $ctrl.requestTypes"
+                            ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x, true)"></select>
+                        <span
+                            ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.requestTypes[x.data.requestType]}}</span>
+                    </td>
+                    <td><select class="vdi-select vdi-white-background w3-round" ng-model="x.data.practiceType"
+                            ng-options="key as value for (key , value) in $ctrl.practiceTypes"
+                            ng-show="x.data.authorID == $ctrl.userId" ng-change="$ctrl.change(x)"></select>
+                        <span
+                            ng-hide="x.data.authorID == $ctrl.userId">{{$ctrl.practiceTypes[x.data.practiceType]}}</span>
+                    </td>
+                    <td>
+                        <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}"
+                            ng-click="x.expanded = !x.expanded" field-value="x.data.description"
+                            editable="x.data.authorID == $ctrl.userId" field-type="text" on-update="$ctrl.change(x)">
+                        </editable-field>
+                        <button class="fa fa-plus vdi-button-symbol" ng-show="x.expanded"
+                            ng-click="$ctrl.addSkill(x.data)"></button>
+                        <button ng-click="$ctrl.delete(x)" class="fa fa-eraser vdi-button-symbol"></button>
+                        <div ng-show="x.expanded" class="vdi-lightGrey-background">
+                            <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId"
+                                on-save="$ctrl.change(x)"></skill-list>
+                        </div>
+                    </td>
+                    <td>
+                        <b ng-style="(x.matches.length > 0) ? {'font-weight': 'bold'} : {'font-weight': 'normal'}"
+                            ng-click="$ctrl.Overlay(x.matches)">{{x.matches.length}}</b>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="w3-container w3-card w3-modal w3-modal-content w3-animate-top w3-card-4 vdi-white-background"
+        ng-show="$ctrl.showOverlay" ng-style="$ctrl.showOverlay ? {'display': 'block'} : { 'display': 'none' }">
         <i class='fa fa-times-circle w3-right' ng-click="$ctrl.showOverlay = false"></i>
         <table class="vdi-boxed" width="100%">
             <tr class="vdi-blue-background">
@@ -105,16 +144,21 @@
                     <b ng-show="!x.expanded" ng-click="x.expanded = !x.expanded">{{x.author.name}}</b>
                     <i ng-show="x.expanded" ng-click="x.expanded = !x.expanded">{{x.author.name}}</i>
                     <div ng-show="x.expanded" class="vdi-lightGrey-background">
-                        <address-view  address="x.author.private" editable="false" on-update="null"></address-view>
+                        <address-view address="x.author.private" editable="false" on-update="null"></address-view>
                     </div>
                 </td>
                 <td>
-                    <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}" ng-click="x.expanded = !x.expanded" field-value="x.data.description" editable="false" field-type="text" on-update="$ctrl.change(x)"></editable-field>
+                    <editable-field ng-style="x.expanded ? {'font-style':'italic'} : {'font-weight': 'bold'}"
+                        ng-click="x.expanded = !x.expanded" field-value="x.data.description" editable="false"
+                        field-type="text" on-update="$ctrl.change(x)"></editable-field>
                     <div ng-show="x.expanded" class="vdi-lightGrey-background">
-                        <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId" on-save="$ctrl.change(x)"></skill-list>
+                        <skill-list skills="x.data.competencies" editable="x.data.authorID == $ctrl.userId"
+                            on-save="$ctrl.change(x)"></skill-list>
                     </div>
                 </td>
             </tr>
         </table>
     </div>
+    </div>
+ 
 </div>

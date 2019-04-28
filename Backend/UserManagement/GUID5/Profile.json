@@ -1,12 +1,60 @@
-{ 
+{
     "ident": "GUID5",
     "name": "Sören Köble",
-    "age": 28,
     "gender": "Male",
-    "jobtitle": "-",
-    "department": "-",
-    "academia": "-",
-    "email": "-",
-    "phone": "-",
-    "competencies" : [ ]
+    "age": 25,
+
+    "academia": "Master of Science",
+
+
+
+    
+    "private": {
+        "street" : "Ulmenweg",
+        "number" : "9",
+        "zipcode" : "71126",
+        "city" : "Gäufelden",
+        "phone": "0176-76833202",
+        "email": "soeren.koeble@gmx.de"
+    },
+
+    "job": {
+        "companyName": "Albert-Ludwig Universität",
+        "companyDepartment": "Institut für Mikrosystemtechnik",
+        "jobtitle": "Masterrand",
+        "street" : "Georges-Köhler- Allee",
+        "number" : "73",
+        "zipcode" : "79110",
+        "city" : "Freiburg",
+        "phone": "",
+        "email": "soeren.koeble@neptun.uni-freiburg.de"
+    },
+
+    "competencies": [
+        {
+            "name": "LabView",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "5"
+        },
+        {
+            "name": "C",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "Solid Works",
+            "Group": "MechanicalEngeneering",
+            "experienceLevel": "3"
+        },
+        {
+            "name": "HTML",
+            "Group": "SoftwareDevelopment",
+            "experienceLevel": "1"
+        },
+        {
+            "name": "Rhetoric",
+            "Group": "Softskills",
+            "experienceLevel": "4"
+        }
+    ]
 }

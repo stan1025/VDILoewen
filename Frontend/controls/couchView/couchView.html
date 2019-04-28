@@ -1,46 +1,58 @@
-<div class="w3-container w3-card vdi-white-background w3-margin-bottom">
-    <h2 class="w3-padding-16">
-        <i class="fas fa-couch w3-margin-right w3-xxlarge"></i>CouchsurfING
-    </h2>
-    <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
-        <h3>Angebot</h3>
-        Ort
-        <span class="w3-right">
-            <editable-field field-value="$ctrl.Data.city" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update(value)"></editable-field>
-        </span>
-        <br />
-        Anzahl Betten
-        <span class="w3-right">
-            <editable-field field-value="$ctrl.Data.couches" editable="$ctrl.editable" field-type="text" on-update="$ctrl.update(value)"></editable-field>
-        </span>
+<div>
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <h2 class="w3-padding-16">
+            <i class="fas fa-couch w3-margin-right w3-xlarge"></i> VDI CouchsurfING
+        </h2>
     </div>
-    <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
-        <h3>Suche</h3>
-        <form novalidate="novalidate">
-            <label>Stadt: <input type="text" class="vdi-button vdi-blue-background vdi-boxed w3-round" ng-model="$ctrl.city" ng-keyup="$ctrl.keyup($event)" /></label>
-            <span class="w3-right">              
-                <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.search()" value="Suchen" />
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
+            <h3>Mein Angebot</h3>
+            Ort
+            <span class="w3-right">
+                <editable-field field-value="$ctrl.Data.city" editable="$ctrl.editable" field-type="text"
+                    on-update="$ctrl.update(value)"></editable-field>
             </span>
-        </form>
-        <h3>Ergebnisse</h3>
-        <table class="vdi-boxed" width="100%">
-            <tr class="vdi-blue-background">
-                <th ng-click="$ctrl.orderByMe('name')">User</th>
-                <th ng-click="$ctrl.orderByMe('data.city')">Stadt</th>
-                <th ng-click="$ctrl.orderByMe('data.couches')">Anzahl</th>
-            </tr>
-            <tr ng-repeat="x in $ctrl.offers | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
-                <td>
-                    <b ng-show="!x.expanded" ng-click="x.expanded = !x.expanded">{{x.name}}</b>
-                    <i ng-show="x.expanded" ng-click="x.expanded = !x.expanded">{{x.name}}</i>
-                    <button class="fa fa-envelope fa-fw w3-right w3-large vdi-button-symbol"></button>
-                    <div ng-show="x.expanded" class="vdi-lightGrey-background">
-                        <address-view  address="x.profile" editable="false" on-update="null"></address-view>
-                    </div>
-                </td>
-                <td>{{x.data.city}}</td>
-                <td>{{x.data.couches}}</td>
-            </tr>
-        </table>
+            <br />
+            "Couches"
+            <span class="w3-right">
+                <editable-field field-value="$ctrl.Data.couches" editable="$ctrl.editable" field-type="text"
+                    on-update="$ctrl.update(value)"></editable-field>
+            </span>
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
+            <h3>Suche</h3>
+            <form novalidate="novalidate">
+                <label>Stadt: <input type="text" class="vdi-button vdi-blue-background vdi-boxed w3-round"
+                        ng-model="$ctrl.city" ng-keyup="$ctrl.keyup($event)" /></label>
+                <span class="w3-right">
+                    <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.search()"
+                        value="Suchen" />
+                </span>
+            </form>
+            <h3>Ergebnisse</h3>
+            <table class="vdi-boxed" width="100%">
+                <tr class="vdi-blue-background">
+                    <th ng-click="$ctrl.orderByMe('name')">User</th>
+                    <th ng-click="$ctrl.orderByMe('data.city')">Stadt</th>
+                    <th ng-click="$ctrl.orderByMe('data.couches')">Anzahl</th>
+                </tr>
+                <tr ng-repeat="x in $ctrl.offers | orderBy:$ctrl.myOrderBy" class="vdi-boxed">
+                    <td>
+                        <b ng-show="!x.expanded" ng-click="x.expanded = !x.expanded">{{x.name}}</b>
+                        <i ng-show="x.expanded" ng-click="x.expanded = !x.expanded">{{x.name}}</i>
+                        <button class="fa fa-envelope fa-fw w3-right w3-large vdi-button-symbol"></button>
+                        <div ng-show="x.expanded" class="vdi-lightGrey-background">
+                            <address-view address="x.profile" editable="false" on-update="null"></address-view>
+                        </div>
+                    </td>
+                    <td>{{x.data.city}}</td>
+                    <td>{{x.data.couches}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

@@ -434,7 +434,12 @@ function GetPracticesDataAsArray() {
 
 //UpdatePracticesData - update the Practices JSON Object to the JSON File
 function UpdatePracticesData(practiceData) {
-  fs.writeFileSync(path.normalize(CalculatePracticesData()), JSON.stringify(practiceData));
+  console.log("Debug Update Practices")
+  console.log(practiceData);
+
+  let filePath = path.normalize(CalculatePracticesData());
+  console.log(filePath)
+  fs.writeFileSync(filePath, JSON.stringify(practiceData));
 }
 
 //CreatePracticeEntry - Create a new Entry
@@ -471,6 +476,8 @@ function ClosePracticeEntry(practiceID) {
 
 
   let data = GetPracticesData();
+
+  console.log(data);
   delete data[practiceID];
   UpdatePracticesData(data);
 }
@@ -716,7 +723,7 @@ app.post('/practices/close', (request, response) => {
 
   ClosePracticeEntry(practiceID);
 
-  response.send(data)
+  response.send()
 })
 
 

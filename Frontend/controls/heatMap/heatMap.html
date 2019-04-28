@@ -1,16 +1,23 @@
-<div class="w3-container w3-card vdi-white-background w3-margin-bottom">
-    <h2 class="w3-padding-16">
-        <i class="fas fa-map-marked-alt w3-margin-right w3-xxlarge"></i>Kompetenzkarte
-    </h2>
-    <div class="vdi-white-background w3-round-xlarge vdi-star-rating">
-        <h3>Suche</h3>
+<div>
+
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <h3 class="w3-padding-16">
+            <i class="fas fa-map-marked-alt w3-margin-right w3-xlarge"></i>CompetenceMap
+        </h3>
+    </div>
+
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <h4 class="w3-padding-16 w3-margin-right"  >Suche</h4>
         <form novalidate="novalidate">
-            <label>Skill: <input type="text" class="vdi-button vdi-blue-background vdi-boxed w3-round" ng-model="$ctrl.skill" ng-keyup="$ctrl.keyup($event)" /></label>
-            <span class="w3-right">              
+            <label>Skill: <input type="text" class="vdi-button vdi-blue-background vdi-boxed w3-round"
+                    ng-model="$ctrl.skill" ng-keyup="$ctrl.keyup($event)" /></label>
+            <span class="w3-right">
                 <input type="button" class="vdi-blue-background w3-round" ng-click="$ctrl.search()" value="Show" />
             </span>
         </form>
-        <h3>Karte</h3>
+    </div>
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+        <h4 class="w3-padding-16 w3-margin-right">Karte</h4>
         <div id="mapid"></div>
     </div>
 </div>
