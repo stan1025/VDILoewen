@@ -34,6 +34,7 @@ Index
   -->
   <script src="angularjs/angular.js"></script>
   <script src="angularjs/angular-route.js"></script>
+  <script src="angularjs/angular-cookies.js"></script>
   <!--
     hier werden alle verwendeten Elemente eingebunden
   -->
@@ -84,7 +85,7 @@ Index
     </header>
 
     <!-- Left Quarter Column for View Area 1-->
-    <div class="w3-content w3-margin-top w3-container  w3-quarter" style="max-width:1400px;">
+    <div class="w3-content w3-margin-top w3-container w3-quarter" style="max-width:1400px;">
 
       <!-- Menu Structure Area -->
       <div class="w3-row-padding">
@@ -92,12 +93,12 @@ Index
           <!-- Navigation element -->
           <nav ng-show="userID != ''" style="max-width:1400px;">
             <a href="javascript:void(0)" ng-click="setScreen('Couchsurfing')"
-              class="w3-bar-item w3-button w3-padding-large">CouchsurfING</a><br />
+              class="w3-bar-item w3-button w3-padding-large"><i class="fas fa-couch w3-margin-right w3-large"></i>CouchsurfING</a><br />
             <a href="javascript:void(0)" ng-click="setScreen('Practice')"
-              class="w3-bar-item w3-button w3-padding-large">Practice@VDI</a><br />
+              class="w3-bar-item w3-button w3-padding-large"><i class="fas fa-industry w3-margin-right w3-large"></i>Practice@VDI</a><br />
             <a href="javascript:void(0)" ng-click="setScreen('Map')"
-              class="w3-bar-item w3-button w3-padding-large">CompetenceMap</a><br />
-            <a href="javascript:void(0)" ng-click="logout()" class="w3-bar-item w3-button w3-padding-large">Logout</a>
+              class="w3-bar-item w3-button w3-padding-large"><i class="fas fa-map-marked-alt w3-margin-right w3-large"></i>CompetenceMap</a><br />
+            <a href="javascript:void(0)" ng-click="logout()" class="w3-bar-item w3-button w3-padding-large"><i class="fas fa-sign-out-alt w3-margin-right w3-large"></i>Logout</a>
           </nav>
         </div>
       </div>
