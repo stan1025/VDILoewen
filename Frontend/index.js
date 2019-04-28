@@ -10,16 +10,6 @@ app.controller('ProfileController', function ($scope, $http) {
     $scope.viewMode = 'Desktop';
 
 
-
-    window.onresize = function (event) {
-        checkViewMode();
-    }
-
-    window.onload = function (event) {
-        checkViewMode();
-    }
-
-
     $scope.setScreen = function (screen, callMyFunc) {
         $scope.screen = screen;
         if (callMyFunc)
@@ -42,17 +32,6 @@ app.controller('ProfileController', function ($scope, $http) {
     $scope.home = function () {
         $scope.userID = '';
         $scope.screen = 'Login';
-    }
-
-    function checkViewMode() {
-        if (window.innerWidth > 600) {
-            $scope.viewMode = 'Desktop';
-            $scope.$digest();
-        }
-        else {
-            $scope.viewMode = 'Smartphone';
-            $scope.$digest();
-        }
     }
 });
 

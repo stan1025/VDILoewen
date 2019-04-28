@@ -71,16 +71,17 @@ Index
 
 <body class="vdi-blue-background" ng-app="VDILionExample" ng-controller="ProfileController">
 
-  <div ng-show="viewMode == 'Desktop'">
     <!-- Kopf und Fuss der Seite sind konstant, nur dazwischen soll sich etwas ändern-->
     <header class="w3-container vdi-blue-background">
       <img src="logo.png" class="vdi-white-background" style="padding: 10px; margin: 10px; float: left" />
       <!-- {{var}} gibt den Wert von var  zurück -->
-      <h1 style="padding: 10px; margin: 10px; float: left">
+      <h1 style="padding: 10px; margin: 10px; float: left" class="w3-hide-small">
         VDI goes Digital <br> (for Desktop/Tablet)
       </h1>
+      <h1 style="padding: 10px; margin: 10px; float: left" class="w3-hide-large w3-hide-medium">
+        VDI goes Digital <br> (for Smartphone)
+      </h1>
     </header>
-
 
     <!-- Left Quarter Column for View Area 1-->
     <div class="w3-content w3-margin-top w3-container  w3-quarter" style="max-width:1400px;">
@@ -104,16 +105,14 @@ Index
       <!-- Login View and Profile View -->
       <main class="w3-content w3-margin-top w3-container" style="max-width:1400px;">
         <login-view ng-show="userID == ''" login-user="login(user)"></login-view>
-        <profile-view ng-show="userID != ''" logout="logout()" user-id="userID"></profile-view>
+        <profile-view ng-show="userID != ''" logout="logout()" user-id="userID" class="w3-hide-small"></profile-view>
       </main>
 
 
-      <footer class="w3-container vdi-blue-background w3-center w3-margin-top">
+      <footer class="w3-container vdi-blue-background w3-center w3-margin-top w3-hide-small">
         <p>Powered by <a href="http://www.vdi.de/vdi-loewen" target="_blank">VDI Digital</a> - created with <i
             class="fab fa-angular fa-fw"></i><i class="fab fa-node-js fa-fw"></i></p>
       </footer>
-
-
     </div>
 
     <!-- Page Container -->
@@ -121,66 +120,15 @@ Index
       <couch-view ng-show="screen == 'Couchsurfing'" user-id="userID" editable="$ctrl.editable"></couch-view>
       <practice-view ng-show="screen == 'Practice'" user-id="userID" editable="$ctrl.editable"></practice-view>
       <heat-map ng-show="screen == 'Map'" user-id="userID"></heat-map>
+      <profile-view ng-show="userID != ''" logout="logout()" user-id="userID" class ="w3-hide-large w3-hide-medium"></profile-view>
     </main>
 
-  </div>
 
 
-  <div ng-show="viewMode == 'Smartphone'">
-
-    <!-- Kopf und Fuss der Seite sind konstant, nur dazwischen soll sich etwas ändern-->
-    <header class="w3-container vdi-blue-background">
-      <img src="logo.png" class="vdi-white-background" style="padding: 10px; margin: 10px; float: left" />
-      <!-- {{var}} gibt den Wert von var  zurück -->
-      <h1 style="padding: 10px; margin: 10px; float: left">
-        VDI goes Digital <br> (for Smartphone)
-      </h1>
-    </header>
-
-
-    <!-- Left Quarter Column for View Area 1-->
-    <div class="w3-content w3-margin-top w3-container">
-
-      <!-- Menu Structure Area -->
-      <div class="w3-row-padding">
-        <div class="vdi-white-background w3-card-4 w3-margin-bottom w3-container">
-          <!-- Navigation element -->
-          <nav ng-show="userID != ''">
-            <a href="javascript:void(0)" ng-click="setScreen('Couchsurfing')"
-              class="w3-bar-item w3-button w3-padding-large">CouchsurfING</a><br />
-            <a href="javascript:void(0)" ng-click="setScreen('Practice')"
-              class="w3-bar-item w3-button w3-padding-large">Practice@VDI</a><br />
-            <a href="javascript:void(0)" ng-click="setScreen('Map')"
-              class="w3-bar-item w3-button w3-padding-large">CompetenceMap</a><br />
-            <a href="javascript:void(0)" ng-click="logout()" class="w3-bar-item w3-button w3-padding-large">Logout</a>
-          </nav>
-        </div>
-      </div>
-
-      <!-- Page Container -->
-      <main class="w3-content w3-margin-top w3-container">
-        <couch-view ng-show="screen == 'Couchsurfing'" user-id="userID" editable="$ctrl.editable"></couch-view>
-        <practice-view ng-show="screen == 'Practice'" user-id="userID" editable="$ctrl.editable"></practice-view>
-        <heat-map ng-show="screen == 'Map'" user-id="userID"></heat-map>
-      </main>
-
-      <!-- Login View and Profile View -->
-      <main class="w3-content w3-margin-top w3-container">
-        <login-view ng-show="userID == ''" login-user="login(user)"></login-view>
-        <profile-view ng-show="userID != ''" logout="logout()" user-id="userID"></profile-view>
-      </main>
-
-
-      <footer class="w3-container vdi-blue-background w3-center w3-margin-top">
-        <p>Powered by <a href="http://www.vdi.de/vdi-loewen" target="_blank">VDI Digital</a> - created with <i
-            class="fab fa-angular fa-fw"></i><i class="fab fa-node-js fa-fw"></i></p>
-      </footer>
-
-
-    </div>
-
-
-  </div>
+    <footer class="w3-container vdi-blue-background w3-center w3-margin-top w3-hide-large w3-hide-medium">
+      <p>Powered by <a href="http://www.vdi.de/vdi-loewen" target="_blank">VDI Digital</a> - created with <i
+          class="fab fa-angular fa-fw"></i><i class="fab fa-node-js fa-fw"></i></p>
+    </footer>
 
 
 </body>
