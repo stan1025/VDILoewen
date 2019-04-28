@@ -10,6 +10,11 @@
       useCache: true
     }).addTo(mymap);
 
+    window.onresize = function (event) {   
+      //mymap.setView([51.163361,10.447683], 6);   
+      mymap.invalidateSize();
+    }
+
     var markers = L.layerGroup().addTo(mymap);
 
     //search for results on server
