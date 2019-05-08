@@ -18,5 +18,9 @@
     "GUID5": {
         "couches": "1",
         "city": "Stuttgart"
+    },
+    "GUID6": {
+        "couches": "2",
+        "city": "Karlsruhe"
     }
 }

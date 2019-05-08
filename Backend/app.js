@@ -574,8 +574,8 @@ function GetPracticeResults(practiceID) {
     // Origin Entry is an Searching -> match with Offerings
 
     _.each(offerData, function (value, key, list) {
-      if (value.practiceType == originEntry.practiceType) {
-        filteredData.push({ ident: key, matchEntry: value, matchProfile: GetProfile(value.authorID) });
+      if (value.data.practiceType == originEntry.practiceType) {
+        filteredData.push(value);
       }
     });
 

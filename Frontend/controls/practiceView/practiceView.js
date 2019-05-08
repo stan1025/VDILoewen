@@ -6,23 +6,42 @@
     ctrl.practiceTypes = {FulltimeJob : "Vollzeitstelle ", Freelancer : "Teilzeitstelle", StudentJob : "Studentenjob", Internship : "Internship", FinalExam : "Abschlussarbeit" , Others : "andere"};
     ctrl.requestType = '';
     ctrl.practiceType = '';
-    ctrl.showOverlay = false;
+    ctrl.showOverlaySearch = false;
+    ctrl.showOverlayOffer = false;
     ctrl.match = '';
     ctrl.practices = [];
     ctrl.myOffers = [];
     ctrl.mySearch = [];
     ctrl.defaultPractice = {"practiceType":"Others","requestType":"Offer","description":"Beschreibung","competencies":[]};
+    ctrl.refreshOffers = true;
+    ctrl.refreshSearch = true;
+    ctrl.refreshList = true;
+
+    var intervalID = setInterval(function(){
+      if (ctrl.refreshSearch)
+        ctrl.loadMySearch();
+      if (ctrl.refreshOffers)
+        ctrl.loadMyOffers();
+      if (ctrl.refreshList)
+        ctrl.loadPractices();}, 1000);
 
     ctrl.loadPractices = function() {
       if (ctrl.userId) {
         $http.get(ctrl.server + "/practices")
         .then(function (response) {
-            //ctrl.practices = [];
+            ctrl.practices = [];
             //console.log(response.data);
             /*angular.forEach(response.data, function(value, key) {
               this.push({data: value, uuid: key});
             }, ctrl.practices);*/
-            ctrl.practices = response.data;
+            angular.forEach(response.data, function (value) {
+              if (((ctrl.requestType == '') || (value.data.requestType == ctrl.requestType))
+                  && ((ctrl.practiceType == '') || (value.data.practiceType == ctrl.practiceType)))
+               {
+                this.push(value);
+              }
+            }, ctrl.practices);
+            //ctrl.practices = response.data;
             //console.log(ctrl.practices);
         }, function () {
             // Second function handles error
@@ -35,7 +54,7 @@
     ctrl.loadPracticeType = function() {
       if (ctrl.userId) {
         //console.log(ctrl.practiceType);
-        $http.get(ctrl.server + "/practices/practiceType", {params: {practiceType: ctrl.practiceType}})
+        /*$http.get(ctrl.server + "/practices/practiceType", {params: {practiceType: ctrl.practiceType}})
         .then(function (response) {
             //console.log(response.data);
             ctrl.practices = response.data;
@@ -44,14 +63,15 @@
             // Second function handles error
             console.log("Something went wrong 1 practice");
 
-        })
+        })*/
+        ctrl.loadPractices();
       }
     }
 
     ctrl.loadRequestType = function() {
       if (ctrl.userId) {
         //console.log(ctrl.requestType);
-        $http.get(ctrl.server + "/practices/requestType", {params: {requestType: ctrl.requestType}})
+        /*$http.get(ctrl.server + "/practices/requestType", {params: {requestType: ctrl.requestType}})
         .then(function (response) {
             //console.log(response.data);
             ctrl.practices = response.data;
@@ -60,7 +80,8 @@
             // Second function handles error
             console.log("Something went wrong 1 practice");
 
-        })
+        })*/
+        ctrl.loadPractices();
       }
     }
 
@@ -156,9 +177,13 @@
     }
 
     //show match results in overlay
-    ctrl.Overlay = function(element) {
+    ctrl.Overlay = function(element, type) {
+      //console.log(element);
       ctrl.match = element;
-      ctrl.showOverlay = true;
+      if (type == 'Search')
+        ctrl.showOverlaySearch = true;
+      if (type == 'Offer')
+        ctrl.showOverlayOffer = true;
     }
 
     ctrl.loadMyOffers = function() {
