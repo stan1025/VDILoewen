@@ -548,6 +548,17 @@ function GetPracticeEntry(practiceID) {
   return JSON.parse(fs.readFileSync(CalculatePracticesData()))[practiceID];
 }
 
+function matchPracticeEntries(entry, candidate) {
+  var matchedItems = 0;
+  entry.competencies.forEach(function(element) {
+    candidate.competencies.forEach(function(elem) {
+        if ((elem.name == element.name) && (elem.experienceLevel >= element.experienceLevel))
+          matchedItems += 1;
+    });
+  });
+  return (matchedItems == entry.competencies.length);
+}
+
 function GetPracticeResults(practiceID) {
   console.log("Call: GetPracticeResults");
   console.log("Incoming Data:")
@@ -563,7 +574,8 @@ function GetPracticeResults(practiceID) {
 
     _.each(searchData, function (value, key, list) {
       if (value.data.practiceType == originEntry.practiceType) {
-        filteredData.push(value);
+        if (matchPracticeEntries(originEntry, value.data))
+          filteredData.push(value);
       }
     });
 
@@ -575,7 +587,8 @@ function GetPracticeResults(practiceID) {
 
     _.each(offerData, function (value, key, list) {
       if (value.data.practiceType == originEntry.practiceType) {
-        filteredData.push(value);
+        if (matchPracticeEntries(value.data, originEntry))
+          filteredData.push(value);
       }
     });
 
