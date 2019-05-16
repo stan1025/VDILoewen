@@ -40,11 +40,11 @@
             </table>
         </div>
     </div>
-    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom"  ng-mouseleave="$ctrl.refreshSearch = true" ng-mouseenter="$ctrl.refreshSearch = false">
         <div class="vdi-white-background w3-round-xlarge">
             <h3>Meine Gesuche <button class="fa fa-plus vdi-button-symbol" ng-click="$ctrl.create('Search')"></button>
             </h3>
-            <table class="vdi-boxed" width="100%" ng-mouseleave="$ctrl.refreshSearch = true" ng-mouseenter="$ctrl.refreshSearch = false">
+            <table class="vdi-boxed" width="100%">
                 <tr class="vdi-blue-background">
                     <th ng-click="$ctrl.orderByMe('data.requestType')">Art</th>
                     <th ng-click="$ctrl.orderByMe('data.practiceType')">Typ</th>
@@ -98,7 +98,7 @@
                     <b ng-show="!x.expanded" ng-click="x.expanded = !x.expanded">{{x.author.name}}</b>
                     <i ng-show="x.expanded" ng-click="x.expanded = !x.expanded">{{x.author.name}}</i>
                     <div ng-show="x.expanded" class="vdi-lightGrey-background">
-                        <address-view address="x.author.private" editable="false" on-update="null"></address-view>
+                        <address-view address="x.author.job" editable="false" on-update="null"></address-view>
                     </div>
                 </td>
                 <td>
@@ -114,11 +114,11 @@
         </table>
     </div>
     </div>
-    <div class="w3-container w3-card vdi-white-background w3-margin-bottom">
+    <div class="w3-container w3-card vdi-white-background w3-margin-bottom" ng-mouseleave="$ctrl.refreshOffers = true" ng-mouseenter="$ctrl.refreshOffers = false">
         <div class="vdi-white-background w3-round-xlarge">
             <h3>Meine Angebote <button class="fa fa-plus vdi-button-symbol" ng-click="$ctrl.create('Offer')"></button>
             </h3>
-            <table class="vdi-boxed" width="100%" ng-mouseleave="$ctrl.refreshOffers = true" ng-mouseenter="$ctrl.refreshOffers = false">
+            <table class="vdi-boxed" width="100%">
                 <tr class="vdi-blue-background">
                     <th ng-click="$ctrl.orderByMe('data.requestType')">Art</th>
                     <th ng-click="$ctrl.orderByMe('data.practiceType')">Typ</th>
